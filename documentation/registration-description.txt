@@ -1,0 +1,11 @@
+ propose that my team will create a simple web application that will initiate a conversation with the user, giving information about heart attack and stroke risks, while at the same time asking all of the relevant questions in order to interact with the API. The site will allow users to login with Facebook, or with just their email addresses. The application will save their answers at every step of the way so that they can come back at any time. When the application gets to the section that requests the detailed test data, it will give the user the option to either enter in the data if they have it, or search for local pharmacies to get the testing done.
+
+If the user does not have the detailed testing data at the time, and they have agreed to receive email notifications, they will receive emails on a schedule that will remind them that their answers have been saved and that they should complete the testing. 
+
+Once the user enters in the full test data, the application will show the user a detailed breakdown of their risk, as found by the API, and suggest next steps to improve their risk of a heart attack or stroke. They will also have the ability to share the website on Facebook or Twitter (not their results, just the address for the web app, to encourage more users). 
+
+The web application will encrypt all data and use secure connections in order to protect user data.
+
+This web application will be fully usable on all mobile devices as well, so that users on the go can also benefit from it. If time allows, this web application will be wrapped into a native application for both Android and iOS, to be released on each device's app store.
+
+Additionally, if time allows, the apps will be built to provide native phone notifications as reminders to complete the testing if it is not done in one sitting. Another possible feature is making the website multilingual.
