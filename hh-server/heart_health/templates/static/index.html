@@ -27,17 +27,29 @@
 	</head>
 
 	<body>
-	  <div class="row-fluid">
-			<header class="span6 offset3">
-			<h1><3 Health</h1>
-			<p class="lead"> Interactive Risk Assesment for Heart Attacks and Strokes </p>
-			</header>
-		</div>	
+	  	
 
 	  <div class="container-fluid">
+	 	<div class="row-fluid">
+			<header class="span8 offset2">
+                <div class="row-fluid">
+                    <img class="title-heart-image" src="{{ STATIC_URL }}img/heart-pulse-100.png"/>
+                    <h1>Health</h1>
+                </div>
+                <p class="lead"> Interactive Risk Assesment for Heart Attacks and Strokes </p>
+			</header>
+		</div>
 		<div class="row-fluid">
-		  <div class="well">
-			<p> Heart Disease is a killer </p>
+		  <div class="well well-large span8 offset2">
+            <h3> Over 2,000,000 Heart Attacks and Strokes Occur Each Year in the US </h3>
+            <p> Heart disease and stroke are an epidemic in the United States today. However, many of the major risk factors for these conditions can be prevented and controlled.
+            <h3> Identifying Your Risk of Cardiovascular Disease </h3>
+			<p> The <a href="http://millionhearts.hhs.gov/" >Million Hearts™</a> campaign is a national initiative to prevent 1 million heart attacks and strokes over five years. As part of the initiative, this application has been granted access to use the <a href="http://archimedesmodel.com/indigo"> Archimedes Indigo Platform </a> to calculate individualized risk. This platform has never before been made available to the general public.</p>
+            <h3> Simple Questions. Easy to Understand Results. Individualized Risk Analysis.</h3>
+            <p> Just by answering a few simple questions, this assesment can give you a good sense of your risk right up front. After this initial assessment, Heart Health can help you find testing facilities to collect additional data to get a more accurate picture of your cardiovascular disease risk. Let's get started!</p>
+            <div class="span6 offset3 margin-top-15">
+                <button class="btn btn-large btn-block btn-danger" type="button"> Begin the Assessment! </button>
+            </div>
 		  </div>
 		</div>
 

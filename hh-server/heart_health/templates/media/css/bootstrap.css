@@ -5622,3 +5622,14 @@ a.badge:hover {
 .affix {
   position: fixed;
 }
+
+.title-heart-image {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    float: left;
+}
+
+.margin-top-15 {
+    margin-top: 15px;
+}
