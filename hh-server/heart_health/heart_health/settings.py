@@ -117,11 +117,22 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'registration',
+    'django.contrib.humanize',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+# Used by django-registration, the number of days a confirmation email link is valid
+ACCOUNT_ACTIVATION_DAYS = 7
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER='hearthealthapp'
+EMAIL_HOST_PASSWORD='killerapp'
+EMAIL_USE_TLS=True
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

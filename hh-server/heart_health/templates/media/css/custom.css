@@ -8,3 +8,20 @@
 .margin-top-15 {
     margin-top: 15px;
 }
+
+body {
+    margin-top: 35px;
+}
+
+.button-space-after {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 767px) {
+    .btn {
+        width: 100% !important;
+    }
+    input {
+        width: 100% !important;
+    }
+}
