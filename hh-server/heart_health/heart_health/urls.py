@@ -7,11 +7,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
 	url(r'^$', 'survey.views.index', name='home'),
 	url(r'^begin/', 'survey.views.begin', name='begin'),
-    url(r'^accounts/', include('registration.backends.default.urls')),
-    url(r'^accounts$', 'registration.views.register', {'backend': 'registration.backends.default.DefaultBackend'},
-                               name='registration_register'),
-    url(r'^accounts/$', 'registration.views.register', {'backend': 'registration.backends.default.DefaultBackend'},
-                               name='registration_register'),
+    url(r'^', include('registration.backends.default.urls')),
+
     # Examples:
     # url(r'^$', 'heart_health.views.home', name='home'),
     # url(r'^heart_health/', include('heart_health.foo.urls')),

@@ -1,30 +1,61 @@
-{% extends "registration/base.html" %}
+{% load bootstrap_toolkit %}
 
-{% block title %}Log in{% endblock %}
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<head>
+	  <meta charset="utf-8">
+	  <title>Log In</title>
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <meta name="description" content="">
+	  <meta name="author" content="">
 
-{% block content %}
+	  <link href="{{ STATIC_URL }}css/bootstrap.css" type="text/css" rel="stylesheet">
+	  <link href="{{ STATIC_URL }}css/custom.css" type="text/css" rel="stylesheet">
 
-<link href="{{ STATIC_URL }}css/bootstrap.css" type="text/css" rel="stylesheet">
-<link href="{{ STATIC_URL }}css/custom.css" type="text/css" rel="stylesheet">
+	  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+	  <!--[if lt IE 9]>
+	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	  <![endif]-->
 
-<h1>Log in</h1>
+	  <!-- Le fav and touch icons -->
+	  <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico?v=2" />
+	</head>
 
-{% if form.errors %}
-<p class="error">Please correct the errors below:</p>
-{% endif %}
+	<body>
+	  	
+	  <div class="container-fluid">
+	 	<div class="row-fluid">
+            <div class="span2 hidden-phone"> </div>
+			<header class="span8">
+                <div class="row-fluid">
+                    <img class="title-heart-image" src="{{ STATIC_URL }}img/heart-pulse-100.png"/>
+                    <h1>Health</h1>
+                </div>
+                <p class="lead"> Interactive Risk Assesment for Heart Attacks and Strokes </p>
+			</header>
+		</div>
+		<div class="row-fluid">
+          <div class="span2 hidden-phone"> </div>
+		  <div class="well well-large span8">
+           <h3 class="center-text">Log In With a Registered Email Address</h3>
+           <div class="row-fluid">
+                <form method="post" action="?next={{ next|default:"/" }}">{% csrf_token %}
+                <div class="span4 centered-span centered-form-stretch">
+                {{ form|as_bootstrap }}
+                    <div class="actions">
+                       <button class="btn btn-large btn-danger" type="submit" value="Log in">Log In </button>
+                    </div>
+                </div>
+                </form>
+            </div>
+          </div>
+        </div>
 
-<form method="post" action="?next={{ next|default:"/" }}">{% csrf_token %}
-<dl>
-<dt><label for="id_username">Username:</label>{% if form.username.errors %} <span class="error">{{ form.username.errors|join:", " }}</span>{% endif %}</dt>
-<dd>{{ form.username }}</dd>
-<dt><label for="id_password">Password:</label>{% if form.password.errors %} <span class="error">{{ form.password.errors|join:", " }}</span>{% endif %}</dt>
-<dd>{{ form.password }}</dd>
-<dt><input type="submit" value="Log in" /></dt>
-</dl>
-</form>
-{% endblock %}
 
-{% block content-related %}
-<p>If you don't have an account, you can <a href="/accounts/register/">sign
-up</a> for one.
-{% endblock %}
+        </div>
+        <script src="{{ STATIC_URL }}js/jquery-1.8.0.js"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+        <script src="{{ STATIC_URL }}js/begin.js"></script>
+
+    </body>
+</html>

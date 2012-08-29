@@ -17,6 +17,23 @@ body {
     margin-bottom: 10px;
 }
 
+.center-text {
+    text-align: center;
+}
+
+.centered-form-stretch input {
+    width: 100% !important;
+}
+
+.centered-form-stretch button {
+    width: 50% !important;
+}
+
+.centered-span {
+    margin: 0 auto !important;
+    float: none !important;
+}
+
 @media (max-width: 767px) {
     .btn {
         width: 100% !important;
