@@ -34,6 +34,10 @@ body {
     float: none !important;
 }
 
+.hidden {
+    display: none !important;
+}
+
 /* Landscape phones and down */
 @media (max-width: 480px) {
 

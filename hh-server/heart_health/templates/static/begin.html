@@ -8,7 +8,7 @@
     <div class="span8 centered-span centered-form-stretch-not-button">
         <form>
             <div id="age-group" class="control-group"> 
-                <p>Welcome! Let's get started. Here's an easy one:</>
+                <h5>Welcome! Let's get started. Here's an easy one:</h5>
                 <label>Please Enter Your Age</label>
                 <input type="text">
                 <span class="help-inline hidden">Valid ages are from 18 to 130.</span>
@@ -69,16 +69,16 @@
                 <span class="help-block">Answer yes if you have diabetes mellitus type I or type II.</span>
                 </label>
             </div>
-            <div id="wizard-both-buttons" class="row-fluid margin-top-15 wizard-button-group">
-                <button class="btn btn-large btn-danger span3 button-space-after" onclick="wizard.showPreviousStep()" type="button">Previous</button>
-                <button class="btn btn-large btn-danger span3" onclick="wizard.showNextStep()" type="button">Next</button>
+            <div id="wizard-both-buttons" class="row-fluid span10 centered-span margin-top-15 wizard-button-group">
+                <button class="btn btn-large btn-danger span6 button-space-after" onclick="wizard.showPreviousStep()" type="button">Previous</button>
+                <button class="btn btn-large btn-danger span6" onclick="wizard.showNextStep()" type="button">Next</button>
             </div>
-            <div id="wizard-next-only" class="hidden margin-top-15 wizard-button-group">
-                <button class="btn btn-large btn-block btn-danger span3" type="button" onclick="wizard.showNextStep()">Next</button>
+            <div id="wizard-next-only" class="hidden span5 centered-span margin-top-15 wizard-button-group">
+                <button class="btn btn-large btn-block btn-danger" type="button" onclick="wizard.showNextStep()">Next</button>
             </div>
-            <div id="wizard-submit-group" class="hidden row-fluid margin-top-15 wizard-button-group">
-                <button class="btn btn-large btn-danger span3" type="button" onclick="wizard.showPreviousStep()">Previous</button>
-                <button class="btn btn-large btn-danger span6" type="submit">Assess Your Risk</button>
+            <div id="wizard-submit-group" class="hidden span10 centered-span row-fluid margin-top-15 wizard-button-group">
+                <button class="btn btn-large btn-danger span4" type="button" onclick="wizard.showPreviousStep()">Previous</button>
+                <button class="btn btn-large btn-danger span8" type="submit">Assess Your Risk</button>
             </div>
 
         </form>
