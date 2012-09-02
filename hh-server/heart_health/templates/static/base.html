@@ -1,10 +1,8 @@
-{% load bootstrap_toolkit %}
-
 <!DOCTYPE html>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<head>
 	  <meta charset="utf-8">
-	  <title>Log In</title>
+	  <title>{% block title %}{% endblock %}</title>
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	  <meta name="description" content="">
 	  <meta name="author" content="">
@@ -22,7 +20,7 @@
 	</head>
 
 	<body>
-	  	
+
 	  <div class="container-fluid">
 	 	<div class="row-fluid">
             <div class="span2 hidden-phone"> </div>
@@ -37,27 +35,21 @@
 		<div class="row-fluid">
           <div class="span2 hidden-phone"> </div>
 		  <div class="well well-large span8">
-           <h3 class="center-text">Log In With a Registered Email Address</h3>
-           <p class="center-text">Enter your email address and password to return to your saved assessment and/or results. </p>
-           <div class="row-fluid">
-                <form method="post" action="?next={{ next|default:"/" }}">{% csrf_token %}
-                <div class="span4 centered-span centered-form-stretch">
-                {{ form|as_bootstrap }}
-                    <div class="actions">
-                       <button class="btn btn-large btn-danger" type="submit" value="Log in">Log In </button>
-                       <p class="margin-top-15"><a href="/register/"> Click here to register for free.</a></p>
-                       <p class="margin-top-15"><a href="/begin/"> Skip this step. I just want to take the assessment without saving anything.</a></p>
-                    </div>
-                </div>
-                </form>
-            </div>
+          {% block content %}{% endblock %}
           </div>
-        </div>
+		</div>
 
-        </div>
-        <script src="{{ STATIC_URL }}js/jquery-1.8.0.js"></script>
-        <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
-        <script src="{{ STATIC_URL }}js/login.js"></script>
 
-    </body>
-</html>
+
+
+	  </div> <!-- /container -->
+
+	  <!-- Le javascript
+	  ================================================== -->
+	  <!-- Placed at the end of the document so the pages load faster -->
+	  <script src="{{ STATIC_URL }}js/jquery-1.8.0.js"></script>
+	  <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+      {% block jsinclude %}{% endblock %}
+
+	</body>
+  </html>

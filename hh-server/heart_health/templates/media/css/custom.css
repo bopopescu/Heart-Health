@@ -25,8 +25,8 @@ body {
     width: 100% !important;
 }
 
-.centered-form-stretch button {
-    width: 50% !important;
+.centered-form-stretch-not-button input, select {
+    width: 100% !important;
 }
 
 .centered-span {
@@ -34,6 +34,12 @@ body {
     float: none !important;
 }
 
+/* Landscape phones and down */
+@media (max-width: 480px) {
+
+}
+
+/* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
     .btn {
         width: 100% !important;
@@ -42,3 +48,27 @@ body {
         width: 100% !important;
     }
 }
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+    .centered-form-stretch button {
+        width: 35% !important;
+    }
+
+    .btn {
+        width: 100% !important;
+    }
+
+    input {
+        width: 100% !important;
+    }
+
+}
+
+/* Large desktop */
+@media (min-width: 1200px) {
+
+}
+
+
+

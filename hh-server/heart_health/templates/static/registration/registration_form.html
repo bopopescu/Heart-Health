@@ -1,58 +1,22 @@
-{% extends "registration/base.html" %}
+{% extends "base.html" %}
+{% load bootstrap_toolkit %}
 
-{% block title %}Sign up{% endblock %}
+{% block title %} Register To Use Heart Health {% endblock %}
 
 {% block content %}
-
-  {% if form.errors %}
-  <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
-  {% endif %}
-
-  <h1>Create an account</h1>
-  
-  <form method="post" action="" class="wide">
-	{% csrf_token %}
-    <p>
-      <label for="id_username">Username:</label>
-      {% if form.username.errors %}
-        <p class="errors">{{ form.username.errors.as_text }}</p>
-      {% endif %}
-      {{ form.username }}
-    </p>
-    <p>
-      <label for="id_email">Email address:</label>
-      {% if form.email.errors %}
-        <p class="errors">{{ form.email.errors.as_text }}</p>
-      {% endif %}
-      {{ form.email }}
-    </p>
-    <p>
-      <label for="id_password1">Password:</label>
-      {% if form.password1.errors %}
-        <p class="errors">{{ form.password1.errors.as_text }}</p>
-      {% endif %}
-      {{ form.password1 }}
-    </p>
-    <p>
-      <label for="id_password2">Password (type again to catch typos):</label>
-      {% if form.password2.errors %}
-        <p class="errors">{{ form.password2.errors.as_text }}</p>
-      {% endif %}
-      {{ form.password2 }}
-    </p>
-    <p class="submit"><input type="submit" value="Register &rarr;"></p>
-  </form>
-  
+<h3 class="center-text">Register Using Just Your Email Address</h3>
+<p class="center-text"> Please consider registering below using just your email address, although this is not required. This will allow you to save your input to return to the assessment or your results at any time. </p>
+<div class="row-fluid">
+    <form method="post" action="?next={{ next|default:"/" }}">{% csrf_token %}
+    <div class="span4 centered-span centered-form-stretch">
+    {{ form|as_bootstrap }}
+        <div class="actions">
+           <button class="btn btn-large btn-danger" type="submit" value="Register">Register</button>
+           <p class="margin-top-15"><a href="/login/"> I have already registered and I would like to log in.</a></p>
+           <p class="margin-top-15"><a href="/begin/"> Skip this step. I just want to take the assessment without saving anything.</a></p>
+        </div>
+    </div>
+    </form>
+</div>
 {% endblock %}
 
-{% block content-related %}
-<p>Fill out the form to the left (all fields are required), and your
-account will be created; you'll be sent an email with instructions on how
-to finish your registration.</p>
-
-<p>We'll only use your email to send you signup instructions. We hate spam
-as much as you do.</p>
-
-<p>This account will let you log into the ticket tracker, claim tickets,
-and be exempt from spam filtering.</p>
-{% endblock %}

@@ -1,8 +1,13 @@
-{% extends "registration/base.html" %}
+{% extends "base.html" %}
+{% load bootstrap_toolkit %}
 
-{% block title %}Registration complete{% endblock %}
+{% block title %}Register to Use Heart Health{% endblock %}
 
 {% block content %}
-<h1>Check your email</h1>
-<p>An activation link has been sent to the email address you supplied, along with instructions for activating your account.</p>
+<h3 class="center-text">Thanks For Registering! Check Your Email!</h3>
+<p class="center-text"> Great work! Be sure to check your email and click the link we just sent you to activate your registration. If you don't do this within two days,
+your registration will be cancelled.</p>
+<div class="span6 centered-span">
+    <button class="btn btn-large btn-block btn-danger" type="button" onclick='window.location.href="/begin/"'> Begin the Assessment! </button>
+</div>
 {% endblock %}
