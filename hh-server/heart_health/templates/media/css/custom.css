@@ -34,6 +34,14 @@ body {
     float: none !important;
 }
 
+.user-dropdown {
+    float: right;
+}
+
+.blue-link {
+    color: #0733E2;
+}
+
 .hidden {
     display: none !important;
 }
