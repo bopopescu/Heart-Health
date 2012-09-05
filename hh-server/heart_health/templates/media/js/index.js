@@ -1,3 +1,3 @@
 function beginNoLogin() {
-    window.location.href = 'begin/';
+    window.location.href = 'register/';
 }
