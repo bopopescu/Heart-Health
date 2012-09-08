@@ -14,5 +14,8 @@
 {% endblock %}
 
 {% block jsinclude %}
+<script type="text/javascript"> 
+   var isUserLoggedIn = ('{{ user.is_authenticated }}' == 'True');
+   </script>
 <script src="{{ STATIC_URL }}js/index.js"></script>
 {% endblock %}
