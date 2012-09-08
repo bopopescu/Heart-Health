@@ -90,6 +90,13 @@ wizard.steps.push(new wizardStep('diabetes-group', function(){
 //Show the first step!
 wizard.showCurrentStep();
 
+// Pressing the enter key on each input checkbox should advance the form wizard
+$('.control-group input').keyup(function(event){
+        if(event.keyCode == 13){
+            wizard.showNextStep();
+        }
+});
+
 function validateTextNumericInRange(text, min, max) {
         var value = parseInt(text, 10);
 
