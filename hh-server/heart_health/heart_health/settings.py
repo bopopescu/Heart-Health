@@ -122,6 +122,8 @@ INSTALLED_APPS = (
     'bootstrap_toolkit',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+    'survey',
+    'accounts',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -165,3 +167,5 @@ LOGGING = {
 }
 
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
+
+AUTH_PROFILE_MODULE = 'survey.UserProfile'
