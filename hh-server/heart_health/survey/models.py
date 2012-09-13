@@ -83,3 +83,15 @@ class Notification(models.Model):
     message_type = models.IntegerField(default=0, verbose_name="Code for type of message to send")
     # Indicates whether this is an email notification (0) or a native notification for an app (1)
     notification_type = models.IntegerField(default=0, verbose_name="Code for email or native type")
+
+class Location(models.Model):
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    distance = models.FloatField()
+    name = models.CharField(max_length=75)
+    address1 = models.CharField(max_length=75)
+    address2 = models.CharField(max_length=75)
+    city = models.CharField(max_length=75)
+    zip_code = models.CharField(max_length=10)
+    phone = models.CharField(max_length=25)
+    url = models.CharField(max_length=255)
