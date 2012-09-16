@@ -1,6 +1,6 @@
 function beginNoLogin() {
     if(isUserLoggedIn){
-        window.location.href = '/begin/';
+        window.location.href = '/basic/';
     } else {
         window.location.href = '/register/';
     }

@@ -103,3 +103,24 @@ function validateTextNumericInRange(text, min, max) {
         return (!isNaN(value) && value >= min && value <= max);
 }
 
+function submitBasicQuestions(){
+    var query = $('#basic-form').serializeArray(),
+    inputData = {};
+
+    for (i in query) {
+        inputData[query[i].name] = query[i].value
+    }
+
+    $.ajax({
+        //url: 'https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health',
+        url: 'save/',
+        data: inputData,
+        type: "POST",
+        success: function(data){
+            console.log('Success! Data is: ' + data);    
+        },
+        error: function(data){
+            console.log('Failure :(');
+        },
+    });
+}

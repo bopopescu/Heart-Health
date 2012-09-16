@@ -6,65 +6,66 @@
 <div class="span8">
 <h3 class="center-text">Some Simple Questions </h3>
     <div class="span8 centered-span centered-form-stretch-not-button">
-        <form>
+        <form method="POST" action="/basic/save/" id="basic-form">
+            {% csrf_token %}
             <div id="age-group" class="control-group"> 
                 <h5>Welcome! Let's get started. Here's an easy one:</h5>
                 <label>Please Enter Your Age</label>
-                <input type="text">
+                <input name="age" type="text">
                 <span class="help-inline hidden">Valid ages are from 18 to 130.</span>
                 </label>
             </div>
             <div id="gender-group" class="control-group hidden"> 
                 <label>Please Select Your Gender</label>
-                <select>
-                    <option name="Male" value="male">Male</option>
-                    <option name="Female" value="female">Female</option>
+                <select name="gender">
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
                 </select>
                 </label>
             </div>
             <div id="height-group" class="control-group hidden"> 
                 <label>Please Enter Your Height in Inches</label>
-                <input type="text">
+                <input name="height" type="text">
                 <span class="help-inline hidden">Height must be between 44 and 87 inches.</span>
                 </label>
             </div>
             <div id="weight-group" class="control-group hidden"> 
                 <label>Please Enter Your Weight in Pounds</label>
-                <input type="text">
+                <input name="weight" type="text">
                 <span class="help-inline hidden">Weight must be between 80 and 600 pounds.</span>
                 </label>
             </div>
             <div id="smoke-group" class="control-group hidden"> 
                 <label>Do You Currently Smoke?</label>
-                <select>
-                    <option name="Yes" value="true">Yes</option>
-                    <option name="No" value="false" selected="true">No</option>
+                <select name="smoker">
+                    <option value="true">Yes</option>
+                    <option value="false" selected="true">No</option>
                 </select>
                 <span class="help-block">Answer yes if you have smoked any cigarettes in the past month.</span>
                 </label>
             </div>
             <div id="heart-attack-group" class="control-group hidden"> 
                 <label>Has a Doctor Ever Told You That You Had a Heart Attack?</label>
-                <select>
-                    <option name="Yes" value="true">Yes</option>
-                    <option name="No" value="false" selected="true">No</option>
+                <select name="mi">
+                    <option value="true">Yes</option>
+                    <option value="false" selected="true">No</option>
                 </select>
                 <span class="help-block">A heart attack is sometimes called a myocardial infarction or MI.</span>
                 </label>
             </div>
             <div id="stroke-group" class="control-group hidden"> 
                 <label>Has a Doctor Ever Told You That You Had a Stroke?</label>
-                <select>
-                    <option name="Yes" value="true">Yes</option>
-                    <option name="No" value="false" selected="true">No</option>
+                <select name="stroke">
+                    <option value="true">Yes</option>
+                    <option value="false" selected="true">No</option>
                 </select>
                 </label>
             </div>
             <div id="diabetes-group" class="control-group hidden"> 
                 <label>Has a Doctor Ever Told You That You Have Diabetes?</label>
-                <select>
-                    <option name="Yes" value="true">Yes</option>
-                    <option name="No" value="false" selected="true">No</option>
+                <select name="diabetes">
+                    <option value="true">Yes</option>
+                    <option value="false" selected="true">No</option>
                 </select>
                 <span class="help-block">Answer yes if you have diabetes mellitus type I or type II.</span>
                 </label>
@@ -78,7 +79,7 @@
             </div>
             <div id="wizard-submit-group" class="hidden span10 centered-span row-fluid margin-top-15 wizard-button-group">
                 <button class="btn btn-large btn-danger span4" type="button" onclick="wizard.showPreviousStep()">Previous</button>
-                <button class="btn btn-large btn-danger span8" type="submit">Assess Your Risk</button>
+                <button class="btn btn-large btn-danger span8" type="submit" >Assess Your Risk</button>
             </div>
 
         </form>

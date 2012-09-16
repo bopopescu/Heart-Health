@@ -21,6 +21,10 @@ body {
     text-align: center;
 }
 
+.loading-spinner-large {
+    width: 100px !important;
+}
+
 .centered-form-stretch input {
     width: 100% !important;
 }

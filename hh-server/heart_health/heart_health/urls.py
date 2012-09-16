@@ -7,7 +7,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 	url(r'^$', 'survey.views.index', name='home'),
-	url(r'^begin/', 'survey.views.begin', name='begin'),
+    url(r'^basic/save/', 'survey.views.basic_save', name='Save Basic'),
+	url(r'^basic/', 'survey.views.basic', name='basic'),
+	url(r'^results/basic/', 'survey.views.results_basic', name='Basic Results'),
     url(r'^register/$', 'registration.views.register',
             {
                 'backend': 'accounts.regbackend.Backend',
