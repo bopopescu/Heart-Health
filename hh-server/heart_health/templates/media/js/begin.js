@@ -112,7 +112,6 @@ function submitBasicQuestions(){
     }
 
     $.ajax({
-        //url: 'https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health',
         url: 'save/',
         data: inputData,
         type: "POST",

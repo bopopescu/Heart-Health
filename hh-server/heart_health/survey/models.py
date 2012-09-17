@@ -1,6 +1,10 @@
 from django.db import models
 from accounts.models import UserProfile
+from django.contrib import admin
+import urllib, urllib2
 import uuid
+
+INDIGO_URL = "https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health"
 
 class Survey(models.Model):
     user_profile = models.OneToOneField(UserProfile, verbose_name="The user that owns this survey")
@@ -75,6 +79,46 @@ class Survey(models.Model):
     elevated_blood_pressure = models.NullBooleanField(verbose_name="The user may have elevated blood pressure")
     elevated_cholesterol = models.NullBooleanField(verbose_name="The user may have elevated cholesterol")
     warning = models.IntegerField(null=True, verbose_name="The code for a warning message")
+
+    def has_basic_input(self):
+        return (self.age is not None and
+                self.gender is not None and
+                self.height is not None and
+                self.weight is not None and 
+                self.smoker is not None and
+                self.mi is not None and
+                self.diabetes is not None and
+                self.stroke is not None)
+
+    def has_basic_results(self):
+        return (self.u_risk is not None and
+                self.u_risk_percentile is not None and
+                self.u_comparison_risk is not None and
+                self.u_rating_for_age is not None and 
+                self.u_rating is not None and
+                self.l_risk is not None and
+                self.l_risk_percentile is not None and
+                self.l_comparison_risk is not None and
+                self.l_rating_for_age is not None and 
+                self.l_rating is not None and 
+                self.recommendation is not None)
+
+    def get_basic_results(self):
+        gender_string = ""
+        if self.gender == 'MALE':
+            gender_string = 'M'
+        else:
+            gender_string = 'F'
+
+        params = {'age': self.age, 'gender': str(self.gender).lower(), 'height': self.height, 'weight': self.weight, 'smoker': str(self.smoker).lower(), 'mi': str(self.mi).lower(), 'diabetes': str(self.diabetes).lower(), 'stroke': str(self.stroke).lower()}  
+        encoded_args = urllib.urlencode(params)
+        print urllib2.urlopen(INDIGO_URL, encoded_args).read()         
+        
+    class Admin:
+        pass
+
+admin.site.register(Survey)
+
 
 class Notification(models.Model):
     user = models.ForeignKey('auth.User')
