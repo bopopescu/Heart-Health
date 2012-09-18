@@ -6,7 +6,7 @@
 <div class="span8">
 <h3 class="center-text">Some Simple Questions </h3>
     <div class="span8 centered-span centered-form-stretch-not-button">
-        <form method="POST" action="/basic/save/" id="basic-form">
+        <form method="POST" action="/assess/basic/save/" id="basic-form">
             {% csrf_token %}
             <div id="age-group" class="control-group"> 
                 <h5>Welcome! Let's get started. Here's an easy one:</h5>
@@ -88,5 +88,5 @@
 {% endblock content %}
 
 {% block jsinclude %}
-<script src="{{ STATIC_URL }}js/begin.js"></script>
+<script src="{{ STATIC_URL }}js/assess_basic.js"></script>
 {% endblock %}

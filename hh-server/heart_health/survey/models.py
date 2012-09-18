@@ -15,10 +15,10 @@ class Survey(models.Model):
     trackingid = uuid.uuid1() 
 
     GENDER_CHOICES = (
-        ('MALE', 'Male'),
-        ('FEMALE', 'Female'),
+        ('M', 'Male'),
+        ('F', 'Female'),
     )
-    gender = models.CharField(choices=GENDER_CHOICES, default='MALE', max_length=6)
+    gender = models.CharField(choices=GENDER_CHOICES, default='M', max_length=6)
 
     height = models.IntegerField(null=True)
     weight = models.IntegerField(null=True)
@@ -109,9 +109,10 @@ class Survey(models.Model):
             gender_string = 'M'
         else:
             gender_string = 'F'
-
-        params = {'age': self.age, 'gender': str(self.gender).lower(), 'height': self.height, 'weight': self.weight, 'smoker': str(self.smoker).lower(), 'mi': str(self.mi).lower(), 'diabetes': str(self.diabetes).lower(), 'stroke': str(self.stroke).lower()}  
+        print gender_string
+        params = {'age': self.age, 'gender': str(self.gender), 'height': self.height, 'weight': self.weight, 'smoker': str(self.smoker).lower(), 'mi': str(self.mi).lower(), 'diabetes': str(self.diabetes).lower(), 'stroke': str(self.stroke).lower()}  
         encoded_args = urllib.urlencode(params)
+        print encoded_args
         print urllib2.urlopen(INDIGO_URL, encoded_args).read()         
         
     class Admin:

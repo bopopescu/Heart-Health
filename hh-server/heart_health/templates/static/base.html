@@ -47,7 +47,8 @@
                     </button>
                     <ul class="dropdown-menu">
                         {% if user.is_authenticated %}
-                            <li><a href="/basic/">Take The Assessment</a></li>
+                            <li><a href="/assess/basic/">Take The Assessment</a></li>
+                            <li><a href="/results/">View Your Results</a></li>
                             <li><a href="/logout/">Log Out</a></li>
                         {% else %}
                             <li><a href="/register/">Register </a></li>

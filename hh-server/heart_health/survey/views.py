@@ -7,10 +7,10 @@ import simplejson as json
 def index(request):
 	return render_to_response('index.html', locals(), context_instance=RequestContext(request))
 
-def basic(request):
-	return render_to_response('begin.html', locals(), context_instance=RequestContext(request))
+def assess_basic(request):
+	return render_to_response('assess_basic.html', locals(), context_instance=RequestContext(request))
 
-def basic_save(request):
+def assess_basic_save(request):
     # reject calls that do not have a logged in user
     if not request.user.is_authenticated():
         return HttpResponseForbidden()
@@ -19,13 +19,7 @@ def basic_save(request):
        request.user.userprofile.survey = Survey()
 
     request.user.userprofile.survey.age = request.POST['age']
-
-    gender = request.POST['gender'] 
-    if gender == "M":
-        request.user.userprofile.survey.gender = 'MALE'
-    else:
-        request.user.userprofile.survey.gender = 'FEMALE'
-
+    request.user.userprofile.survey.gender = request.POST['gender'] 
     request.user.userprofile.survey.height = request.POST['height']
     request.user.userprofile.survey.weight = request.POST['weight']
     request.user.userprofile.survey.smoker = request.POST['smoker'] == "true"
@@ -46,13 +40,13 @@ def results(request):
 def get_results(request):
     # reject calls that do not have a logged in user
     if not request.user.is_authenticated():
-        return HttpResponse(json.dumps({"success": False, "message": 'You have not taken the assessment yet, please <a href="/basic/"> take the assessment</a> or <a href="/login/"> log in </a> to see your results.'}))
+        return HttpResponse(json.dumps({"success": False, "message": 'You have not taken the assessment yet, please <a href="/assess/basic/"> take the assessment</a> or <a href="/login/"> log in </a> to see your results.'}))
 
     if not hasattr(request.user.userprofile, 'survey'):
-        return HttpResponse(json.dumps({"success": False, "message": 'You have not taken the assessment yet, please <a href="/basic/"> take the assessment</a> or <a href="/login/"> log in </a> to see your results.'}))
+        return HttpResponse(json.dumps({"success": False, "message": 'You have not taken the assessment yet, please <a href="/assess/basic/"> take the assessment</a> or <a href="/login/"> log in </a> to see your results.'}))
 
     if not request.user.userprofile.survey.has_basic_input():
-        return HttpResponse(json.dumps({"success": False, "message": 'You have not entered enough information to calculate results, please <a href="/basic/"> take the assessment</a> to see your results.'}))
+        return HttpResponse(json.dumps({"success": False, "message": 'You have not entered enough information to calculate results, please <a href="/assess/basic/"> take the assessment</a> to see your results.'}))
   
     # We have basic input, so get basic results if we don't have them yet 
     if not request.user.userprofile.survey.has_basic_results():
