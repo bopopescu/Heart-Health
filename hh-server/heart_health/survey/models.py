@@ -2,6 +2,7 @@ from django.db import models
 from accounts.models import UserProfile
 from django.contrib import admin
 import urllib, urllib2
+import simplejson as json
 import uuid
 
 INDIGO_URL = "https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health"
@@ -104,16 +105,27 @@ class Survey(models.Model):
                 self.recommendation is not None)
 
     def get_basic_results(self):
-        gender_string = ""
-        if self.gender == 'MALE':
-            gender_string = 'M'
-        else:
-            gender_string = 'F'
-        print gender_string
         params = {'age': self.age, 'gender': str(self.gender), 'height': self.height, 'weight': self.weight, 'smoker': str(self.smoker).lower(), 'mi': str(self.mi).lower(), 'diabetes': str(self.diabetes).lower(), 'stroke': str(self.stroke).lower()}  
         encoded_args = urllib.urlencode(params)
-        print encoded_args
-        print urllib2.urlopen(INDIGO_URL, encoded_args).read()         
+        response = json.loads(urllib2.urlopen(INDIGO_URL, encoded_args).read())        
+
+        risk_array = response['Risk']
+        for risk_obj in risk_array:
+            if risk_obj['riskType'] == 'UpperBoundCVD':
+                self.u_risk = risk_obj['risk']
+                self.u_risk_percentile = risk_obj['riskPercentile']
+                self.u_comparison_risk = risk_obj['comparisonRisk']
+                self.u_rating_for_age = risk_obj['ratingForAge']
+                self.u_rating = risk_obj['rating']
+            if risk_obj['riskType'] == 'LowerBoundCVD':
+                self.l_risk = risk_obj['risk']
+                self.l_risk_percentile = risk_obj['riskPercentile']
+                self.l_comparison_risk = risk_obj['comparisonRisk']
+                self.l_rating_for_age = risk_obj['ratingForAge']
+                self.l_rating = risk_obj['rating']
+
+        self.recommendation = response['Recommendation']
+        self.save()
         
     class Admin:
         pass
