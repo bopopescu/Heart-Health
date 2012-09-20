@@ -108,7 +108,6 @@ class Survey(models.Model):
         params = {'age': self.age, 'gender': str(self.gender), 'height': self.height, 'weight': self.weight, 'smoker': str(self.smoker).lower(), 'mi': str(self.mi).lower(), 'diabetes': str(self.diabetes).lower(), 'stroke': str(self.stroke).lower()}  
         encoded_args = urllib.urlencode(params)
         response = json.loads(urllib2.urlopen(INDIGO_URL, encoded_args).read())        
-
         risk_array = response['Risk']
         for risk_obj in risk_array:
             if risk_obj['riskType'] == 'UpperBoundCVD':
