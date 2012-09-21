@@ -4,8 +4,8 @@ $('#percentile-more-button').popover({
 });
 
 function setUpperRatingMessage(){
-  var messages = ['low', 'medium', 'high', 'very high', 'extremely high'] 
-  $('#upper-rating').text(messages[absoluteRatingUpper]);
+  var messages = ['Low', 'Medium', 'High', 'Very High', 'Extremely High'] 
+  $('#upper-rating').text(messages[absoluteRatingUpper - 1]);
   
   var colorClass = 'text-success';
   if(absoluteRatingUpper <= 2){
@@ -16,6 +16,25 @@ function setUpperRatingMessage(){
       colorClass = 'text-error';
   }
 
-  $('#upper-rating-text').addClass(colorClass);
+  $('.rating-color').addClass(colorClass);
 }
 setUpperRatingMessage();
+
+function setUpperRatingBar(){
+    var highestWidth = absoluteRatingUpper * 20;
+
+    var colorClass = 'progress-success';
+    
+    if(absoluteRatingUpper <= 2){
+      colorClass = 'progress-success';
+    } else if(absoluteRatingUpper == 3){
+      colorClass = 'progress-warning';
+    } else if(absoluteRatingUpper <= 5){
+      colorClass = 'progress-danger';
+    }
+
+    $('#rating-bar-container').addClass(colorClass);
+
+    $('#rating-bar').css('width', highestWidth + "%");
+}
+setUpperRatingBar();

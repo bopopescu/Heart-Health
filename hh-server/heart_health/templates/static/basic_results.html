@@ -3,14 +3,22 @@
 
 {% block title %}Assesment Results{% endblock %}
 {% block content %}
-<h2 class="center-text"> Preliminary Assesment Results </h2>
-<p> Based on just the information you gave us so far, we can calculate an estimate of your risk for Cardiovascular Disease. </p>
-<h3> Your Heart Attack Risk </h3>
-<p class="lead"> Your risk of having a heart attack or a stroke within the next five years is between: <strong>{{ user.userprofile.survey.l_risk }}%</strong> and <strong>{{ user.userprofile.survey.u_risk }}%</strong> </p>
-<h3> Your Risk Percentile </h3>
-<p class="lead"> Your risk could be in the <strong>{{ user.userprofile.survey.u_risk_percentile|floatformat:"0"|ordinal }}</strong> percentile for your age and gender. <button id="percentile-more-button" class="btn btn-info">Learn More</button> </p>
-<h3> Your Risk Rating </h3>
-<p id="upper-rating-text" class="lead"> Your risk of having a heart attack or stroke in the next five years is: <strong id="upper-rating"></strong></p>
+<h2 class="center-text"> Your Preliminary Assesment Results </h2>
+<p> Based on just the information you gave us so far, we can calculate an estimate of your risk for Cardiovascular Disease. This information should be used as a starting point, but you should get your blood pressure and cholesterol checked. With that information, we can provide you with an accurate risk assessment, and suggestions about how you can improve your heart health.</p>
+<h3> Risk Rating </h3>
+<p><h4 id="upper-rating" class="rating-color"></h4></p>
+<div class="row-fluid">
+    <div id="rating-bar-container" class="progress">
+        <div id="rating-bar" class="bar" style="width: 0%;"></div>
+    </div>
+</div>
+<p class="lead"> This represents your risk of having a heart attack or stroke in the next five years, in the worst case. </p>
+<h3> Risk Comparison </h3>
+<p class="lead"> Your risk of having a heart attack or stroke is <strong class="rating-color">{{ user.userprofile.survey.u_comparison_risk }}</strong> times higher than what is considered healthy for {{ user.userprofile.survey.gender_group_string }} in your age group.</p>
+<h3> Risk Percentile </h3>
+<p class="lead"> Your risk could be in the <strong class="rating-color">{{ user.userprofile.survey.u_risk_percentile|floatformat:"0"|ordinal }}</strong> percentile for {{ user.userprofile.survey.gender_group_string }} in your age group. <button id="percentile-more-button" class="btn btn-info">Learn More</button> </p>
+<h3> Heart Attack and Stroke Risk </h3>
+<p class="lead"> Your risk of having a heart attack or a stroke within the next five years is between: <strong class="rating-color">{{ user.userprofile.survey.l_risk|floatformat:"0" }}%</strong> and <strong class="rating-color">{{ user.userprofile.survey.u_risk|floatformat:"0" }}%</strong> </p>
 
 
 {% endblock %}

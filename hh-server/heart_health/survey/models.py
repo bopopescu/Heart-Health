@@ -81,6 +81,12 @@ class Survey(models.Model):
     elevated_cholesterol = models.NullBooleanField(verbose_name="The user may have elevated cholesterol")
     warning = models.IntegerField(null=True, verbose_name="The code for a warning message")
 
+    def gender_group_string(self):
+        if self.gender == 'M':
+            return 'men'
+        else:
+            return 'women'
+
     def has_basic_input(self):
         return (self.age is not None and
                 self.gender is not None and
