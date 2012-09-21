@@ -20,6 +20,7 @@ function setUpperRatingMessage(){
 }
 setUpperRatingMessage();
 
+/*
 function setUpperRatingBar(){
     var highestWidth = absoluteRatingUpper * 20;
 
@@ -38,3 +39,4 @@ function setUpperRatingBar(){
     $('#rating-bar').css('width', highestWidth + "%");
 }
 setUpperRatingBar();
+*/

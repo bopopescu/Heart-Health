@@ -70,6 +70,16 @@ body {
     display: none !important;
 }
 
+.results-category-header {
+    float: left;
+    margin-right: 10px;
+}
+
+.header-border {
+    padding-bottom: 6px;
+    border-bottom: 1px solid #CCCCCC;
+}
+
 /* Landscape phones and down */
 @media (max-width: 480px) {
     .full-stretch-on-phone {
