@@ -4,8 +4,8 @@ $('#percentile-more-button').popover({
 });
 
 function setUpperRatingMessage(){
-  var messages = ['Low', 'Medium', 'High', 'Very High', 'Extremely High'] 
-  $('#upper-rating').text(messages[absoluteRatingUpper - 1]);
+  //var messages = ['Low', 'Medium', 'High', 'Very High', 'Extremely High'] 
+  //$('#upper-rating').text(messages[absoluteRatingUpper - 1]);
   
   var colorClass = 'text-success';
   if(absoluteRatingUpper <= 2){
@@ -16,6 +16,7 @@ function setUpperRatingMessage(){
       colorClass = 'text-error';
   }
 
+  $('#upper-rating-' + absoluteRatingUpper).addClass(colorClass).removeClass('hidden-phone').css('font-size', '30px');
   $('.rating-color').addClass(colorClass);
 }
 setUpperRatingMessage();

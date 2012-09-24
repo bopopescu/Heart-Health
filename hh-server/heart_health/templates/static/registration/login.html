@@ -4,7 +4,7 @@
 {% block title %}Log In{% endblock %}
 
 {% block content %}
-<h3 class="center-text">Log In With a Registered Email Address</h3>
+<h3 class="center-text header-border">Log In With a Registered Email Address</h3>
 <p class="center-text">Enter your email address and password to return to your saved assessment and/or results. </p>
 <div class="row-fluid">
     <form method="post" action="?next={{ next|default:"/" }}">{% csrf_token %}

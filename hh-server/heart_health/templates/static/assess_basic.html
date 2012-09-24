@@ -2,41 +2,43 @@
 
 {% block title %}Heart Health{% endblock %}
 {% block content %}
+<h2 class="center-text header-border">Basic Questions</h2>
 <div class="span2 hidden-phone"> </div>
 <div class="span8">
-<h2 class="center-text">Basic Questions</h2>
     <div class="span8 centered-span centered-form-stretch-not-button">
         <form method="POST" action="/assess/basic/save/" id="basic-form">
             {% csrf_token %}
             <div id="age-group" class="control-group"> 
                 <h5>Welcome! Let's get started. Here's an easy one:</h5>
-                <label>Please Enter Your Age</label>
+                <label>Please enter your age:</label>
                 <input name="age" type="text" value="{{ user.userprofile.survey.age }}">
                 <span class="help-inline hidden">Valid ages are from 18 to 130.</span>
                 </label>
             </div>
             <div id="gender-group" class="control-group hidden"> 
-                <label>Please Select Your Gender</label>
+                <label>Please select your gender:</label>
                 <select name="gender">
+                    <option value="Not Selected" {% if not user.userprofile.survey.gender %}selected="true"{% endif %}>Select a Gender</option>
                     <option value="M" {% if user.userprofile.survey.gender == 'M' %}selected="true"{% endif %}>Male</option>
                     <option value="F" {% if user.userprofile.survey.gender == 'F' %}selected="true"{% endif %}>Female</option>
                 </select>
+                <span class="help-inline hidden">You must select a gender to continue.</span>
                 </label>
             </div>
             <div id="height-group" class="control-group hidden"> 
-                <label>Please Enter Your Height in Inches</label>
+                <label>Please enter your height in inches:</label>
                 <input name="height" type="text" value="{{ user.userprofile.survey.height }}">
                 <span class="help-inline hidden">Height must be between 44 and 87 inches.</span>
                 </label>
             </div>
             <div id="weight-group" class="control-group hidden"> 
-                <label>Please Enter Your Weight in Pounds</label>
+                <label>Please enter your weight in pounds:</label>
                 <input name="weight" type="text" value="{{ user.userprofile.survey.weight }}">
                 <span class="help-inline hidden">Weight must be between 80 and 600 pounds.</span>
                 </label>
             </div>
             <div id="smoke-group" class="control-group hidden"> 
-                <label>Do You Currently Smoke?</label>
+                <label>Do you currently smoke?</label>
                 <select name="smoker">
                     <option value="true" {% if user.userprofile.survey.smoker %}selected="true"{% endif %}>Yes</option>
                     <option value="false" {% if not user.userprofile.survey.smoker %}selected="true"{% endif %}>No</option>
@@ -45,7 +47,7 @@
                 </label>
             </div>
             <div id="heart-attack-group" class="control-group hidden"> 
-                <label>Has a Doctor Ever Told You That You Had a Heart Attack?</label>
+                <label>Has a doctor ever told you that you have had a heart attack?</label>
                 <select name="mi">
                     <option value="true" {% if user.userprofile.survey.mi %}selected="true"{% endif %}>Yes</option>
                     <option value="false" {% if not user.userprofile.survey.mi %}selected="true"{% endif %}>No</option>
@@ -54,7 +56,7 @@
                 </label>
             </div>
             <div id="stroke-group" class="control-group hidden"> 
-                <label>Has a Doctor Ever Told You That You Had a Stroke?</label>
+                <label>Has a doctor ever told you that you have had a stroke?</label>
                 <select name="stroke">
                     <option value="true" {% if user.userprofile.survey.stroke %}selected="true"{% endif %}>Yes</option>
                     <option value="false" {% if not user.userprofile.survey.stroke %}selected="true"{% endif %}>No</option>
@@ -62,7 +64,7 @@
                 </label>
             </div>
             <div id="diabetes-group" class="control-group hidden"> 
-                <label>Has a Doctor Ever Told You That You Have Diabetes?</label>
+                <label>Has a doctor ever told you that you have diabetes?</label>
                 <select name="diabetes">
                     <option value="true" {% if user.userprofile.survey.diabetes %}selected="true"{% endif %}>Yes</option>
                     <option value="false" {% if not user.userprofile.survey.diabetes %}selected="true"{% endif %}>No</option>

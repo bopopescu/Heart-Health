@@ -50,7 +50,15 @@ wizard.steps.push(new wizardStep('age-group', function(){
     return validated;
 }));
 wizard.steps.push(new wizardStep('gender-group', function(){
-   return true;
+   if($('#gender-group select').val() == "Not Selected"){
+       $('#gender-group').addClass('error');
+       $('#gender-group .help-inline').removeClass('hidden');
+       return false;
+   } else {
+       $('#gender-group').removeClass('error');
+       $('#gender-group .help-inline').addClass('hidden');
+       return true;
+   }
 }));
 wizard.steps.push(new wizardStep('height-group', function(){
     var validated = validateTextNumericInRange($('#height-group input').val(), 44, 87);
