@@ -130,6 +130,7 @@ class Survey(models.Model):
                 self.l_rating = risk_obj['rating']
 
         self.recommendation = response['Recommendation']
+
         self.save()
         
     class Admin:
