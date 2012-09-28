@@ -31,6 +31,9 @@ def assess_basic_save(request):
     request.user.userprofile.save()
     return HttpResponseRedirect('/results/')    
 
+def assess_bio(request):
+	return render_to_response('assess_bio.html', locals(), context_instance=RequestContext(request))
+
 def results_basic(request):
     if not request.user.userprofile.survey.has_basic_results():
         return render_to_response('results_loading.html', locals(), context_instance=RequestContext(request))
