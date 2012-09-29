@@ -33,6 +33,29 @@ $('#bio-form').submit(function() {
             validated = validateInputGroupInRange('hba1c', 2, 16) && validated;
         }
     }
+   
+    var diastolic = $('#diastolic input').val();
+    var systolic = $('#systolic input').val();
+    // Diastolic must be less than systolic 
+    if(!isNaN(diastolic) && !isNaN(systolic) && (parseInt(systolic) <= parseInt(diastolic))){
+        validated = false;
+        $('#diastolic').addClass('error')
+        $('#diastolic-less-error').removeClass('hidden');
+    } else {
+        $('#diastolic-less-error').addClass('hidden');
+    }
+
+    // HDL + LDL must be less than total cholesterol
+    var ldl = $('#ldl input').val();
+    var hdl = $('#hdl input').val();
+    var total = $('#cholesterol input').val();
+    if(!isNaN(ldl) && !isNaN(hdl) && !isNaN(total) && ((parseInt(hdl) + parseInt(ldl)) > parseInt(total))){
+        validated = false;
+        $('#cholesterol,#hdl,#ldl').addClass('error');
+        $('.cholesterol-combo-error').removeClass('hidden');
+    } else {
+        $('.cholesterol-combo-error').addClass('hidden')
+    }
 
     return validated;
 });
@@ -40,5 +63,5 @@ $('#bio-form').submit(function() {
 function validateTextNumericInRange(text, min, max) {
         var value = parseInt(text, 10);
 
-        return (!isNaN(value) && value >= min && value <= max);
+        return (!isNaN(value) && !isNaN(text) && value >= min && value <= max);
 }

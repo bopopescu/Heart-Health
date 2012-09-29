@@ -108,7 +108,7 @@ $('.control-group input').keyup(function(event){
 function validateTextNumericInRange(text, min, max) {
         var value = parseInt(text, 10);
 
-        return (!isNaN(value) && value >= min && value <= max);
+        return (!isNaN(value) && !isNaN(text) && value >= min && value <= max);
 }
 
 function submitBasicQuestions(){
