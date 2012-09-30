@@ -52,7 +52,9 @@ def assess_bio_save(request):
 
     request.user.userprofile.survey.get_bio_results()
 
-    return HttpResponseRedirect('/assess/detail/')    
+    warning = str(request.user.userprofile.survey.warning)
+
+    return HttpResponse(json.dumps({"warningCode": warning}), mimetype="application/json")    
 
 
 def assess_bio(request):

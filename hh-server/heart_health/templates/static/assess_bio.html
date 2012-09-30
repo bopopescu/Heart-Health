@@ -60,8 +60,25 @@
         </form>
     </div>
 </div>
+
+ <div class="modal hide fade" id="warningModal" tabindex="-1" role="dialog" aria-labelledby="Warning" aria-hidden="true">
+   <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+       <h3>Something Seems Wrong</h3>
+    </div>
+   <div class="modal-body">
+       <h4 id="warning-heading"></h4>
+       <p id="warning-text"></p>
+   </div>
+   <div class="modal-footer">
+       <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+       <a href="/assess/detail/" class="btn btn-danger">Save and Continue Anyway</a>
+   </div>
+ </div>
 {% endblock content %}
 
 {% block jsinclude %}
+
+<script src="{{ STATIC_URL }}js/jquery.form.js"></script>
 <script src="{{ STATIC_URL }}js/assess_bio.js"></script>
 {% endblock %}
