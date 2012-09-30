@@ -57,6 +57,10 @@ $('#bio-form').submit(function() {
         $('.cholesterol-combo-error').addClass('hidden')
     }
 
+    if(validated){
+        $('#submit-button').button('loading');
+    }
+
     return validated;
 });
 

@@ -132,9 +132,53 @@ class Survey(models.Model):
         self.recommendation = response['Recommendation']
 
         self.save()
+
+    # This function uses the saved values for the bio results and pulls in the new data about the user's risk.
+    def get_bio_results(self):
+        params = {'age': self.age, 'gender': str(self.gender), 'height': self.height, 'weight': self.weight, 'smoker': str(self.smoker).lower(), 'mi': str(self.mi).lower(), 'diabetes': str(self.diabetes).lower(), 'stroke': str(self.stroke).lower(), 'systolic': self.systolic, 'diastolic': self.diastolic, 'cholesterol': self.cholesterol, 'hdl': self.hdl, 'ldl': self.ldl}  
+
+        if self.hba1c:
+            params['hba1c'] = self.hba1c
+
+        encoded_args = urllib.urlencode(params)
+        response = json.loads(urllib2.urlopen(INDIGO_URL, encoded_args).read())        
+        print response
+
+        risk_array = response['Risk']
+        for risk_obj in risk_array:
+            if risk_obj['riskType'] == 'CVD':
+                self.risk = risk_obj['risk']
+                self.risk_percentile = risk_obj['riskPercentile']
+                self.comparison_risk = risk_obj['comparisonRisk']
+                self.rating_for_age = risk_obj['ratingForAge']
+                self.rating = risk_obj['rating']
+
+        self.doctor_recommendation = response['DoctorRecommendation']
+ 
+        # For these outputs, I'm not positive they will be returned, so I will use get() since it returns none
+        # if the output doesn't exist
+        self.warning = response.get('WarningCode')
+        self.recommendation = response.get('Recommendation')
         
-    class Admin:
-        pass
+        if 'Interventions' in response:
+           interventions = response['Interventions']
+           self.increase_in_risk = interventions.get('IncreaseInRisk')
+           self.percent_reduc_with_medication = interventions.get('PercentReductionInRiskWithMedication')
+           self.percent_reduc_with_moderate_exercise = interventions.get('PercentReductionInRiskWithAdditionalModerateExercise')
+           self.percent_reduc_with_vigorous_exercise = interventions.get('PercentReductionInRiskWithAdditionalVigorousExercise')
+           self.percent_reduc_with_weight_loss = interventions.get('PercentReductionInRiskWithWeightLoss')
+           self.pounds_of_weight_loss_required = interventions.get('PoundsOfWeightLossRequired')
+           self.percent_reduc_with_no_smoking = interventions.get('PercentReductionWithSmokingCessation')
+           self.percent_reduc_with_all = interventions.get('PercentReductionWithAllInterventions')
+           
+        self.elevated_blood_pressure = response.get('ElevatedBloodPressure')
+        self.elevated_cholesterol = response.get('ElevatedCholesterol')
+
+        self.save()
+
+        
+class Admin:
+    pass
 
 admin.site.register(Survey)
 

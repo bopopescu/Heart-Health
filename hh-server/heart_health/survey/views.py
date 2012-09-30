@@ -31,6 +31,30 @@ def assess_basic_save(request):
     request.user.userprofile.save()
     return HttpResponseRedirect('/results/')    
 
+def assess_bio_save(request):
+    # reject calls that do not have a logged in user
+    if not request.user.is_authenticated():
+        return HttpResponseForbidden()
+    
+    if not hasattr(request.user.userprofile, 'survey'):
+       request.user.userprofile.survey = Survey()
+
+    request.user.userprofile.survey.systolic = request.POST['systolic']
+    request.user.userprofile.survey.diastolic = request.POST['diastolic'] 
+    request.user.userprofile.survey.cholesterol = request.POST['cholesterol']
+    request.user.userprofile.survey.hdl = request.POST['hdl']
+    request.user.userprofile.survey.ldl = request.POST['ldl']
+    if 'hba1c' in request.POST:
+        request.user.userprofile.survey.hba1c = request.POST['hba1c']
+
+    request.user.userprofile.survey.save()
+    request.user.userprofile.save()
+
+    request.user.userprofile.survey.get_bio_results()
+
+    return HttpResponseRedirect('/assess/detail/')    
+
+
 def assess_bio(request):
 	return render_to_response('assess_bio.html', locals(), context_instance=RequestContext(request))
 
