@@ -60,6 +60,34 @@ def assess_bio_save(request):
 def assess_bio(request):
 	return render_to_response('assess_bio.html', locals(), context_instance=RequestContext(request))
 
+def assess_detail(request):
+	return render_to_response('assess_detail.html', locals(), context_instance=RequestContext(request))
+
+def assess_detail_save(request):
+    # reject calls that do not have a logged in user
+    if not request.user.is_authenticated():
+        return HttpResponseForbidden()
+    
+    if not hasattr(request.user.userprofile, 'survey'):
+       request.user.userprofile.survey = Survey()
+
+    request.user.userprofile.survey.bloodpressuremeds = request.POST['bloodpressuremeds'] == 'true'
+    if request.user.userprofile.survey.bloodpressuremeds:
+        request.user.userprofile.survey.bloodpressuremedcount = request.POST['bloodpressuremedcount'] 
+    else:
+        request.user.userprofile.survey.bloodpressuremedcount = 0
+
+    request.user.userprofile.survey.cholesterolmeds = request.POST['cholesterolmeds'] == 'true'
+    request.user.userprofile.survey.aspirin = request.POST['aspirin'] == 'true'
+    request.user.userprofile.survey.moderateexercise = request.POST['moderateexercise'] == "true"
+    request.user.userprofile.survey.vigorousexercise = request.POST['vigorousexercise'] == "true"
+    request.user.userprofile.survey.familymihistory = request.POST['familymihistory'] == "true"
+
+    request.user.userprofile.survey.save()
+    request.user.userprofile.save()
+    return HttpResponseRedirect('/results/')    
+
+
 def results_basic(request):
     if not request.user.userprofile.survey.has_basic_results():
         return render_to_response('results_loading.html', locals(), context_instance=RequestContext(request))

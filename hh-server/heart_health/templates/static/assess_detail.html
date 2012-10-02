@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Heart Health{% endblock %}
+{% block content %}
+<h2 class="center-text header-border">Basic Questions</h2>
+<div class="span2 hidden-phone"> </div>
+<div class="span8">
+    <div class="span8 centered-span centered-form-stretch-not-button">
+        <form method="POST" action="/assess/detail/save/" id="basic-form">
+            {% csrf_token %}
+            <div id="bp-meds-group" class="control-group"> 
+                <p>In order to refine your risk estimate and present you with personalized suggestions for reducing your risk, you should fill out this section of additional information. There are just 6 to 7 quick questions about your family history, number of medications, and exercise habits.</p>
+                <label>Are you currently on any medication to treat high blood pressure?</label>
+                <select name="bloodpressuremeds">
+                    <option value="true" {% if user.userprofile.survey.bloodpressuremeds %}selected="true"{% endif %}>Yes</option>
+                    <option value="false" {% if not user.userprofile.survey.bloodpressuremeds %}selected="true"{% endif %}>No</option>
+                </select>
+                <span class="help-block">If you are unsure, then answer no.</span>
+            </div>
+            <div id="bp-meds-count-group" class="control-group hidden wizard-skip-step"> 
+                <label>How many different medications do you take for your blood pressure?</label>
+                <select name="bloodpressuremedcount">
+                    <option value="1" {% if not user.userprofile.survey.bloodpressuremedcount or user.userprofile.survey.bloodpressuremedcount == 1 %}selected="true"{% endif %}>1</option>
+                    <option value="2" {% if user.userprofile.survey.bloodpressuremedcount == 2 %}selected="true"{% endif %}>2</option>
+                    <option value="3" {% if user.userprofile.survey.bloodpressuremedcount == 3 %}selected="true"{% endif %}>3</option>
+                    <option value="4" {% if user.userprofile.survey.bloodpressuremedcount == 3 %}selected="true"{% endif %}>4</option>
+                </select>
+            </div>
+            <div id="cholesterol-med-group" class="control-group hidden"> 
+                <label>Are you currently on medication to lower your cholesterol?</label>
+                <select name="cholesterolmeds">
+                    <option value="true" {% if user.userprofile.survey.cholesterolmeds %}selected="true"{% endif %}>Yes</option>
+                    <option value="false" {% if not user.userprofile.survey.cholesterolmeds %}selected="true"{% endif %}>No</option>
+                </select>
+            </div>
+            <div id="aspirin-group" class="control-group hidden"> 
+                <label>Do you take aspirin daily for your heart?</label>
+                <select name="aspirin">
+                    <option value="true" {% if user.userprofile.survey.aspirin %}selected="true"{% endif %}>Yes</option>
+                    <option value="false" {% if not user.userprofile.survey.aspirin %}selected="true"{% endif %}>No</option>
+                </select>
+                <span class="help-block">Answer yes if you take full strength or junior aspirin daily.</span>
+                </label>
+            </div>
+            <div id="moderate-exercise-group" class="control-group hidden"> 
+                <label>How many hours do you spend doing moderate physical activities such as brisk walking in a typical week?</label>
+                <input name="moderateexercise" type="text" value="{{ user.userprofile.survey.moderateexercise|default_if_none:"0" }}">
+                <span class="help-inline hidden">Please enter a number between 0 and 59.</span>
+                <span class="help-block">Moderate physical activities are the ones that cause a slight elevation in heart rate or breathing, such as raking leaves, mowing the lawn, or heavy cleaning.</span>
+                </label>
+            </div>
+            <div id="vigorous-exercise-group" class="control-group hidden"> 
+                <label>How many hours do you spend doing vigorous physical activities such as running in a typical week?</label>
+                <input name="vigorousexercise" type="text" value="{{ user.userprofile.survey.vigorousexercise|default_if_none:"0" }}">
+                <span class="help-inline hidden">Please enter a number between 0 and 29.</span>
+                <span class="help-block">Vigorous phyisical activities are ones that cause heavy sweating or large increases in breathing or heart rate for at least 10 minutes at a time. Some examples are running, lap swimming, aerobics classes or fast bicycling.</span>
+                </label>
+            </div>
+            <div id="family-risk-group" class="control-group hidden"> 
+                <label>Have any of your first-degree relatives (parent, full-blooded brother or sister, or child) had a heart attack before the age of 55?</label>
+                <select name="familymihistory">
+                    <option value="true" {% if user.userprofile.survey.familymihistory %}selected="true"{% endif %}>Yes</option>
+                    <option value="false" {% if not user.userprofile.survey.familymihistory %}selected="true"{% endif %}>No</option>
+                </select>
+                <span class="help-block">A heart attack is also called a myocardial infarction or MI.</span>
+                </label>
+            </div>
+            <div id="wizard-both-buttons" class="row-fluid span10 centered-span margin-top-15 wizard-button-group">
+                <button class="btn btn-large btn-danger span6 button-space-after" onclick="wizard.showPreviousStep()" type="button">Previous</button>
+                <button class="btn btn-large btn-danger span6" onclick="wizard.showNextStep()" type="button">Next</button>
+            </div>
+            <div id="wizard-next-only" class="hidden span5 centered-span margin-top-15 wizard-button-group">
+                <button class="btn btn-large btn-block btn-danger" type="button" onclick="wizard.showNextStep()">Next</button>
+            </div>
+            <div id="wizard-submit-group" class="hidden span10 centered-span row-fluid margin-top-15 wizard-button-group">
+                <button class="btn btn-large btn-danger span4" type="button" onclick="wizard.showPreviousStep()">Previous</button>
+                <button class="btn btn-large btn-danger span8" type="submit" >Assess Your Risk</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endblock content %}
+
+{% block jsinclude %}
+<script src="{{ STATIC_URL }}js/assess_detail.js"></script>
+{% endblock %}
