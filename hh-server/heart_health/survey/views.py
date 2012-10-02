@@ -71,6 +71,8 @@ def assess_detail_save(request):
     if not hasattr(request.user.userprofile, 'survey'):
        request.user.userprofile.survey = Survey()
 
+    print request.POST
+
     request.user.userprofile.survey.bloodpressuremeds = request.POST['bloodpressuremeds'] == 'true'
     if request.user.userprofile.survey.bloodpressuremeds:
         request.user.userprofile.survey.bloodpressuremedcount = request.POST['bloodpressuremedcount'] 
@@ -79,8 +81,8 @@ def assess_detail_save(request):
 
     request.user.userprofile.survey.cholesterolmeds = request.POST['cholesterolmeds'] == 'true'
     request.user.userprofile.survey.aspirin = request.POST['aspirin'] == 'true'
-    request.user.userprofile.survey.moderateexercise = request.POST['moderateexercise'] == "true"
-    request.user.userprofile.survey.vigorousexercise = request.POST['vigorousexercise'] == "true"
+    request.user.userprofile.survey.moderateexercise = request.POST['moderateexercise']
+    request.user.userprofile.survey.vigorousexercise = request.POST['vigorousexercise']
     request.user.userprofile.survey.familymihistory = request.POST['familymihistory'] == "true"
 
     request.user.userprofile.survey.save()

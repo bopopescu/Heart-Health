@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}Heart Health{% endblock %}
+{% block title %}Heart Health - Enter Additional Details{% endblock %}
 {% block content %}
 <h2 class="center-text header-border">Basic Questions</h2>
+<p id="description-text">In order to refine your risk estimate and present you with personalized suggestions for reducing your risk, you should fill out this section of additional information. There are just 6 to 7 quick questions about your family history, number of medications, and exercise habits.</p>
 <div class="span2 hidden-phone"> </div>
 <div class="span8">
     <div class="span8 centered-span centered-form-stretch-not-button">
         <form method="POST" action="/assess/detail/save/" id="basic-form">
             {% csrf_token %}
             <div id="bp-meds-group" class="control-group"> 
-                <p>In order to refine your risk estimate and present you with personalized suggestions for reducing your risk, you should fill out this section of additional information. There are just 6 to 7 quick questions about your family history, number of medications, and exercise habits.</p>
                 <label>Are you currently on any medication to treat high blood pressure?</label>
                 <select name="bloodpressuremeds">
                     <option value="true" {% if user.userprofile.survey.bloodpressuremeds %}selected="true"{% endif %}>Yes</option>

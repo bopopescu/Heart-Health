@@ -7,6 +7,13 @@ var wizard = new Object();
 wizard.steps = new Array();
 wizard.currentStepIdx = 0;
 wizard.showCurrentStep = function(){
+    // Only show the description on the first step
+    if(this.currentStepIdx == 0){
+        $('#description-text').removeClass('hidden');
+    } else {
+        $('#description-text').addClass('hidden');
+    }
+
     $('.wizard-button-group').each(function (){
         $(this).addClass('hidden');
     });

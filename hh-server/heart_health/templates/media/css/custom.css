@@ -21,6 +21,10 @@ body {
     margin-top: 35px;
 }
 
+li {
+    margin-bottom: 5px;
+}
+
 .button-space-after {
     margin-bottom: 10px;
 }
