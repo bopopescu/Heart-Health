@@ -35,15 +35,13 @@
             <div class="span3 hidden-phone"></div>
             <div class="span3 hidden-phone"></div>
             <div class="btn-group user-dropdown">
-                    <button class="btn btn-large">
-                    <i class="icon-user icon-black"></i>
+                    <button class="btn btn-large dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-user icon-black"></i>
                         {% if user.is_authenticated %}
                             {{ user.username }}
                         {% else %}
                             Not Logged In
                         {% endif %}
-                    </button>
-                    <button class="btn btn-large dropdown-toggle" data-toggle="dropdown">
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
@@ -54,6 +52,8 @@
                         {% else %}
                             <li><a href="/register/">Register </a></li>
                             <li><a href="/login/">Log In</a></li>
+                            <li><a href="/assess/basic/"><i class="icon-pencil"></i> Take The Assessment</a></li>
+                            <li><a href="/results/"><i class="icon-heart"></i> View Your Results</a></li>
                         {% endif %}
                     </ul>
                  </div>
