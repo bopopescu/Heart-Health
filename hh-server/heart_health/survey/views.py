@@ -90,6 +90,9 @@ def assess_detail_save(request):
     return HttpResponseRedirect('/results/')    
 
 
+def locate(request):
+	return render_to_response('locate.html', locals(), context_instance=RequestContext(request))
+
 def results_basic(request):
     if not request.user.userprofile.survey.has_basic_results():
         return render_to_response('results_loading.html', locals(), context_instance=RequestContext(request))

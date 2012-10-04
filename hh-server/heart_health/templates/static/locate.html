@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}Find a Testing Location{% endblock %}
+{% block cssinclude %}
+<link href="{{ STATIC_URL }}css/locate.css" type="text/css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<h2 class="center-text header-border">Find a Testing Location Near You</h2>
+
+<div class="row-fluid">
+    <div id="map-section" class="span7">
+        <h4> Search: </h4>
+        <form id="address-search-form" class="form-search">
+            <div class="input-append span12">
+                <input id="address-search" class="search-query span10" type="text" placeholder="Enter an Address">
+                <button id="search-button" onclick="searchAddress()" type="button" class="btn"><i class="icon-search"></i></button>
+            </div>
+        </form>
+
+        <div id="map_canvas_container" class="span11" style="height: 400px;">
+            <div id="map_canvas" class="margin-top-10" style="height: 100%; width: 100%;"></div>
+        </div>
+    </div>
+    <div id="address-section" class="span5">
+        <h4> Locations Near You: </h4>
+    </div>
+
+{% endblock %}
+{% block jsinclude %}
+<script src="{{ STATIC_URL }}js/locate.js"></script>
+{% endblock %}
