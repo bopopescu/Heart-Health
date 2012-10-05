@@ -14,7 +14,7 @@
         <h4> Search: </h4>
         <form id="address-search-form" class="form-search">
             <div class="input-append span12">
-                <input id="address-search" class="search-query span10" type="text" placeholder="Enter an Address">
+                <input id="address-search" class="search-query span10" autocomplete="off" type="text" placeholder="Enter an Address">
                 <button id="search-button" onclick="searchAddress()" type="button" class="btn"><i class="icon-search"></i></button>
             </div>
         </form>
@@ -29,5 +29,8 @@
 
 {% endblock %}
 {% block jsinclude %}
+<script type="text/javascript">
+    var greenMarkerPath = '{{ STATIC_URL }}img/green-marker.png';
+</script>
 <script src="{{ STATIC_URL }}js/locate.js"></script>
 {% endblock %}

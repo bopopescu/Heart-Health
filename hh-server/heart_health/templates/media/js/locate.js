@@ -1,12 +1,12 @@
 // Load the Google Maps API asynchronously
-
+var map;
 function initialize() {
     var mapOptions = {
-      zoom: 8,
-      center: new google.maps.LatLng(-34.397, 150.644),
+      zoom: 4,
+      center: new google.maps.LatLng(39.930801,-97.328796),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
-    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
     setLocationIfAvailable(map);
 }
 
@@ -22,13 +22,47 @@ window.onload = loadScript;
 function setLocationIfAvailable(map){
     if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(function(position){
-            map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+            var currentLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            setAndSearchLocation(currentLatLng);
+
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({'latLng': latLng}, function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                  if (results[1]) {
+                        $('#address-search').val(results[1].formatted_address);
+                  }
+              }
+            });
         });
     }
 }
 
-function searchAddress(){
+// Takes a LatLng object and centers the map around it + searches and displays locations
+function setAndSearchLocation(latLng){
+        map.setCenter(latLng);
+        map.setZoom(14);
+        var marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+                icon: greenMarkerPath,
+                title: "You are here!"
+        });
+        marker.setMap(map);
 
+        
+    
+}
+
+function searchAddress(){
+    var address = $('#address-search').val();
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({'address': address}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+              if(results[0]){
+                 setAndSearchLocation(results[0].geometry.location);
+              }
+          }
+    });
 }
 
 // Pressing the enter key on the input should search the address
