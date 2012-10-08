@@ -1,3 +1,30 @@
 #map_canvas_container {
     margin-left: 0px;
 }
+
+#locations-alert {
+    margin-left: 0px;
+}
+
+#locate-button {
+    float: left;
+    margin-left: 0px;
+}
+
+#search-radius-select {
+    margin-top: 10px;
+    max-width: 40%;
+    margin-right: 10px;
+}
+
+.loading-spinner-locate {
+    margin: 0 auto !important;
+    margin-top: 50px !important;
+    float: none !important;
+}
+
+#address-section-content {
+    height: 485px;
+    overflow: auto;
+    padding-right: 15px;
+}

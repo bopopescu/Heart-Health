@@ -1,19 +1,26 @@
 {% extends "base.html" %}
 {% load humanize %}
 
-{% block title %}Find a Testing Location{% endblock %}
+{% block title %}Find a Screening Location{% endblock %}
 {% block cssinclude %}
 <link href="{{ STATIC_URL }}css/locate.css" type="text/css" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-<h2 class="center-text header-border">Find a Testing Location Near You</h2>
+<h2 class="center-text header-border">Find a Screening Location Near You</h2>
 
 <div class="row-fluid">
     <div id="map-section" class="span7">
         <h4> Search: </h4>
         <form id="address-search-form" class="form-search">
-            <div class="input-append span12">
+            <div id="search-alert" class="alert alert-error span11 hidden">
+                <a class="close" data-dismiss="alert" href="#">&times;</a>
+                <h5>We're sorry!</h5>
+                <div id="search-alert-text">
+                </div>
+            </div>
+            <button id="locate-button" class="btn span3" type="button" onclick="setLocationIfAvailable()"><i class="icon-globe"></i> Find Me</button>
+            <div class="input-append span8">
                 <input id="address-search" class="search-query span10" autocomplete="off" type="text" placeholder="Enter an Address">
                 <button id="search-button" onclick="searchAddress()" type="button" class="btn"><i class="icon-search"></i></button>
             </div>
@@ -25,6 +32,32 @@
     </div>
     <div id="address-section" class="span5">
         <h4> Locations Near You: </h4>
+        <div id="address-section-content">
+            <div id="loading-spinner" class="loading-spinner-locate hidden loading-spinner-large"><img src="{{ STATIC_URL }}img/large-spinner.gif"></img> </div>
+            <div id="locations-error" class="alert alert-error span12 hidden">
+                <a class="close" data-dismiss="alert" href="#">&times;</a>
+                <div id="locations-error-text">
+                </div>
+            </div>
+            <div id="locations-noresults-alert" class="alert alert-warn hidden span12">
+                <a class="close" data-dismiss="alert" href="#">&times;</a>
+                <h5> No Locations Found </h5>
+                We're sorry, there were no locations found near you. Would you like to try expanding your search radius? 
+                <br/>
+                <select id="search-radius-select" name="search-radius">
+                    <option name="2" value="2.0">2 Miles</option>
+                    <option name="5" value="5.0" selected="true">5 Miles</option>
+                    <option name="10" value="10.0">10 Miles</option>
+                    <option name="15" value="15.0">15 Miles</option>
+                    <option name="20" value="20.0">20 Miles</option>
+                    <option name="30" value="30.0">30 Miles</option>
+                    <option name="50" value="50.0">50 Miles</option>
+                </select>
+                <button class="btn" onclick="searchNewRadius()"> Search Again </button>
+            </div>
+            <div id="results-container">
+            </div>
+        </div>
     </div>
 
 {% endblock %}

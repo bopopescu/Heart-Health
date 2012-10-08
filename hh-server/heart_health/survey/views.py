@@ -3,6 +3,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from survey.models import Survey
 import simplejson as json
+import survey.locationMethods as locationMethods
+
 
 def index(request):
 	return render_to_response('index.html', locals(), context_instance=RequestContext(request))
@@ -71,8 +73,6 @@ def assess_detail_save(request):
     if not hasattr(request.user.userprofile, 'survey'):
        request.user.userprofile.survey = Survey()
 
-    print request.POST
-
     request.user.userprofile.survey.bloodpressuremeds = request.POST['bloodpressuremeds'] == 'true'
     if request.user.userprofile.survey.bloodpressuremeds:
         request.user.userprofile.survey.bloodpressuremedcount = request.POST['bloodpressuremedcount'] 
@@ -92,6 +92,10 @@ def assess_detail_save(request):
 
 def locate(request):
 	return render_to_response('locate.html', locals(), context_instance=RequestContext(request))
+
+def locate_get(request):
+    locations = locationMethods.getScreeningLocations(request.GET['lat'], request.GET['lon'], request.GET['radius'])     
+    return HttpResponse(json.dumps({'providers': locations}))
 
 def results_basic(request):
     if not request.user.userprofile.survey.has_basic_results():

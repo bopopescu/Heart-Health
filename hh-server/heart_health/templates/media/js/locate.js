@@ -1,13 +1,13 @@
 // Load the Google Maps API asynchronously
-var map;
+var heartHealthLocateMap;
 function initialize() {
     var mapOptions = {
       zoom: 4,
       center: new google.maps.LatLng(39.930801,-97.328796),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
-    map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-    setLocationIfAvailable(map);
+    heartHealthLocateMap = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    setLocationIfAvailable();
 }
 
 function loadScript() {
@@ -19,48 +19,152 @@ function loadScript() {
 
 window.onload = loadScript;
 
-function setLocationIfAvailable(map){
+function setLocationIfAvailable(){
     if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(function(position){
             var currentLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             setAndSearchLocation(currentLatLng);
 
             var geocoder = new google.maps.Geocoder();
-            geocoder.geocode({'latLng': latLng}, function(results, status) {
+            geocoder.geocode({'latLng': currentLatLng}, function(results, status) {
               if (status == google.maps.GeocoderStatus.OK) {
                   if (results[1]) {
                         $('#address-search').val(results[1].formatted_address);
+                        $('#search-alert').addClass('hidden');
+                  } else {
+                        searchError('Unable to find your location. Please try again.');
                   }
+              } else {
+                  searchError('An unexpected error has occurred. Please try again.');
               }
             });
+        }, function(error){
+            if(error.code == 1){
+                searchError('Permission was denied to find your location.');
+            } else {
+                searchError('Unable to find your location. Please try again.');
+            }
         });
+    } else {
+        searchError('Your browser doesn\'t support geolocation.');
     }
 }
 
+var myLocationMarker;
 // Takes a LatLng object and centers the map around it + searches and displays locations
 function setAndSearchLocation(latLng){
-        map.setCenter(latLng);
-        map.setZoom(14);
-        var marker = new google.maps.Marker({
-                position: latLng,
-                map: map,
-                icon: greenMarkerPath,
-                title: "You are here!"
-        });
-        marker.setMap(map);
+        heartHealthLocateMap.setCenter(latLng);
+        heartHealthLocateMap.setZoom(14);
+        if(!myLocationMarker){
+            myLocationMarker = new google.maps.Marker({
+                    position: latLng,
+                    map: heartHealthLocateMap,
+                    icon: greenMarkerPath,
+                    title: "You are here!"
+            });
+            myLocationMarker.setMap(heartHealthLocateMap);
+        } else {
+            myLocationMarker.setPosition(latLng);
+        }
 
-        
-    
+        retrieveLocations(latLng);
+}
+
+// Searches again using the location that the map has already been centered around
+function searchNewRadius(){
+    retrieveLocations(heartHealthLocateMap.getCenter());
+}
+
+// Retrieve locations from the server and display them
+function retrieveLocations(latLng){
+    resetResults();
+    $('#loading-spinner').removeClass('hidden');
+    $.ajax({
+        url: '/locate/get/',
+        type: "GET",
+        data: 'lat=' + latLng.lat() + '&lon=' + latLng.lng() + '&radius=' + $('#search-radius-select').val(),
+        success: function(data){
+            response = JSON.parse(data);
+            if(response.providers.length < 1){
+                $('#locations-noresults-alert').removeClass('hidden');
+            }
+            showProviders(response.providers);
+            $('#loading-spinner').addClass('hidden');
+        },
+        error: function(data){
+            locationsError('An unexpected error has occurred, please try again.');
+            $('#loading-spinner').addClass('hidden');
+        },
+    });
+}
+
+function resetResults(){
+    $('#results-container').html('');
+    $('#locations-error').addClass('hidden');
+    $('#locations-noresults-alert').addClass('hidden');
+}
+
+function showProviders(providers){
+    var htmlResults = '';
+    for(var i = 0; i < providers.length; i++){
+        var provider = providers[i];
+        htmlResults += '<address><strong>' + provider.name +
+            '</strong><strong style="float: right;">' + provider.distance.toFixed(1) + ' Miles Away' + '</strong><br>' +
+            provider.address1 + '<br>';
+        if(provider.address2){
+            htmlResults += provider.address2 + '<br>';
+        }
+        var formattedZip = provider.zip.substr(0,5) + '-' + provider.zip.substr(5,4);
+        htmlResults += provider.city + ' ' + provider.state + ' ' + formattedZip + '<br>'; 
+        if(provider.url){
+            htmlResults += '<a href="' + provider.url + '">' + provider.urlCaption + '</a><br>';
+        }
+        if(provider.phone){
+            var formattedPhone = provider.phone.substr(0, 3) + '-' + provider.phone.substr(3, 3) + '-' + provider.phone.substr(6,4)
+            htmlResults += formattedPhone + '<br>';
+        }
+        if(provider.description){
+            htmlResults += provider.description + '<br>';
+        }
+        htmlResults += '</address>';
+        addLocationMarker(provider.lat, provider.lon);
+    }
+
+    // Show the htmlResults
+    $('#results-container').html(htmlResults);
+}
+
+var locationMarkers = new Array();
+function addLocationMarker(lat,lng){
+    var latLng = new google.maps.LatLng(lat,lng);
+    newMarker = new google.maps.Marker({
+            position: latLng,
+            map: heartHealthLocateMap,
+    });
+    newMarker.setMap(heartHealthLocateMap);
+    locationMarkers.push(newMarker);
 }
 
 function searchAddress(){
+    resetResults();
+    $('#loading-spinner').removeClass('hidden');
     var address = $('#address-search').val();
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({'address': address}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
               if(results[0]){
                  setAndSearchLocation(results[0].geometry.location);
+                 $('#search-alert').addClass('hidden');
+              } else {
+                  searchError('An unexpected error has occurred. Please try again.');
+                  $('#loading-spinner').addClass('hidden');
               }
+          } else if (status == google.maps.GeocoderStatus.ZERO_RESULTS) {
+              searchError('No location was found for the address you entered.');
+              $('#loading-spinner').addClass('hidden');
+          } else {
+              searchError('An unexpected error has occurred. Please try again.');
+              $('#loading-spinner').addClass('hidden');
           }
     });
 }
@@ -73,6 +177,16 @@ $('#address-search').keyup(function(event){
             return false;
         }
 });
+
+function searchError(message){
+    $('#search-alert-text').text(message);
+    $('#search-alert').removeClass('hidden');
+}
+
+function locationsError(message){
+    $('#locations-error-text').text(message);
+    $('#locations-error').removeClass('hidden');
+}
 
 $('#address-search-form').submit(function(){
     return false;
