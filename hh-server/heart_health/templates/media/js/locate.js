@@ -1,5 +1,6 @@
 // Load the Google Maps API asynchronously
 var heartHealthLocateMap;
+var infoWindow;
 function initialize() {
     var mapOptions = {
       zoom: 4,
@@ -7,6 +8,9 @@ function initialize() {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     heartHealthLocateMap = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    infoWindow = new google.maps.InfoWindow({
+        maxWidth: 200
+    });
     setLocationIfAvailable();
 }
 
@@ -62,6 +66,7 @@ function setAndSearchLocation(latLng){
                     icon: greenMarkerPath,
                     title: "You are here!"
             });
+            myLocationMarker.setAnimation(google.maps.Animation.DROP);
             myLocationMarker.setMap(heartHealthLocateMap);
         } else {
             myLocationMarker.setPosition(latLng);
@@ -102,13 +107,18 @@ function resetResults(){
     $('#results-container').html('');
     $('#locations-error').addClass('hidden');
     $('#locations-noresults-alert').addClass('hidden');
+    for(var i = 0; i < locationMarkers.length; i++){
+        locationMarkers[i].setMap(null);
+    }
+    // Clear the array after removing all markers from the map
+    locationMarkers.length = 0;
 }
 
 function showProviders(providers){
     var htmlResults = '';
     for(var i = 0; i < providers.length; i++){
         var provider = providers[i];
-        htmlResults += '<address><strong>' + provider.name +
+        htmlResults += '<address id="results-address-' + i + '"><strong>' + provider.name +
             '</strong><strong style="float: right;">' + provider.distance.toFixed(1) + ' Miles Away' + '</strong><br>' +
             provider.address1 + '<br>';
         if(provider.address2){
@@ -117,7 +127,7 @@ function showProviders(providers){
         var formattedZip = provider.zip.substr(0,5) + '-' + provider.zip.substr(5,4);
         htmlResults += provider.city + ' ' + provider.state + ' ' + formattedZip + '<br>'; 
         if(provider.url){
-            htmlResults += '<a href="' + provider.url + '">' + provider.urlCaption + '</a><br>';
+            htmlResults += '<a href="' + provider.url + '" target="_blank">' + provider.urlCaption + '</a><br>';
         }
         if(provider.phone){
             var formattedPhone = provider.phone.substr(0, 3) + '-' + provider.phone.substr(3, 3) + '-' + provider.phone.substr(6,4)
@@ -132,6 +142,15 @@ function showProviders(providers){
 
     // Show the htmlResults
     $('#results-container').html(htmlResults);
+    // Setup on click listeners for clicking an address box
+    $('#results-container').children().each(function (){
+        $(this).click(function (){
+            removeSelectedLocation();
+            $(this).addClass('selected-location');
+            google.maps.event.trigger(locationMarkers[$(this).index()], 'click');
+        });
+    });
+    zoomToFitMarkers();
 }
 
 var locationMarkers = new Array();
@@ -141,8 +160,40 @@ function addLocationMarker(lat,lng){
             position: latLng,
             map: heartHealthLocateMap,
     });
+    newMarker.setAnimation(google.maps.Animation.DROP);
+    var markerNumber = locationMarkers.length;
+    google.maps.event.addListener(newMarker, 'click', function(){
+        removeSelectedLocation();
+        infoWindow.close();
+        $('#results-address-' + markerNumber).addClass('selected-location');
+        infoWindow.setContent($('#results-address-' + markerNumber).html());
+        infoWindow.open(heartHealthLocateMap, this);
+    });
     newMarker.setMap(heartHealthLocateMap);
     locationMarkers.push(newMarker);
+}
+
+function removeSelectedLocation(){
+    $('#results-container').children().each(function (){
+        $(this).removeClass('selected-location');
+    });
+}
+
+function zoomToFitMarkers(){
+    // If there aren't any location markers, don't do this step
+    if(locationMarkers.length == 0){
+        return;
+    }
+    //  Create a new viewpoint bound
+    var bounds = new google.maps.LatLngBounds();
+    //  Go through each...
+    for (var i = 0; i < locationMarkers.length; i++) {
+        // Increase the bounds to take this point
+        bounds.extend(locationMarkers[i].getPosition());
+    }
+    bounds.extend(myLocationMarker.getPosition())
+    //  Fit these bounds to the map
+    heartHealthLocateMap.fitBounds(bounds);
 }
 
 function searchAddress(){

@@ -2,8 +2,17 @@
     margin-left: 0px;
 }
 
-#locations-alert {
+#locations-noresults-alert {
     margin-left: 0px;
+}
+
+#locations-error {
+    margin-left: 0px;
+}
+
+address {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 #locate-button {
@@ -24,7 +33,12 @@
 }
 
 #address-section-content {
-    height: 485px;
+    height: 450px;
     overflow: auto;
     padding-right: 15px;
+}
+
+.selected-location {
+    background-color: #D9EDF7;
+    border-color: #BCE8F1;
 }
