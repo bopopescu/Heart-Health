@@ -75,6 +75,33 @@
         </div>
     </div>
 
+<div class="modal hide fade" id="chooseModal" tabindex="-1" role="dialog" aria-labelledby="Warning" aria-hidden="true">
+   <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+       <h3>Set Your Preferred Location</h3>
+    </div>
+   <div class="modal-body">
+        <div id="preferred-save-error" class="hidden alert alert-error">
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+            <h5>We're sorry!</h5>
+            An error has occurred saving your preferred location. Please try again.
+        </div>
+        <p> If this is the most convenient location for you, mark it as your preferred location here. This will allow you to return later to the application (if you have <a href="/login/" target="_blank">logged in</a>) and view your chosen location. If you have enabled email notifications, we can send you a helpful reminder including information about this location.</p>
+        <h4>Your Preferred Location: </h4>
+        <div id="choose-modal-address">
+        </div>
+        <a id="directions-button" class="btn btn-danger" href="#" target="_blank">Get Directions!</a>
+        <h4> At the Testing Location </h4>
+        <p> Head to the testing location at your earliest convenience and ask to have both a cholesterol and blood pressure screening test done. Consider calling ahead to ask if there is a wait.</p>
+        <h4> After The Screening Test </h4>
+        <p> After you have the screening test done and obtain your results, make sure to return back to Heart Health and <a href="/assess/bio/" target="_blank">enter this information</a>. With this additional information, we can give you a complete and accurate assessment of your risk of having a heart attack or stroke in the next five years</p>
+   </div>
+   <div class="modal-footer">
+       <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+       <button id="btn-save-preferred" autocomplete="off" class="btn btn-danger" data-loading-text="Saving..." onClick="savePreferredLocation()">Save This Location</button>
+   </div>
+ </div>
+
 {% endblock %}
 {% block jsinclude %}
 <script type="text/javascript">

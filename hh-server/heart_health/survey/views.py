@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirec
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from survey.models import Survey
+from survey import locationMethods as location
 import simplejson as json
 import survey.locationMethods as locationMethods
 
@@ -96,6 +97,15 @@ def locate(request):
 def locate_get(request):
     locations = locationMethods.getScreeningLocations(request.GET['lat'], request.GET['lon'], request.GET['radius'])     
     return HttpResponse(json.dumps({'providers': locations}))
+
+def locate_save_preferred(request):
+    # reject calls that do not have a logged in user
+    if not request.user.is_authenticated():
+        return HttpResponseForbidden()
+    preferred_location = location.get_and_save_location_from_provider_dict(request.POST) 
+    request.user.userprofile.preferred_location = preferred_location
+    request.user.userprofile.save()
+    return HttpResponse(json.dumps({"success": True}))
 
 def results_basic(request):
     if not request.user.userprofile.survey.has_basic_results():

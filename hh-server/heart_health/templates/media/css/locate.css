@@ -15,6 +15,10 @@
     border-bottom: 1px solid #CCCCCC;
 }
 
+#results-container address button {
+    margin-top: 5px;
+}
+
 #locate-button {
     float: left;
     margin-left: 0px;

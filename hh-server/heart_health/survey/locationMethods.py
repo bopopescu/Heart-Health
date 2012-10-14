@@ -61,3 +61,30 @@ def location_to_provider_dict(location):
    provider['description'] = location.description
    provider['distance'] = location.distance
    return provider 
+
+def get_and_save_location_from_provider_dict(provider):
+    address2_string = ''
+    if provider['address2']:
+       address2_string = provider['address2']
+    try:
+        location = Location.objects.get(name=provider['name'], address1=provider['address1'], address2=address2_string, city=provider['city'], state=provider['state'], zip_code=provider['zip']) 
+    except Location.DoesNotExist:
+        location = Location()
+
+    location.latitude = provider['lat']
+    location.longitude = provider['lon']
+    location.name = provider['name']
+    location.address1 = provider['address1']
+    location.address2 = provider['address2']
+    location.city = provider['city']
+    location.state = provider['state']
+    location.zip_code = provider['zip']
+    location.phone = provider['phone']
+    location.url = provider['url']
+    location.url_caption = provider['urlCaption']
+    location.cross_street = provider['crossStreet']
+    location.description = provider['description']
+
+    location.save()
+    return location
+

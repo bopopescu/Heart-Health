@@ -34,6 +34,7 @@ function setLocationIfAvailable(){
               if (status == google.maps.GeocoderStatus.OK) {
                   if (results[1]) {
                         $('#address-search').val(results[1].formatted_address);
+                        currentAddress = results[1].formatted_address;
                         $('#search-alert').addClass('hidden');
                   } else {
                         searchError('Unable to find your location. Please try again.');
@@ -129,29 +130,13 @@ function resetResults(){
     locationMarkers.length = 0;
 }
 
+// A global variable to store the preferred provider when chosen
+var preferredProvider;
 function showProviders(providers){
     var htmlResults = '';
     for(var i = 0; i < providers.length; i++){
         var provider = providers[i];
-        htmlResults += '<address id="results-address-' + i + '" class="location"><strong>' + provider.name +
-            '</strong><strong style="float: right;">' + provider.distance.toFixed(1) + ' Miles Away' + '</strong><br>' +
-            provider.address1 + '<br>';
-        if(provider.address2){
-            htmlResults += provider.address2 + '<br>';
-        }
-        var formattedZip = provider.zip.substr(0,5);
-        htmlResults += provider.city + ' ' + provider.state + ' ' + formattedZip + '<br>'; 
-        if(provider.url){
-            htmlResults += '<a href="' + provider.url + '" target="_blank">' + provider.urlCaption + '</a><br>';
-        }
-        if(provider.phone){
-            var formattedPhone = '(' + provider.phone.substr(0, 3) + ')' + '-' + provider.phone.substr(3, 3) + '-' + provider.phone.substr(6,4)
-            htmlResults += formattedPhone + '<br>';
-        }
-        if(provider.description){
-            htmlResults += provider.description + '<br>';
-        }
-        htmlResults += '</address>';
+        htmlResults += getContentForProvider(provider, true, true, true);
         addLocationMarker(provider.lat, provider.lon);
     }
 
@@ -159,10 +144,23 @@ function showProviders(providers){
     $('#results-container').html(htmlResults);
     // Setup on click listeners for clicking an address box
     $('#results-container').children().each(function (){
+        var currentProviderIdx = $(this).index();
         $(this).click(function (){
             removeSelectedLocation();
             $(this).addClass('selected-location');
-            google.maps.event.trigger(locationMarkers[$(this).index()], 'click');
+            google.maps.event.trigger(locationMarkers[currentProviderIdx], 'click');
+        });
+        $(this).find('button').click(function(evt) {
+            var provider = currentProviders[currentProviderIdx];
+            preferredProvider = provider;
+            $('#choose-modal-address').html(getContentForProvider(provider, true, true, false));
+            var sAddrEncoded = encodeURIComponent(currentAddress);
+            var address2 = ''; 
+            if(provider.address2) { address2 = provider.address2 + ' '; }
+            var dAddrEncoded = encodeURIComponent(provider.address1 + ' ' + address2 + provider.state + ' ' + provider.zip)
+            var directionsUrl = 'http://maps.google.com/maps?saddr=' + sAddrEncoded + '&' + 'daddr=' + dAddrEncoded;
+            $('#directions-button').attr('href', directionsUrl);
+            $('#chooseModal').modal('show');
         });
     });
     zoomToFitMarkers();
@@ -181,19 +179,51 @@ function addLocationMarker(lat,lng){
         removeSelectedLocation();
         infoWindow.close();
         $('#results-address-' + markerNumber).addClass('selected-location');
-        infoWindow.setContent(getContentForProvider(currentProviders[markerNumber]));
+        infoWindow.setContent(getContentForProvider(currentProviders[markerNumber], false, false, false));
         infoWindow.open(heartHealthLocateMap, this);
     });
     newMarker.setMap(heartHealthLocateMap);
     locationMarkers.push(newMarker);
 }
 
+function savePreferredLocation(){
+    $('#btn-save-preferred').button('loading');
+    $('#preferred-save-error').addClass('hidden');
+    $.ajax({
+        url: '/locate/savepreferred/',
+        type: "POST",
+        data: preferredProvider,
+        dataType: "json",
+        success: function(data){
+            if(data.success){
+                $('#btn-save-preferred').button('reset');
+                $('#chooseModal').modal('hide');
+            } else {
+                $('#btn-save-preferred').button('reset');
+                $('#preferred-save-error').removeClass('hidden');
+            }
+        },
+        error: function(data){
+            $('#btn-save-preferred').button('reset');
+            $('#preferred-save-error').removeClass('hidden');
+        },
+    });
+}
+
 // Returns an html string with some basic info about a provider, formatted in an <address>
-function getContentForProvider(provider){
+// This function will not inclue the description if you pass false in for includeDescription
+// If floatDistance is true, the distance info will be floated right
+// If includeButton is true, a select location button will be added as well
+function getContentForProvider(provider, includeDescription, floatDistance, includeButton){
         var htmlResult = '';
-        htmlResult += '<address><strong>' + provider.name +
-            '</strong><br><strong>' + provider.distance.toFixed(1) + ' Miles Away' + '</strong><br>' +
-            provider.address1 + '<br>';
+        htmlResult += '<address><strong>' + provider.name + '</strong>';
+        if(floatDistance){
+            htmlResult += '<strong style="float: right;"';
+        } else {
+            htmlResult += '<br><strong';
+        }
+        htmlResult += '>' + provider.distance.toFixed(1) + ' Miles Away' + '</strong><br>' +
+        provider.address1 + '<br>';
         if(provider.address2){
             htmlResult += provider.address2 + '<br>';
         }
@@ -205,6 +235,12 @@ function getContentForProvider(provider){
         }
         if(provider.url){
             htmlResult += '<a href="' + provider.url + '" target="_blank">' + provider.urlCaption + '</a>';
+        }
+        if(includeDescription && provider.description){
+            htmlResult += '<br>' + provider.description + '<br>';
+        }
+        if(includeButton){
+            htmlResult += '<button class="btn btn-danger">Set As My Preferred Location</button>';
         }
         htmlResult += '</address>';
         return htmlResult;
@@ -233,10 +269,13 @@ function zoomToFitMarkers(){
     heartHealthLocateMap.fitBounds(bounds);
 }
 
+// A global variable to store the current address
+var currentAddress = '';
 function searchAddress(){
     resetResults();
     $('#loading-spinner').removeClass('hidden');
     var address = $('#address-search').val();
+    currentAddress = address;
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({'address': address}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
