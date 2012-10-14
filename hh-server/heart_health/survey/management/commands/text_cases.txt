@@ -1,0 +1,3 @@
+1. More than 10 results with some included from flat file that are closer
+2. Every result is closer than flat file.
+3. Order is correct

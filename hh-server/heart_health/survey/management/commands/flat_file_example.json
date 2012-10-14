@@ -1,0 +1,20 @@
+{
+ "errors": [],
+ "success": true,
+ "providers": 
+    [{"precise": true,
+     "description": "10 cents off all screening tests!", 
+     "zip": "021153483", 
+     "city": "Boston", 
+     "url": "http://www.cvs.com/", 
+     "address1": "46 Massachusetts Ave", 
+     "address2": null, 
+     "lon": -71.08575, 
+     "lat": 42.344498, 
+     "phone": "6125551212", 
+     "state": "MA", 
+     "crossStreet": null, 
+     "urlCaption": "www.cvs.com",
+     "name": "CVS"}]
+}
+
