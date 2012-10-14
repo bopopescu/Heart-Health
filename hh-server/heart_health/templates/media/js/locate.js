@@ -139,7 +139,7 @@ function showProviders(providers){
         if(provider.address2){
             htmlResults += provider.address2 + '<br>';
         }
-        var formattedZip = provider.zip.substr(0,5) + '-' + provider.zip.substr(5,4);
+        var formattedZip = provider.zip.substr(0,5);
         htmlResults += provider.city + ' ' + provider.state + ' ' + formattedZip + '<br>'; 
         if(provider.url){
             htmlResults += '<a href="' + provider.url + '" target="_blank">' + provider.urlCaption + '</a><br>';
@@ -197,7 +197,7 @@ function getContentForProvider(provider){
         if(provider.address2){
             htmlResult += provider.address2 + '<br>';
         }
-        var formattedZip = provider.zip.substr(0,5) + '-' + provider.zip.substr(5,4);
+        var formattedZip = provider.zip.substr(0,5);
         htmlResult += provider.city + ' ' + provider.state + ' ' + formattedZip + '<br>'; 
         if(provider.phone){
             var formattedPhone = '(' + provider.phone.substr(0, 3) + ')' + '-' + provider.phone.substr(3, 3) + '-' + provider.phone.substr(6,4)
