@@ -128,10 +128,13 @@ function resetResults(){
     }
     // Clear the array after removing all markers from the map
     locationMarkers.length = 0;
+    // Clear the preferred button
+    preferredProviderIdx = -1;
 }
 
 // A global variable to store the preferred provider when chosen
 var preferredProvider;
+var preferredProviderIdx = -1;
 function showProviders(providers){
     var htmlResults = '';
     for(var i = 0; i < providers.length; i++){
@@ -153,17 +156,30 @@ function showProviders(providers){
         $(this).find('button').click(function(evt) {
             var provider = currentProviders[currentProviderIdx];
             preferredProvider = provider;
+            preferredProviderIdx = currentProviderIdx;
             $('#choose-modal-address').html(getContentForProvider(provider, true, true, false));
             var sAddrEncoded = encodeURIComponent(currentAddress);
             var address2 = ''; 
             if(provider.address2) { address2 = provider.address2 + ' '; }
-            var dAddrEncoded = encodeURIComponent(provider.address1 + ' ' + address2 + provider.state + ' ' + provider.zip)
+            var dAddrEncoded = encodeURIComponent(provider.address1 + ' ' + address2 + ' ' + provider.city + ' ' +  provider.state + ' ' + provider.zip)
             var directionsUrl = 'http://maps.google.com/maps?saddr=' + sAddrEncoded + '&' + 'daddr=' + dAddrEncoded;
             $('#directions-button').attr('href', directionsUrl);
             $('#chooseModal').modal('show');
         });
     });
     zoomToFitMarkers();
+    markPreferredLocation();
+}
+
+function markPreferredLocation(){
+    if(preferredProviderIdx == -1){
+        return;
+    }
+    $('#results-container').children().each(function(){
+        $(this).find('button').removeAttr('disabled');
+    });
+    var addressElement = $('#results-container').children()[preferredProviderIdx]
+    $(addressElement).find('button').attr('disabled', 'disabled');
 }
 
 var locationMarkers = new Array();
@@ -198,6 +214,7 @@ function savePreferredLocation(){
             if(data.success){
                 $('#btn-save-preferred').button('reset');
                 $('#chooseModal').modal('hide');
+                markPreferredLocation();
             } else {
                 $('#btn-save-preferred').button('reset');
                 $('#preferred-save-error').removeClass('hidden');
