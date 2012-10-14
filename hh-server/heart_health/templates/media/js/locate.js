@@ -86,6 +86,8 @@ function searchNewRadiusNormal(){
     retrieveLocations(heartHealthLocateMap.getCenter());
 }
 
+// a variable to hold all the current providers
+var currentProviders = new Array();
 // Retrieve locations from the server and display them
 function retrieveLocations(latLng){
     resetResults();
@@ -96,6 +98,7 @@ function retrieveLocations(latLng){
         data: 'lat=' + latLng.lat() + '&lon=' + latLng.lng() + '&radius=' + $('#search-radius-select').val(),
         success: function(data){
             response = JSON.parse(data);
+            currentProviders = response.providers;
             if(response.providers.length < 1){
                 $('#locations-noresults-alert').removeClass('hidden');
                 $('#locations-newradius').addClass('hidden');
@@ -142,7 +145,7 @@ function showProviders(providers){
             htmlResults += '<a href="' + provider.url + '" target="_blank">' + provider.urlCaption + '</a><br>';
         }
         if(provider.phone){
-            var formattedPhone = provider.phone.substr(0, 3) + '-' + provider.phone.substr(3, 3) + '-' + provider.phone.substr(6,4)
+            var formattedPhone = '(' + provider.phone.substr(0, 3) + ')' + '-' + provider.phone.substr(3, 3) + '-' + provider.phone.substr(6,4)
             htmlResults += formattedPhone + '<br>';
         }
         if(provider.description){
@@ -178,11 +181,33 @@ function addLocationMarker(lat,lng){
         removeSelectedLocation();
         infoWindow.close();
         $('#results-address-' + markerNumber).addClass('selected-location');
-        infoWindow.setContent($('#results-address-' + markerNumber).html());
+        infoWindow.setContent(getContentForProvider(currentProviders[markerNumber]));
         infoWindow.open(heartHealthLocateMap, this);
     });
     newMarker.setMap(heartHealthLocateMap);
     locationMarkers.push(newMarker);
+}
+
+// Returns an html string with some basic info about a provider, formatted in an <address>
+function getContentForProvider(provider){
+        var htmlResult = '';
+        htmlResult += '<address><strong>' + provider.name +
+            '</strong><br><strong>' + provider.distance.toFixed(1) + ' Miles Away' + '</strong><br>' +
+            provider.address1 + '<br>';
+        if(provider.address2){
+            htmlResult += provider.address2 + '<br>';
+        }
+        var formattedZip = provider.zip.substr(0,5) + '-' + provider.zip.substr(5,4);
+        htmlResult += provider.city + ' ' + provider.state + ' ' + formattedZip + '<br>'; 
+        if(provider.phone){
+            var formattedPhone = '(' + provider.phone.substr(0, 3) + ')' + '-' + provider.phone.substr(3, 3) + '-' + provider.phone.substr(6,4)
+            htmlResult += formattedPhone + '<br>';
+        }
+        if(provider.url){
+            htmlResult += '<a href="' + provider.url + '" target="_blank">' + provider.urlCaption + '</a>';
+        }
+        htmlResult += '</address>';
+        return htmlResult;
 }
 
 function removeSelectedLocation(){
