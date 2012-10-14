@@ -35,10 +35,17 @@ address {
 #address-section-content {
     height: 450px;
     overflow: auto;
-    padding-right: 15px;
+    padding-right: 5px;
 }
 
 .selected-location {
     background-color: #D9EDF7;
     border-color: #BCE8F1;
+}
+
+.location {
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

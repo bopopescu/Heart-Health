@@ -118,7 +118,7 @@ function showProviders(providers){
     var htmlResults = '';
     for(var i = 0; i < providers.length; i++){
         var provider = providers[i];
-        htmlResults += '<address id="results-address-' + i + '"><strong>' + provider.name +
+        htmlResults += '<address id="results-address-' + i + '" class="location"><strong>' + provider.name +
             '</strong><strong style="float: right;">' + provider.distance.toFixed(1) + ' Miles Away' + '</strong><br>' +
             provider.address1 + '<br>';
         if(provider.address2){
