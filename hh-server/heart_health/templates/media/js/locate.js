@@ -76,7 +76,13 @@ function setAndSearchLocation(latLng){
 }
 
 // Searches again using the location that the map has already been centered around
-function searchNewRadius(){
+function searchNewRadiusNoLocations(){
+    $('#search-radius-select-normal').val($('#search-radius-select').val()); 
+    retrieveLocations(heartHealthLocateMap.getCenter());
+}
+
+function searchNewRadiusNormal(){
+    $('#search-radius-select').val($('#search-radius-select-normal').val()); 
     retrieveLocations(heartHealthLocateMap.getCenter());
 }
 
@@ -92,6 +98,9 @@ function retrieveLocations(latLng){
             response = JSON.parse(data);
             if(response.providers.length < 1){
                 $('#locations-noresults-alert').removeClass('hidden');
+                $('#locations-newradius').addClass('hidden');
+            } else {
+                $('#locations-newradius').removeClass('hidden');
             }
             showProviders(response.providers);
             $('#loading-spinner').addClass('hidden');
@@ -99,6 +108,8 @@ function retrieveLocations(latLng){
         error: function(data){
             locationsError('An unexpected error has occurred, please try again.');
             $('#loading-spinner').addClass('hidden');
+            $('#locations-noresults-alert').addClass('hidden');
+            $('#locations-newradius').addClass('hidden');
         },
     });
 }
@@ -107,6 +118,7 @@ function resetResults(){
     $('#results-container').html('');
     $('#locations-error').addClass('hidden');
     $('#locations-noresults-alert').addClass('hidden');
+    $('#locations-newradius').addClass('hidden');
     for(var i = 0; i < locationMarkers.length; i++){
         locationMarkers[i].setMap(null);
     }

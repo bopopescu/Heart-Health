@@ -31,7 +31,7 @@
         </div>
     </div>
     <div id="address-section" class="span5">
-        <h4 style="padding-left:10px;"> Locations Near You: </h4>
+        <h4> Locations Near You: </h4>
         <div id="address-section-content">
             <div id="loading-spinner" class="loading-spinner-locate hidden loading-spinner-large"><img src="{{ STATIC_URL }}img/large-spinner.gif"></img> </div>
             <div id="locations-error" class="alert alert-error span12 hidden">
@@ -39,12 +39,14 @@
                 <div id="locations-error-text">
                 </div>
             </div>
+            <div id="results-container">
+            </div>
             <div id="locations-noresults-alert" class="alert alert-warn hidden span12">
                 <a class="close" data-dismiss="alert" href="#">&times;</a>
                 <h5> No Locations Found </h5>
                 We're sorry, there were no locations found near you. Would you like to try expanding your search radius? 
                 <br/>
-                <select id="search-radius-select" name="search-radius">
+                <select id="search-radius-select" name="search-radius" class="radius-select">
                     <option name="2" value="2.0" selected="true">2 Miles</option>
                     <option name="5" value="5.0">5 Miles</option>
                     <option name="10" value="10.0">10 Miles</option>
@@ -53,10 +55,23 @@
                     <option name="30" value="30.0">30 Miles</option>
                     <option name="50" value="50.0">50 Miles</option>
                 </select>
-                <button class="btn" onclick="searchNewRadius()"> Search Again </button>
+                <button class="btn" onclick="searchNewRadiusNoLocations()"> Search Again </button>
             </div>
-            <div id="results-container">
+            <div id="locations-newradius" class="hidden span12">
+                <h5> Change Search Radius? </h5>
+                <select id="search-radius-select-normal" name="search-radius" class="radius-select">
+                    <option name="2" value="2.0" selected="true">2 Miles</option>
+                    <option name="5" value="5.0">5 Miles</option>
+                    <option name="10" value="10.0">10 Miles</option>
+                    <option name="15" value="15.0">15 Miles</option>
+                    <option name="20" value="20.0">20 Miles</option>
+                    <option name="30" value="30.0">30 Miles</option>
+                    <option name="50" value="50.0">50 Miles</option>
+                </select>
+                <button class="btn" onclick="searchNewRadiusNormal()"> Search Again </button>
             </div>
+            
+
         </div>
     </div>
 

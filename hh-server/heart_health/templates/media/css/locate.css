@@ -20,7 +20,7 @@ address {
     margin-left: 0px;
 }
 
-#search-radius-select {
+.radius-select {
     margin-top: 10px;
     max-width: 40%;
     margin-right: 10px;
@@ -45,7 +45,10 @@ address {
 
 .location {
     padding-right: 10px;
-    padding-left: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+#locations-newradius {
+    margin-left: 0px;
 }
