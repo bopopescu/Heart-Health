@@ -104,6 +104,7 @@
 {% block jsinclude %}
 <script type="text/javascript">
     var greenMarkerPath = '{{ STATIC_URL }}img/green-marker.png';
+    var preferredProvider = JSON.parse('{{ user.userprofile.preferred_location.get_as_provider_json|safe }}');
 </script>
 <script src="{{ STATIC_URL }}js/locate.js"></script>
 {% endblock %}

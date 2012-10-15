@@ -206,6 +206,31 @@ class Location(models.Model):
     cross_street = models.CharField(max_length=255,default='',blank=True)
     description = models.CharField(max_length=255,default='',blank=True)
     is_result = models.BooleanField(default=False)
+
+    def get_as_provider_json(self):
+       return json.dumps(self.to_provider_dict())
+
+    def to_provider_dict(self):
+       """
+       For a self model object instance,
+       create a provider dictionary that contains the same information
+       """
+       provider = {}
+       provider['lat'] = self.latitude
+       provider['lon'] = self.longitude
+       provider['name'] = self.name
+       provider['address1'] = self.address1
+       provider['address2'] = self.address2
+       provider['city'] = self.city
+       provider['state'] = self.state
+       provider['zip'] = self.zip_code
+       provider['phone'] = self.phone
+       provider['url'] = self.url
+       provider['urlCaption'] = self.url_caption
+       provider['crossStreet'] = self.cross_street
+       provider['description'] = self.description
+       return provider 
+
     class Meta:
         unique_together = ['name', 'address1', 'address2', 'city', 'state', 'zip_code']
 

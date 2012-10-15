@@ -132,8 +132,7 @@ function resetResults(){
     preferredProviderIdx = -1;
 }
 
-// A global variable to store the preferred provider when chosen
-var preferredProvider;
+// A global variable to store the preferred provider index when chosen
 var preferredProviderIdx = -1;
 function showProviders(providers){
     var htmlResults = '';
@@ -172,6 +171,13 @@ function showProviders(providers){
 }
 
 function markPreferredLocation(){
+    for(var i = 0; i < currentProviders.length; i++){
+        var provider = currentProviders[i];
+        if(preferredProvider.name == provider.name && preferredProvider.address1 == provider.address1 && preferredProvider.address2 == provider.address2 && preferredProvider.city == provider.city && preferredProvider.state == provider.state && preferredProvider.zip == provider.zip){
+            preferredProviderIdx = i;
+        }
+    }
+
     if(preferredProviderIdx == -1){
         return;
     }
