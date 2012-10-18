@@ -172,6 +172,10 @@ function showProviders(providers){
 }
 
 function markPreferredLocation(){
+    if(preferredProvider == null){
+        return;
+    }
+
     for(var i = 0; i < currentProviders.length; i++){
         var provider = currentProviders[i];
         var address2Equal = ((preferredProvider.address2 == null) && (provider.address2 == '')) || (preferredProvider.address2 == provider.address2);
@@ -266,7 +270,7 @@ function getContentForProvider(provider, includeDescription, floatDistance, incl
         if(includeDescription && provider.description){
             htmlResult += '<br>' + provider.description + '<br>';
         }
-        if(includeButton){
+        if(includeButton && preferredProvider != null){
             htmlResult += '<button class="btn btn-danger">Set As My Preferred Location</button>';
         }
         htmlResult += '</address>';
