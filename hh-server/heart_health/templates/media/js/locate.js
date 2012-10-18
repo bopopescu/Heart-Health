@@ -138,7 +138,7 @@ function showProviders(providers){
     var htmlResults = '';
     for(var i = 0; i < providers.length; i++){
         var provider = providers[i];
-        htmlResults += getContentForProvider(provider, true, true, true);
+        htmlResults += getContentForProvider(provider, true, true, true, i);
         addLocationMarker(provider.lat, provider.lon);
     }
 
@@ -146,6 +146,7 @@ function showProviders(providers){
     $('#results-container').html(htmlResults);
     // Setup on click listeners for clicking an address box
     $('#results-container').children().each(function (){
+        $(this).addClass('location');
         var currentProviderIdx = $(this).index();
         $(this).click(function (){
             removeSelectedLocation();
@@ -156,7 +157,7 @@ function showProviders(providers){
             var provider = currentProviders[currentProviderIdx];
             preferredProvider = provider;
             preferredProviderIdx = currentProviderIdx;
-            $('#choose-modal-address').html(getContentForProvider(provider, true, true, false));
+            $('#choose-modal-address').html(getContentForProvider(provider, true, true, false, -1));
             var sAddrEncoded = encodeURIComponent(currentAddress);
             var address2 = ''; 
             if(provider.address2) { address2 = provider.address2 + ' '; }
@@ -201,7 +202,7 @@ function addLocationMarker(lat,lng){
         removeSelectedLocation();
         infoWindow.close();
         $('#results-address-' + markerNumber).addClass('selected-location');
-        infoWindow.setContent(getContentForProvider(currentProviders[markerNumber], false, false, false));
+        infoWindow.setContent(getContentForProvider(currentProviders[markerNumber], false, false, false, -1));
         infoWindow.open(heartHealthLocateMap, this);
     });
     newMarker.setMap(heartHealthLocateMap);
@@ -237,9 +238,11 @@ function savePreferredLocation(){
 // This function will not inclue the description if you pass false in for includeDescription
 // If floatDistance is true, the distance info will be floated right
 // If includeButton is true, a select location button will be added as well
-function getContentForProvider(provider, includeDescription, floatDistance, includeButton){
+// resultNumber is the number in the list of results that this provider is. Pass -1 if this 
+// is not being used to generate results for the main list.
+function getContentForProvider(provider, includeDescription, floatDistance, includeButton, resultNumber){
         var htmlResult = '';
-        htmlResult += '<address><strong>' + provider.name + '</strong>';
+        htmlResult += '<address id="results-address-' + resultNumber + '"><strong>' + provider.name + '</strong>';
         if(floatDistance){
             htmlResult += '<strong style="float: right;"';
         } else {
