@@ -174,7 +174,8 @@ function showProviders(providers){
 function markPreferredLocation(){
     for(var i = 0; i < currentProviders.length; i++){
         var provider = currentProviders[i];
-        if(preferredProvider.name == provider.name && preferredProvider.address1 == provider.address1 && preferredProvider.address2 == provider.address2 && preferredProvider.city == provider.city && preferredProvider.state == provider.state && preferredProvider.zip == provider.zip){
+        var address2Equal = ((preferredProvider.address2 == null) && (provider.address2 == '')) || (preferredProvider.address2 == provider.address2);
+        if(preferredProvider.name == provider.name && preferredProvider.address1 == provider.address1 && address2Equal && preferredProvider.city == provider.city && preferredProvider.state == provider.state && preferredProvider.zip == provider.zip){
             preferredProviderIdx = i;
         }
     }
