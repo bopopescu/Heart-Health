@@ -2,10 +2,12 @@ import urllib
 import urllib2
 import simplejson as json
 import string
+import logging
 from survey.models import Location
 
 SURESCRIPTS_API_KEY = "3a0a572b-4f5d-47a2-9a75-819888576454"
 SURESCRIPTS_URL = "https://millionhearts.surescripts.net/test/Provider/Find"
+logger = logging.getLogger(__name__)
 
 def getScreeningLocations(latitude, longitude, radius):
     """
@@ -16,6 +18,9 @@ def getScreeningLocations(latitude, longitude, radius):
     encoded_args = urllib.urlencode(params)
     response = json.loads(urllib2.urlopen(SURESCRIPTS_URL, encoded_args).read())
     providers = response['providers']
+        
+    if len(response['errors']) > 1:
+         logger.error('Error while getting surescripts results: ' + json.dumps(response['errors'])) 
 
     # Find the highest radius in the results returned by SureScripts
     highest_radius = 0

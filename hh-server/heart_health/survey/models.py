@@ -4,8 +4,10 @@ from django.contrib import admin
 import urllib, urllib2
 import simplejson as json
 import uuid
+import logging
 
 INDIGO_URL = "https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health"
+logger = logging.getLogger(__name__)
 
 class Survey(models.Model):
     user_profile = models.OneToOneField(UserProfile, verbose_name="The user that owns this survey")
@@ -114,6 +116,9 @@ class Survey(models.Model):
         params = {'age': self.age, 'gender': str(self.gender), 'height': self.height, 'weight': self.weight, 'smoker': str(self.smoker).lower(), 'mi': str(self.mi).lower(), 'diabetes': str(self.diabetes).lower(), 'stroke': str(self.stroke).lower()}  
         encoded_args = urllib.urlencode(params)
         response = json.loads(urllib2.urlopen(INDIGO_URL, encoded_args).read())        
+        if len(response['ErrorMessageHashMap']) > 1:
+             logger.error('Error while getting basic results: ' + json.dumps(response['ErrorMessageHashMap'])) 
+
         risk_array = response['Risk']
         for risk_obj in risk_array:
             if risk_obj['riskType'] == 'UpperBoundCVD':
@@ -141,8 +146,10 @@ class Survey(models.Model):
             params['hba1c'] = self.hba1c
 
         encoded_args = urllib.urlencode(params)
-        response = json.loads(urllib2.urlopen(INDIGO_URL, encoded_args).read())        
-        print response
+        response = json.loads(urllib2.urlopen(INDIGO_URL, encoded_args).read())
+         
+        if len(response['ErrorMessageHashMap']) > 1:
+             logger.error('Error while getting bio results: ' + json.dumps(response['ErrorMessageHashMap'])) 
 
         risk_array = response['Risk']
         for risk_obj in risk_array:
@@ -157,19 +164,19 @@ class Survey(models.Model):
  
         # For these outputs, I'm not positive they will be returned, so I will use get() since it returns none
         # if the output doesn't exist
-        self.warning = response.get('WarningCode')
-        self.recommendation = response.get('Recommendation')
+        self.warning = get_from_dict_or_zero(response, 'WarningCode')
+        self.recommendation = get_from_dict_or_zero(response, 'Recommendation')
         
         if 'Interventions' in response:
            interventions = response['Interventions']
-           self.increase_in_risk = interventions.get('IncreaseInRisk')
-           self.percent_reduc_with_medication = interventions.get('PercentReductionInRiskWithMedication')
-           self.percent_reduc_with_moderate_exercise = interventions.get('PercentReductionInRiskWithAdditionalModerateExercise')
-           self.percent_reduc_with_vigorous_exercise = interventions.get('PercentReductionInRiskWithAdditionalVigorousExercise')
-           self.percent_reduc_with_weight_loss = interventions.get('PercentReductionInRiskWithWeightLoss')
-           self.pounds_of_weight_loss_required = interventions.get('PoundsOfWeightLossRequired')
-           self.percent_reduc_with_no_smoking = interventions.get('PercentReductionWithSmokingCessation')
-           self.percent_reduc_with_all = interventions.get('PercentReductionWithAllInterventions')
+           self.increase_in_risk = get_from_dict_or_zero(interventions, 'IncreaseInRisk')
+           self.percent_reduc_with_medication = get_from_dict_or_zero(interventions, 'PercentReductionInRiskWithMedication')
+           self.percent_reduc_with_moderate_exercise = get_from_dict_or_zero(interventions, 'PercentReductionInRiskWithAdditionalModerateExercise')
+           self.percent_reduc_with_vigorous_exercise = get_from_dict_or_zero(interventions, 'PercentReductionInRiskWithAdditionalVigorousExercise')
+           self.percent_reduc_with_weight_loss = get_from_dict_or_zero(interventions, 'PercentReductionInRiskWithWeightLoss')
+           self.pounds_of_weight_loss_required = get_from_dict_or_zero(interventions, 'PoundsOfWeightLossRequired')
+           self.percent_reduc_with_no_smoking = get_from_dict_or_zero(interventions, 'PercentReductionWithSmokingCessation')
+           self.percent_reduc_with_all = get_from_dict_or_zero(interventions, 'PercentReductionWithAllInterventions')
            
         self.elevated_blood_pressure = response.get('ElevatedBloodPressure')
         self.elevated_cholesterol = response.get('ElevatedCholesterol')
@@ -181,6 +188,13 @@ class Admin:
     pass
 
 admin.site.register(Survey)
+
+def get_from_dict_or_zero(dictionary, key):
+    result = dictionary.get(key)
+    if(result == ''):
+        return None
+    else:
+        return result
 
 
 class Notification(models.Model):
