@@ -113,7 +113,7 @@ class Survey(models.Model):
                 self.recommendation is not None)
 
     def get_basic_results(self):
-        params = {'age': self.age, 'gender': str(self.gender), 'height': self.height, 'weight': self.weight, 'smoker': str(self.smoker).lower(), 'mi': str(self.mi).lower(), 'diabetes': str(self.diabetes).lower(), 'stroke': str(self.stroke).lower()}  
+        params = {'age': self.age, 'gender': str(self.gender), 'height': self.height, 'weight': self.weight, 'smoker': str(self.smoker).lower(), 'mi': str(self.mi).lower(), 'diabetes': str(self.diabetes).lower(), 'stroke': str(self.stroke).lower(), 'trackingid': str(self.trackingid)}  
         encoded_args = urllib.urlencode(params)
         response = json.loads(urllib2.urlopen(INDIGO_URL, encoded_args).read())        
         if len(response['ErrorMessageHashMap']) > 1:
@@ -140,14 +140,14 @@ class Survey(models.Model):
 
     # This function uses the saved values for the bio results and pulls in the new data about the user's risk.
     def get_bio_results(self):
-        params = {'age': self.age, 'gender': str(self.gender), 'height': self.height, 'weight': self.weight, 'smoker': str(self.smoker).lower(), 'mi': str(self.mi).lower(), 'diabetes': str(self.diabetes).lower(), 'stroke': str(self.stroke).lower(), 'systolic': self.systolic, 'diastolic': self.diastolic, 'cholesterol': self.cholesterol, 'hdl': self.hdl, 'ldl': self.ldl}  
+        params = {'age': self.age, 'gender': str(self.gender), 'height': self.height, 'weight': self.weight, 'smoker': str(self.smoker).lower(), 'mi': str(self.mi).lower(), 'diabetes': str(self.diabetes).lower(), 'stroke': str(self.stroke).lower(), 'systolic': self.systolic, 'diastolic': self.diastolic, 'cholesterol': self.cholesterol, 'hdl': self.hdl, 'ldl': self.ldl, 'trackingid': str(self.trackingid)}  
 
         if self.hba1c:
             params['hba1c'] = self.hba1c
 
         encoded_args = urllib.urlencode(params)
         response = json.loads(urllib2.urlopen(INDIGO_URL, encoded_args).read())
-         
+
         if len(response['ErrorMessageHashMap']) > 1:
              logger.error('Error while getting bio results: ' + json.dumps(response['ErrorMessageHashMap'])) 
 
