@@ -108,10 +108,20 @@ def locate_save_preferred(request):
     return HttpResponse(json.dumps({"success": True}))
 
 def results_basic(request):
+    if not hasattr(request.user, 'userprofile'):
+        return render_to_response('results_loading.html', locals(), context_instance=RequestContext(request))
     if not request.user.userprofile.survey.has_basic_results():
         return render_to_response('results_loading.html', locals(), context_instance=RequestContext(request))
     else:
         return render_to_response('basic_results.html', locals(), context_instance=RequestContext(request))
+
+def results_full(request):
+    if not hasattr(request.user, 'userprofile'):
+        return render_to_response('results_loading.html', locals(), context_instance=RequestContext(request))
+    if not request.user.userprofile.survey.has_basic_results():
+        return render_to_response('results_loading.html', locals(), context_instance=RequestContext(request))
+    else:
+        return render_to_response('full_results.html', locals(), context_instance=RequestContext(request))
 
 def results(request):
 	return render_to_response('results_loading.html', locals(), context_instance=RequestContext(request))
