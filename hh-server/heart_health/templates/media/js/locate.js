@@ -1,3 +1,12 @@
+function setPreferredButtonVisibility(){
+    if(preferredProvider == null || preferredProvider == ''){
+        $('#preferred-button').addClass('hidden');
+    } else {
+        $('#preferred-button').removeClass('hidden');
+    }
+}
+setPreferredButtonVisibility();
+
 // Load the Google Maps API asynchronously
 var heartHealthLocateMap;
 var infoWindow;
@@ -88,7 +97,7 @@ function searchNewRadiusNormal(){
 }
 
 // a variable to hold all the current providers
-var currentProviders = new Array();
+var currentProviders = [];
 // Retrieve locations from the server and display them
 function retrieveLocations(latLng){
     resetResults();
@@ -130,6 +139,13 @@ function resetResults(){
     locationMarkers.length = 0;
     // Clear the preferred button
     preferredProviderIdx = -1;
+}
+
+function viewPreferred(){
+    var array = [preferredProvider];
+    currentProviders = array;
+    showProviders(array);
+    $('#location-newradius').addClass('hidden'); 
 }
 
 // A global variable to store the preferred provider index when chosen
@@ -192,9 +208,11 @@ function markPreferredLocation(){
     });
     var addressElement = $('#results-container').children()[preferredProviderIdx]
     $(addressElement).find('button').attr('disabled', 'disabled');
+    $('#new-radius-search').removeAttr('disabled');
+    setPreferredButtonVisibility();
 }
 
-var locationMarkers = new Array();
+var locationMarkers = [];
 function addLocationMarker(lat,lng){
     var latLng = new google.maps.LatLng(lat,lng);
     newMarker = new google.maps.Marker({
@@ -248,13 +266,15 @@ function savePreferredLocation(){
 function getContentForProvider(provider, includeDescription, floatDistance, includeButton, resultNumber){
         var htmlResult = '';
         htmlResult += '<address id="results-address-' + resultNumber + '"><strong>' + provider.name + '</strong>';
-        if(floatDistance){
-            htmlResult += '<strong style="float: right;"';
-        } else {
-            htmlResult += '<br><strong';
+        if(provider.distance){
+            if(floatDistance){
+                htmlResult += '<strong style="float: right;"';
+            } else {
+                htmlResult += '<br><strong';
+            }
+            htmlResult += '>' + provider.distance.toFixed(1) + ' Miles Away' + '</strong>'; 
         }
-        htmlResult += '>' + provider.distance.toFixed(1) + ' Miles Away' + '</strong><br>' +
-        provider.address1 + '<br>';
+        htmlResult += '<br>' + provider.address1 + '<br>';
         if(provider.address2){
             htmlResult += provider.address2 + '<br>';
         }
@@ -295,9 +315,17 @@ function zoomToFitMarkers(){
         // Increase the bounds to take this point
         bounds.extend(locationMarkers[i].getPosition());
     }
-    bounds.extend(myLocationMarker.getPosition())
+    // If my location hasn't been found, don't include it.
+    if(myLocationMarker){
+        bounds.extend(myLocationMarker.getPosition())
+    }
     //  Fit these bounds to the map
     heartHealthLocateMap.fitBounds(bounds);
+    // If there is just one marker and no location marker,
+    // the map will be zoomed in all the way. We should zoom it out some.
+    if(locationMarkers.length == 1 && !myLocationMarker){
+        heartHealthLocateMap.setZoom(17);
+    }
 }
 
 // A global variable to store the current address
