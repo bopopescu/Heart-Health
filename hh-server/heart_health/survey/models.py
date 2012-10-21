@@ -15,7 +15,9 @@ class Survey(models.Model):
     age = models.IntegerField(null=True)
 
     # tracking ID 
-    trackingid = uuid.uuid1() 
+    trackingid = models.CharField(default=uuid.uuid1(), max_length=75) 
+    # Maintain if the data is stale or not
+    is_stale = models.BooleanField(default=True)
 
     GENDER_CHOICES = (
         ('M', 'Male'),
@@ -89,6 +91,12 @@ class Survey(models.Model):
         else:
             return 'women'
 
+    def risk_comparison_less_1(self):
+        return 1 - self.comparison_risk
+
+    def u_risk_comparison_less_1(self):
+        return 1 - self.u_comparison_risk
+
     def has_basic_input(self):
         return (self.age is not None and
                 self.gender is not None and
@@ -98,6 +106,22 @@ class Survey(models.Model):
                 self.mi is not None and
                 self.diabetes is not None and
                 self.stroke is not None)
+
+    def has_bio_input(self):
+        return (self.systolic is not None and
+                self.diastolic is not None and
+                self.cholesterol is not None and
+                self.hdl is not None and 
+                self.ldl is not None)
+
+    def has_detail_input(self):
+        return (self.cholesterolmeds is not None and
+                self.bloodpressuremeds is not None and
+                self.bloodpressuremedcount is not None and
+                self.aspirin is not None and 
+                self.moderateexercise is not None and
+                self.vigorousexercise is not None and
+                self.familymihistory is not None)
 
     def has_basic_results(self):
         return (self.u_risk is not None and
@@ -111,6 +135,16 @@ class Survey(models.Model):
                 self.l_rating_for_age is not None and 
                 self.l_rating is not None and 
                 self.recommendation is not None)
+
+    def has_full_results(self):
+        return (self.risk is not None and
+                self.risk_percentile is not None and
+                self.comparison_risk is not None and
+                self.rating_for_age is not None and 
+                self.rating is not None and
+                self.elevated_blood_pressure is not None and
+                self.elevated_cholesterol is not None and
+                self.doctor_recommendation is not None)
 
     def get_basic_results(self):
         params = {'age': self.age, 'gender': str(self.gender), 'height': self.height, 'weight': self.weight, 'smoker': str(self.smoker).lower(), 'mi': str(self.mi).lower(), 'diabetes': str(self.diabetes).lower(), 'stroke': str(self.stroke).lower(), 'trackingid': str(self.trackingid)}  
@@ -136,6 +170,8 @@ class Survey(models.Model):
 
         self.recommendation = response['Recommendation']
 
+        self.is_stale = False
+
         self.save()
 
     # This function uses the saved values for the bio results and pulls in the new data about the user's risk.
@@ -145,8 +181,18 @@ class Survey(models.Model):
         if self.hba1c:
             params['hba1c'] = self.hba1c
 
+        if self.has_detail_input():
+            params['cholesterolmeds'] = self.cholesterolmeds
+            params['bloodpressuremeds'] = self.bloodpressuremeds
+            params['bloodpressuremedcount'] = self.bloodpressuremedcount
+            params['aspirin'] = self.aspirin
+            params['moderateexercise'] = self.moderateexercise
+            params['vigorousexercise'] = self.vigorousexercise
+            params['familymihistory'] = self.familymihistory
+
         encoded_args = urllib.urlencode(params)
         response = json.loads(urllib2.urlopen(INDIGO_URL, encoded_args).read())
+        print response
 
         if len(response['ErrorMessageHashMap']) > 1:
              logger.error('Error while getting bio results: ' + json.dumps(response['ErrorMessageHashMap'])) 
@@ -164,22 +210,24 @@ class Survey(models.Model):
  
         # For these outputs, I'm not positive they will be returned, so I will use get() since it returns none
         # if the output doesn't exist
-        self.warning = get_from_dict_or_zero(response, 'WarningCode')
-        self.recommendation = get_from_dict_or_zero(response, 'Recommendation')
+        self.warning = get_from_dict_or_none(response, 'WarningCode')
+        self.recommendation = get_from_dict_or_none(response, 'Recommendation')
         
         if 'Interventions' in response:
            interventions = response['Interventions']
-           self.increase_in_risk = get_from_dict_or_zero(interventions, 'IncreaseInRisk')
-           self.percent_reduc_with_medication = get_from_dict_or_zero(interventions, 'PercentReductionInRiskWithMedication')
-           self.percent_reduc_with_moderate_exercise = get_from_dict_or_zero(interventions, 'PercentReductionInRiskWithAdditionalModerateExercise')
-           self.percent_reduc_with_vigorous_exercise = get_from_dict_or_zero(interventions, 'PercentReductionInRiskWithAdditionalVigorousExercise')
-           self.percent_reduc_with_weight_loss = get_from_dict_or_zero(interventions, 'PercentReductionInRiskWithWeightLoss')
-           self.pounds_of_weight_loss_required = get_from_dict_or_zero(interventions, 'PoundsOfWeightLossRequired')
-           self.percent_reduc_with_no_smoking = get_from_dict_or_zero(interventions, 'PercentReductionWithSmokingCessation')
-           self.percent_reduc_with_all = get_from_dict_or_zero(interventions, 'PercentReductionWithAllInterventions')
+           self.increase_in_risk = get_from_dict_or_none(interventions, 'IncreaseInRisk')
+           self.percent_reduc_with_medication = get_from_dict_or_none(interventions, 'PercentReductionInRiskWithMedication')
+           self.percent_reduc_with_moderate_exercise = get_from_dict_or_none(interventions, 'PercentReductionInRiskWithAdditionalModerateExercise')
+           self.percent_reduc_with_vigorous_exercise = get_from_dict_or_none(interventions, 'PercentReductionInRiskWithAdditionalVigorousExercise')
+           self.percent_reduc_with_weight_loss = get_from_dict_or_none(interventions, 'PercentReductionInRiskWithWeightLoss')
+           self.pounds_of_weight_loss_required = get_from_dict_or_none(interventions, 'PoundsOfWeightLossRequired')
+           self.percent_reduc_with_no_smoking = get_from_dict_or_none(interventions, 'PercentReductionWithSmokingCessation')
+           self.percent_reduc_with_all = get_from_dict_or_none(interventions, 'PercentReductionWithAllInterventions')
            
         self.elevated_blood_pressure = response.get('ElevatedBloodPressure')
         self.elevated_cholesterol = response.get('ElevatedCholesterol')
+
+        self.is_stale = False
 
         self.save()
 
@@ -189,7 +237,7 @@ class Admin:
 
 admin.site.register(Survey)
 
-def get_from_dict_or_zero(dictionary, key):
+def get_from_dict_or_none(dictionary, key):
     result = dictionary.get(key)
     if(result == ''):
         return None

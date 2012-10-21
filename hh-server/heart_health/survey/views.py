@@ -30,6 +30,8 @@ def assess_basic_save(request):
     request.user.userprofile.survey.mi = request.POST['mi'] == "true"
     request.user.userprofile.survey.diabetes = request.POST['diabetes'] == "true"
 
+
+    request.user.userprofile.survey.is_stale = True
     request.user.userprofile.survey.save()
     request.user.userprofile.save()
     return HttpResponseRedirect('/results/')    
@@ -86,6 +88,7 @@ def assess_detail_save(request):
     request.user.userprofile.survey.vigorousexercise = request.POST['vigorousexercise']
     request.user.userprofile.survey.familymihistory = request.POST['familymihistory'] == "true"
 
+    request.user.userprofile.survey.is_stale = True
     request.user.userprofile.survey.save()
     request.user.userprofile.save()
     return HttpResponseRedirect('/results/')    
@@ -118,7 +121,7 @@ def results_basic(request):
 def results_full(request):
     if not hasattr(request.user, 'userprofile'):
         return render_to_response('results_loading.html', locals(), context_instance=RequestContext(request))
-    if not request.user.userprofile.survey.has_basic_results():
+    if not request.user.userprofile.survey.has_full_results():
         return render_to_response('results_loading.html', locals(), context_instance=RequestContext(request))
     else:
         return render_to_response('full_results.html', locals(), context_instance=RequestContext(request))
@@ -137,11 +140,15 @@ def get_results(request):
     if not request.user.userprofile.survey.has_basic_input():
         return HttpResponse(json.dumps({"success": False, "message": 'You have not entered enough information to calculate results, please <a href="/assess/basic/"> take the assessment</a> to see your results.'}))
   
-    # We have basic input, so get basic results if we don't have them yet 
+    # Now check for full input 
+    if request.user.userprofile.survey.has_bio_input():
+        if (not request.user.userprofile.survey.has_full_results()) or request.user.userprofile.survey.is_stale:
+            request.user.userprofile.survey.get_bio_results()
+        return HttpResponse(json.dumps({"success": True, "redirect": "/results/full/"}))
 
     # TODO remove this, I'm forcing a refresh for testing purposes
-    request.user.userprofile.survey.get_basic_results()
-    if not request.user.userprofile.survey.has_basic_results():
+    #request.user.userprofile.survey.get_basic_results()
+    if (not request.user.userprofile.survey.has_basic_results()) or request.user.userprofile.survey.is_stale:
         request.user.userprofile.survey.get_basic_results()
         return HttpResponse(json.dumps({"success": True, "redirect": "/results/basic/"}))
     else:
