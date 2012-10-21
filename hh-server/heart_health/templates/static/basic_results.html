@@ -80,7 +80,7 @@
     <h3 class="results-category-header"> Risk Percentile: </h3> 
     <h3 class="rating-color">{{ user.userprofile.survey.u_risk_percentile|floatformat:"0"|ordinal }}</h3>
 </div>
-<p class="lead"> Your risk could be in the <strong class="rating-color">{{ user.userprofile.survey.u_risk_percentile|floatformat:"0"|ordinal }}</strong> percentile for {{ user.userprofile.survey.gender_group_string }} in your age group. <button id="percentile-more-button" class="btn btn-danger">Learn More</button> </p>
+<p class="lead"> Your risk could be in the <strong class="rating-color">{{ user.userprofile.survey.u_risk_percentile|floatformat:"0"|ordinal }}</strong> percentile for {{ user.userprofile.survey.gender_group_string }} in your age group. <a id="percentile-more-button">Learn More</a> </p>
 
 <h2 class="center-text header-border margin-top-10"> What To Do Next </h2>
 

@@ -3,7 +3,7 @@
 
 {% block title %}Risk Estimate{% endblock %}
 {% block content %}
-<h2 class="center-text header-border"> Your Risk Estimate </h2>
+<h2 class="center-text header-border"> Your Full Risk Analysis </h2>
 
 {% if user.userprofile.survey.doctor_recommendation == 1 %}
 <div id="results-alert" class="alert alert-block alert-success">
@@ -66,31 +66,82 @@
     <h3 class="results-category-header"> Risk Percentile: </h3> 
     <h3 class="rating-color">{{ user.userprofile.survey.risk_percentile|floatformat:"0"|ordinal }}</h3>
 </div>
-<p class="lead"> Your risk is in the <strong class="rating-color">{{ user.userprofile.survey.risk_percentile|floatformat:"0"|ordinal }}</strong> percentile for {{ user.userprofile.survey.gender_group_string }} in your age group. <button id="percentile-more-button" class="btn btn-danger">Learn More</button> </p>
+<p class="lead"> Your risk is in the <strong class="rating-color">{{ user.userprofile.survey.risk_percentile|floatformat:"0"|ordinal }}</strong> percentile for {{ user.userprofile.survey.gender_group_string }} in your age group. <a id="percentile-more-button">Learn More</a> </p>
 
-<h2 class="center-text header-border margin-top-10"> What To Do Next </h2>
-
-{% if not user.userprofile.survey.recommendation == 1 %}
-
+{% if user.userprofile.survey.elevated_blood_pressure %}
+<div class="row-fluid">
+    <h3 class="results-category-header">Blood Pressure: </h3> 
+    <h3 class="text-error">Elevated</h3>
+</div>
+<p class="lead"> You may have elevated blood pressure. You should consult your doctor or primary care provider about things you can do to control it.</p>
 {% endif %}
-<h3> 1. Obtain a Screening Test: </h3> 
-<p class="lead"> The results above are just an estimate. Knowing the results of some common medical tests (cholesterol and blood pressure screening) can allow us to give you exact risk information, and suggestions for what to do next. The following information is requested:
-<ul class="lead">
-    <li> Cholesterol Levels (HDL, LDL, and Total) </li>
-    <li> Blood Pressure (Systolic and Diastolic) </li> 
-    {% if user.userprofile.survey.diabetes %}
-    <li> Glycated Hemoglobin (HbA1c) - Optional</li>
-    {% endif %}
-</ul>
-<p class="lead"> If you don't have this information from a previous visit to your doctor, don't worry! You can locate a nearby pharmacy or testing location to have the screening tests done.</p>
-<button class="btn span6 margin-top-15 centered-span btn-large btn-block btn-danger" type="button" onclick="window.location.href='/locate/'">Find a Screening Test Location</button>
+{% if user.userprofile.survey.elevated_cholesterol %}
+<div class="row-fluid">
+    <h3 class="results-category-header">Cholesterol Level: </h3> 
+    <h3 class="text-error">Elevated</h3>
+</div>
+<p class="lead">Your cholesterol levels exceed national standards and are contributing to your risk. You should consult with your physician about things you can do to improve your cholesterol levels.</p> 
+{% endif %}
 
-<h3> 2. Enter The Results to Receive Your Full Risk Assessment: </h3> 
-<p class="lead"> Once you have the results to the screening test or from your doctor, enter the results to get your full and accurate risk assessment. Completing this step will also give you access to several personal risk reducing suggestions.</p>
-<button class="btn span6 margin-top-15 centered-span btn-large btn-block btn-danger" type="button" onclick="window.location.href='/assess/bio/'">Enter Your Screening Test Results</button>
-<h3> 3. Enter Additional Details: </h3> 
-<p class="lead">In order to refine your risk estimate and present you with personalized suggestions for reducing your risk, you should fill out this section of additional information. There are just 6 to 7 quick questions about your family history, number of medications, and exercise habits.</p>
-<button class="btn span6 margin-top-15 centered-span btn-large btn-block btn-danger" type="button" onclick="window.location.href='/assess/detail/'">Enter Additional Information</button>
+<h2 class="center-text header-border margin-top-10"> Ways to Reduce Your Risk </h2>
+
+{% if user.userprofile.survey.pounds_of_weight_loss_required %}
+<div class="row-fluid">
+    <h3 class="results-category-header">Lose Weight:</h3> 
+    <h3 class="text-success">{{ user.userprofile.survey.percent_reduc_with_weight_loss|floatformat:"0" }}% Risk Reduction if you lose {{ user.userprofile.survey.pounds_of_weight_loss_required }} pounds</h3>
+</div>
+<p class="lead"> If you lose {{ user.userprofile.survey.pounds_of_weight_loss_required }} pounds, 5% of your body weight, and do not regain it, you will reduce your risk by {{ user.userprofile.survey.percent_reduc_with_weight_loss|floatformat:"0" }}%.</p>
+{% endif %}
+{% if user.userprofile.survey.percent_reduc_with_no_smoking %}
+<div class="row-fluid">
+    <h3 class="results-category-header">Quit Smoking:</h3> 
+    <h3 class="text-success">{{ user.userprofile.survey.percent_reduc_with_no_smoking|floatformat:"0" }}% Risk Reduction</h3>
+</div>
+<p class="lead"> If you quit smoking, you will reduce your risk by {{ user.userprofile.survey.percent_reduc_with_no_smoking|floatformat:"0" }}%.</p>
+{% endif %}
+{% if user.userprofile.survey.percent_reduc_with_moderate_exercise %}
+<div class="row-fluid">
+    <h3 class="results-category-header">Increase Your Moderate Exercise:</h3> 
+    <h3 class="text-success">{{ user.userprofile.survey.percent_reduc_with_moderate_exercise|floatformat:"0" }}% Risk Reduction</h3>
+</div>
+<p class="lead"> If you add three additional hours of moderate exercise, such as biking or walking, to your weekly routine, you will reduce your risk by {{ user.userprofile.survey.percent_reduc_with_moderate_exercise|floatformat:"0" }}%.</p>
+{% endif %}
+{% if user.userprofile.survey.percent_reduc_with_vigorous_exercise %}
+<div class="row-fluid">
+    <h3 class="results-category-header">Increase Your Vigorous Exercise:</h3> 
+    <h3 class="text-success">{{ user.userprofile.survey.percent_reduc_with_vigorous_exercise|floatformat:"0" }}% Risk Reduction</h3>
+</div>
+<p class="lead"> If you add three additional hours of vigorous exercise, such as running, to your weekly routine, you will reduce your risk by {{ user.userprofile.survey.percent_reduc_with_vigorous_exercise|floatformat:"0" }}%. Be sure to discuss with a doctor before starting any vigorous exercise program.</p>
+{% endif %}
+{% if user.userprofile.survey.percent_reduc_with_medication %}
+<div class="row-fluid">
+    <h3 class="results-category-header">Take Blood Pressure or Cholesterol Reducing Medication:</h3> 
+    <h3 class="text-success">{{ user.userprofile.survey.percent_reduc_with_medication|floatformat:"0" }}% Risk Reduction</h3>
+</div>
+<p class="lead"> Discuss with your doctor ways that your blood pressure and cholesterol can be managed. It is possible to reduce your risk by {{ user.userprofile.survey.percent_reduc_with_medication|floatformat:"0" }}% with the right medication.</p>
+{% endif %}
+{% if user.userprofile.survey.percent_reduc_with_all %}
+<div class="row-fluid">
+    <h3 class="results-category-header">All of the Above:</h3> 
+    <h3 class="text-success">{{ user.userprofile.survey.percent_reduc_with_all|floatformat:"0" }}% Risk Reduction</h3>
+</div>
+<p class="lead">If you take all of the above steps, your risk will be reduced by {{ user.userprofile.survey.percent_reduc_with_all|floatformat:"0" }}%!</p>
+{% endif %}
+
+<h2 class="center-text header-border margin-top-10">What To Do Next</h2>
+
+<div class="row-fluid">
+{% if user.userprofile.survey.increase_in_risk %}
+<h3>Stay Consistent With Your Medications</h3>
+<p class="lead">It is important to stay consistent with the medications you are currently taking to reduce your blood pressure or cholesterol. Based on what you've told us, the medications you are taking are already reducing your risk by {{ user.userprofile.survey.increase_in_risk }}%, so keep it up!</p>
+{% endif %}
+<h3>Work to Reduce Your Risk</h3>
+<p class="lead">By following the suggestions above, work on reducing your risk. You don't have to follow all of them to be healthier, do anything that you can!</p>
+<h3>Discuss With Your Doctor</h3>
+<p class="lead">Now that you have this detailed information about your risk of having a heart attack or stroke in the next five years, you should discuss ways to reduce your risk with your doctor. It is very important that you and your doctor come up with a plan to reduce your risk.</p>
+<h3>Share Heart Health With Your Loved Ones</h3>
+<p class="lead">It is extremely important that you spread the word about reducing the risk of heart disease. Understanding the risk of heart disease and knowing how to reduce it can mean the difference between life and death. Share this with your friends and family today:</p>
+</div>
 
 {% endblock %}
 
