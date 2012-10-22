@@ -54,14 +54,14 @@
     <h3 class="results-category-header"> Risk Comparison: </h3> 
     <h3 class="rating-color">{{ user.userprofile.survey.u_comparison_risk }} x Higher than the Risk of a Healthy Person</h3>
 </div>
-<p class="lead"> Your risk of having a heart attack or stroke is <strong class="rating-color">{{ user.userprofile.survey.u_comparison_risk }}</strong> times higher than what is considered healthy for {{ user.userprofile.survey.gender_group_string }} in your age group.</p>
+<p class="lead"> Your risk of having a heart attack or stroke could be <strong class="rating-color">{{ user.userprofile.survey.u_comparison_risk }}</strong> times higher than what is considered healthy for {{ user.userprofile.survey.gender_group_string }} in your age group.</p>
 {% endif %}
 {% if user.userprofile.survey.u_comparison_risk < 1 %}
 <div class="row-fluid">
     <h3 class="results-category-header"> Risk Comparison: </h3> 
     <h3 class="rating-color">{{ user.userprofile.survey.u_risk_comparison_less_1 }} x Lower than the Risk of a Healthy Person</h3>
 </div>
-<p class="lead"> Your risk of having a heart attack or stroke is <strong class="rating-color">{{ user.userprofile.survey.u_risk_comparison_less_1 }}</strong> times lower than what is considered healthy for {{ user.userprofile.survey.gender_group_string }} in your age group! That's great!</p>
+<p class="lead"> Your risk of having a heart attack or stroke could be <strong class="rating-color">{{ user.userprofile.survey.u_risk_comparison_less_1 }}</strong> times lower than what is considered healthy for {{ user.userprofile.survey.gender_group_string }} in your age group! That's great!</p>
 {% endif %}
 {% if user.userprofile.survey.u_comparison_risk == 1 %}
 <div class="row-fluid">
@@ -71,11 +71,6 @@
 <p class="lead"> Your risk of having a heart attack or stroke is considered healthy for {{ user.userprofile.survey.gender_group_string }} in your age group!</p>
 {% endif %}
 
-<div class="row-fluid">
-    <h3 class="results-category-header"> Risk Comparison: </h3> 
-    <h3 class="rating-color">{{ user.userprofile.survey.u_comparison_risk }} x Higher than the Risk of a Healthy Person</h3>
-</div>
-<p class="lead"> Your risk of having a heart attack or stroke is <strong class="rating-color">{{ user.userprofile.survey.u_comparison_risk }}</strong> times higher than what is considered healthy for {{ user.userprofile.survey.gender_group_string }} in your age group.</p>
 <div class="row-fluid">
     <h3 class="results-category-header"> Risk Percentile: </h3> 
     <h3 class="rating-color">{{ user.userprofile.survey.u_risk_percentile|floatformat:"0"|ordinal }}</h3>

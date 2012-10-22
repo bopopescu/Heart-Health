@@ -26,6 +26,16 @@
     <p> Based on the information you provided, it is very important that you speak to your doctor as soon as possible about your risk of having a heart attack or stroke. You should discuss things you can do to reduce your risk. </p>
 </div>
 {% endif %}
+{% if not user.userprofile.survey.has_detail_input %}
+<div class="alert alert-block alert-info">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <h4>Enter Additional Information to Increase Results Accuracy </h4>
+    <p>In order to refine your risk estimate and present you with additional personalized suggestions for reducing your risk, you should fill out this quick section of additional details. There are just 6 to 7 quick questions about your family history, number of medications, and exercise habits.</p>
+    <p>
+        <a class="btn btn-danger" href="/assess/detail/">Enter this Information</a>
+    </p>
+</div>
+{% endif %}
 <div class="row-fluid">
     <h3 class="results-category-header"> Risk Rating: </h3> 
     <h3 id="upper-rating-1" class="muted upper-rating hidden-phone">&nbsp; Low</h3>
@@ -39,7 +49,7 @@
     <h3 class="results-category-header"> Heart Attack and Stroke Risk: </h3> 
     <h3 class="rating-color">{{ user.userprofile.survey.risk|floatformat:"0" }}%</h3>
 </div>
-<p class="lead"> Your risk of having a heart attack or a stroke within the next five years is: <strong class="rating-color">{{ user.userprofile.survey.risk|floatformat:"0" }}%</strong> This accurate estimate has been calculated using the information you recorded.</p>
+<p class="lead"> Your risk of having a heart attack or a stroke within the next five years is: <strong class="rating-color">{{ user.userprofile.survey.risk|floatformat:"0" }}%.</strong> This accurate estimate has been calculated using the information you recorded.</p>
 
 {% if user.userprofile.survey.comparison_risk > 1 %}
 <div class="row-fluid">
@@ -73,14 +83,14 @@
     <h3 class="results-category-header">Blood Pressure: </h3> 
     <h3 class="text-error">Elevated</h3>
 </div>
-<p class="lead"> You may have elevated blood pressure. You should consult your doctor or primary care provider about things you can do to control it.</p>
+<p class="lead"> You may have elevated blood pressure. You should consult your doctor about things you can do to control it.</p>
 {% endif %}
 {% if user.userprofile.survey.elevated_cholesterol %}
 <div class="row-fluid">
     <h3 class="results-category-header">Cholesterol Level: </h3> 
     <h3 class="text-error">Elevated</h3>
 </div>
-<p class="lead">Your cholesterol levels exceed national standards and are contributing to your risk. You should consult with your physician about things you can do to improve your cholesterol levels.</p> 
+<p class="lead">Your cholesterol levels exceed national standards and are contributing to your risk. You should consult with your doctor about things you can do to improve your cholesterol levels.</p> 
 {% endif %}
 
 <h2 class="center-text header-border margin-top-10"> Ways to Reduce Your Risk </h2>
@@ -88,9 +98,9 @@
 {% if user.userprofile.survey.pounds_of_weight_loss_required %}
 <div class="row-fluid">
     <h3 class="results-category-header">Lose Weight:</h3> 
-    <h3 class="text-success">{{ user.userprofile.survey.percent_reduc_with_weight_loss|floatformat:"0" }}% Risk Reduction if you lose {{ user.userprofile.survey.pounds_of_weight_loss_required }} pounds</h3>
+    <h3 class="text-success">{{ user.userprofile.survey.percent_reduc_with_weight_loss|floatformat:"0" }}% Risk Reduction if you lose {{ user.userprofile.survey.pounds_of_weight_loss_required|floatformat:"0" }} pounds</h3>
 </div>
-<p class="lead"> If you lose {{ user.userprofile.survey.pounds_of_weight_loss_required }} pounds, 5% of your body weight, and do not regain it, you will reduce your risk by {{ user.userprofile.survey.percent_reduc_with_weight_loss|floatformat:"0" }}%.</p>
+<p class="lead"> If you lose {{ user.userprofile.survey.pounds_of_weight_loss_required|floatformat:"0" }} pounds, and do not regain it, you will reduce your risk by {{ user.userprofile.survey.percent_reduc_with_weight_loss|floatformat:"0" }}%.</p>
 {% endif %}
 {% if user.userprofile.survey.percent_reduc_with_no_smoking %}
 <div class="row-fluid">
