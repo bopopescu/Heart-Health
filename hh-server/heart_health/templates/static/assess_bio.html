@@ -3,7 +3,11 @@
 {% block title %}Enter Screening Test Results - Heart Health{% endblock %}
 {% block content %}
 <h2 class="center-text header-border">Enter Screening Test Results</h2>
-
+<div id="submit-error" class="alert alert-block alert-error hidden">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <h4>We're Sorry! </h4>
+    <p>An error has occurred while saving your information. Please try again.</p>
+</div>
     <p class="span10 center-text centered-span"> Knowing the results of some common medical tests will improve the accuracy of your risk score. It will also allow us to give you personalized suggestions for reducing your risk. If you know these results from your last routine doctor's visit, enter them below. If you don't know these results, please <a href="/locate/"> locate </a> a testing location now. These results are extremely important for understanding your risk.</p>
     <br/>
 <div class="span2 hidden-phone"> </div>

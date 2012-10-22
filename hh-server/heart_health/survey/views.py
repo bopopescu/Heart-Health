@@ -6,7 +6,6 @@ from survey import locationMethods as location
 import simplejson as json
 import survey.locationMethods as locationMethods
 
-
 def index(request):
 	return render_to_response('index.html', locals(), context_instance=RequestContext(request))
 

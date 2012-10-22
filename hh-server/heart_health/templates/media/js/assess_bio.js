@@ -1,7 +1,11 @@
 $(document).ready(function() {
     var options = {
         beforeSubmit: validationFunction,
-        success: warningCheck
+        success: warningCheck,
+        error: function() {
+            $('#submit-button').button('reset');
+            $('#submit-error').removeClass('hidden');
+        }
     };
 
     $('#bio-form').ajaxForm(options);
@@ -75,6 +79,7 @@ var validationFunction = function(formData, jqForm, options) {
 
 var warningCheck = function(responseText, statusText, xhr, form){
     $('#submit-button').button('reset');
+    $('#submit-error').addClass('hidden');
     var warningCode = responseText.warningCode;
     var warningTitle = "";
     var warningText = "";
