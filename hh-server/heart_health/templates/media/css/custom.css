@@ -55,7 +55,7 @@ li {
 }
 
 .user-dropdown {
-    float: right;
+    float: right !important;
 }
 
 .blue-link {
