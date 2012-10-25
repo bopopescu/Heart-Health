@@ -1,3 +1,6 @@
+// Select the right pill for the menu
+$('#results-pill').addClass('active');
+
 $(document).ready(function (){
     $.ajax({
         url: '/results/get/',

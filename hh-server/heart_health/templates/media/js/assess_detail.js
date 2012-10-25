@@ -1,3 +1,6 @@
+// Select the right pill for the menu
+$('#assess-pill').addClass('active');
+
 function wizardStep(inputDivId, validationFunction) {
     this.inputDivId = inputDivId;
     this.validationFunction = validationFunction;

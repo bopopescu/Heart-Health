@@ -1,3 +1,6 @@
+// Select the right pill for the menu
+$('#assess-pill').addClass('active');
+
 $(document).ready(function() {
     var options = {
         beforeSubmit: validationFunction,

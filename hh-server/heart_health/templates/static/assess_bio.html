@@ -2,7 +2,19 @@
 
 {% block title %}Enter Screening Test Results - Heart Health{% endblock %}
 {% block content %}
-<h2 class="center-text header-border">Enter Screening Test Results</h2>
+<ul class="nav nav-tabs">
+    <li>
+        <a href="/assess/basic/">Basic Information</a>
+    </li>
+    <li class="active">
+        <a href="#">Screening Test Results</a>
+    </li>
+    <li>
+        <a href="/assess/detail/">Additional Information</a>
+    </li>
+</ul>
+
+<h2 class="center-text">Enter Screening Test Results</h2>
 <div id="submit-error" class="alert alert-block alert-error hidden">
     <button type="button" class="close" data-dismiss="alert">×</button>
     <h4>We're Sorry! </h4>

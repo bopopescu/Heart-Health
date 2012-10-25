@@ -30,7 +30,7 @@
 			<header class="span8">
                 <div class="row-fluid">
                     <a href='/'><img class="title-heart-image" src="{{ STATIC_URL }}img/heart-pulse-100.png"/></a>
-                    <h1>Health</h1>
+                    <a href="/" class="title-text"><h1>Health</h1></a>
                 </div>
                 <p class="lead"> Interactive Risk Assesment for Heart Attacks and Strokes </p>
 			</header>
@@ -39,9 +39,9 @@
         <div class="row-fluid">
             <div class="span1 hidden-phone"></div>
                 <ul class="nav nav-pills span5">
-                    <li class="active"><a href="/assess/basic/"><i class="icon-pencil"></i> Take The Assessment</a></li>
-                    <li><a href="/locate/"><i class="icon-globe"></i> Locate a Screening Location</a></li>
-                    <li><a href="/results/"><i class="icon-heart"></i> View Your Results</a></li>
+                    <li id="assess-pill"><a href="/assess/basic/"><i class="icon-pencil"></i> Take The Assessment</a></li>
+                    <li id="locate-pill"><a href="/locate/"><i class="icon-globe"></i> Locate a Screening Location</a></li>
+                    <li id="results-pill"><a href="/results/"><i class="icon-heart"></i> View Your Results</a></li>
                 </ul>
                 <div class="span5">
                     <div class="btn-group user-dropdown">

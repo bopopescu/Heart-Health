@@ -1,3 +1,6 @@
+// Select the right pill for the menu
+$('#locate-pill').addClass('active');
+
 function setPreferredButtonVisibility(){
     if(preferredProvider == null || preferredProvider == ''){
         $('#preferred-button').addClass('hidden');

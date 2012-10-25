@@ -5,6 +5,11 @@
     float: left;
 }
 
+.title-text {
+    color: #333333 !important;
+    text-decoration: none !important;
+}
+
 .margin-right-15 {
     margin-right: 15px;
 }
