@@ -9,9 +9,11 @@
     <li class="active">
         <a href="#">Screening Test Results</a>
     </li>
+    {% if user.userprofile.survey.has_bio_input %}
     <li>
         <a href="/assess/detail/">Additional Information</a>
     </li>
+    {% endif %}
 </ul>
 
 <h2 class="center-text">Enter Screening Test Results</h2>

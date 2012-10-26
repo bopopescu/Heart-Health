@@ -3,103 +3,118 @@
 
 {% block title %}Risk Estimate{% endblock %}
 {% block content %}
-<h2 class="center-text header-border"> Your Risk Estimate </h2>
+<div class="tabbable">
 
-{% if user.userprofile.survey.recommendation == 1 %}
-<div id="results-alert" class="alert alert-block alert-success">
-    <button type="button" class="close" data-dismiss="alert">×</button>
-    <h4>Consider Getting a Screening Test </h4>
-    <p> Based on just the information you gave us so far, we have calculated an estimate of your risk for Cardiovascular Disease. We have estimated that your risk is likely in a lower category. However, knowing the results of some common medical tests (cholesterol and blood pressure screening) can allow us to give you exact risk information and suggestions for what to do next. Please consider locating a screening location to have these tests done.</p>
-    <p>
-        <a class="btn btn-success margin-right-15" href="/assess/bio/">Enter this Information</a>
-        <a class="btn btn-success margin-top-10-phone" href="/locate/">Search for Testing Locations</a>
-    </p>
-</div>
-{% endif %}
-{% if user.userprofile.survey.recommendation == 2 %}
-<div id="results-alert" class="alert alert-block alert-warn">
-    <button type="button" class="close" data-dismiss="alert">×</button>
-    <h4>It is Important That You Get a Screening Test </h4>
-    <p> Based on just the information you gave us so far, we have calculated an estimate of your risk for Cardiovascular Disease. We have estimated that your risk could be high or very high. Knowing the results of some common medical tests (cholesterol and blood pressure screening) can allow us to give you exact risk information, and suggestions for what to do next. Because your risk could be dangerous, it is very important that you enter this information, so you can take action if necessary.</p>
-    <p>
-        <a class="btn btn-warning margin-right-15" href="/assess/bio/">Enter this Information</a>
-        <a class="btn btn-warning margin-top-10-phone" href="/locate/">Search for Testing Locations</a>
-    </p>
-</div>
-{% endif %}
-{% if user.userprofile.survey.recommendation == 3 %}
-<div id="results-alert" class="alert alert-block alert-danger">
-    <button type="button" class="close" data-dismiss="alert">×</button>
-    <h4>It is Urgent That You Get a Screening Test</h4>
-    <p> Based on just the information you gave us so far, we have calculated an estimate of your risk for Cardiovascular Disease. We have estimated that your risk could be extremely high. Knowing the results of some common medical tests (cholesterol and blood pressure) can allow us to give you exact risk information, and suggestions for what to do next. Because your risk could be dangerous, it is extremely important that you enter this information.</p>
-    <p>
-        <a class="btn btn-danger margin-right-15" href="/assess/bio/">Enter this Information</a>
-        <a class="btn btn-danger margin-top-10-phone" href="/locate/">Search for Testing Locations</a>
-    </p>
-</div>
-{% endif %}
-<div class="row-fluid">
-    <h3 class="results-category-header"> Risk Rating: </h3> 
-    <h3 id="upper-rating-1" class="muted upper-rating hidden-phone">&nbsp; Low</h3>
-    <h3 id="upper-rating-2" class="muted upper-rating hidden-phone">&nbsp; &nbsp; Medium</h3>
-    <h3 id="upper-rating-3" class="muted upper-rating hidden-phone">&nbsp; &nbsp; High</h3>
-    <h3 id="upper-rating-4" class="muted upper-rating hidden-phone">&nbsp; &nbsp; Very High</h3>
-    <h3 id="upper-rating-5" class="muted upper-rating hidden-phone">&nbsp; &nbsp; Extremely High</h3>
-</div>
-<p class="lead"> This represents your risk of having a heart attack or stroke in the next five years, in the worst case. </p>
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#maintab" data-toggle="tab">Your Risk Estimate</a></li>
+        <li><a href="#nexttab" data-toggle="tab">What To Do Next</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="maintab">
+            <h2 class="center-text"> Your Risk Estimate </h2>
+            {% if user.userprofile.survey.recommendation == 1 %}
+            <div id="results-alert" class="alert alert-block alert-success">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <h4>Consider Getting a Screening Test </h4>
+                <p> Based on just the information you gave us so far, we have calculated an estimate of your risk for Cardiovascular Disease. We have estimated that your risk is likely in a lower category. However, knowing the results of some common medical tests (cholesterol and blood pressure screening) can allow us to give you exact risk information and suggestions for what to do next. Please consider locating a screening location to have these tests done.</p>
+                <p>
+                    <a class="btn btn-success margin-right-15" href="/assess/bio/">Enter this Information</a>
+                    <a class="btn btn-success margin-top-10-phone" href="/locate/">Search for Testing Locations</a>
+                </p>
+            </div>
+            {% endif %}
+            {% if user.userprofile.survey.recommendation == 2 %}
+            <div id="results-alert" class="alert alert-block alert-warn">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <h4>It is Important That You Get a Screening Test </h4>
+                <p> Based on just the information you gave us so far, we have calculated an estimate of your risk for Cardiovascular Disease. We have estimated that your risk could be high or very high. Knowing the results of some common medical tests (cholesterol and blood pressure screening) can allow us to give you exact risk information, and suggestions for what to do next. Because your risk could be dangerous, it is very important that you enter this information, so you can take action if necessary.</p>
+                <p>
+                    <a class="btn btn-warning margin-right-15" href="/assess/bio/">Enter this Information</a>
+                    <a class="btn btn-warning margin-top-10-phone" href="/locate/">Search for Testing Locations</a>
+                </p>
+            </div>
+            {% endif %}
+            {% if user.userprofile.survey.recommendation == 3 %}
+            <div id="results-alert" class="alert alert-block alert-danger">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <h4>It is Urgent That You Get a Screening Test</h4>
+                <p> Based on just the information you gave us so far, we have calculated an estimate of your risk for Cardiovascular Disease. We have estimated that your risk could be extremely high. Knowing the results of some common medical tests (cholesterol and blood pressure) can allow us to give you exact risk information, and suggestions for what to do next. Because your risk could be dangerous, it is extremely important that you enter this information.</p>
+                <p>
+                    <a class="btn btn-danger margin-right-15" href="/assess/bio/">Enter this Information</a>
+                    <a class="btn btn-danger margin-top-10-phone" href="/locate/">Search for Testing Locations</a>
+                </p>
+            </div>
+            {% endif %}
+            <div class="row-fluid">
+                <h3 class="results-category-header"> Risk Rating: </h3> 
+                <h3 id="upper-rating-1" class="muted upper-rating hidden-phone">&nbsp; Low</h3>
+                <h3 id="upper-rating-2" class="muted upper-rating hidden-phone">&nbsp; &nbsp; Medium</h3>
+                <h3 id="upper-rating-3" class="muted upper-rating hidden-phone">&nbsp; &nbsp; High</h3>
+                <h3 id="upper-rating-4" class="muted upper-rating hidden-phone">&nbsp; &nbsp; Very High</h3>
+                <h3 id="upper-rating-5" class="muted upper-rating hidden-phone">&nbsp; &nbsp; Extremely High</h3>
+            </div>
+            <p class="lead"> This represents your risk of having a heart attack or stroke in the next five years, in the worst case. </p>
 
-<p class="lead"> Your risk of having a heart attack or a stroke within the next five years is between: <strong class="rating-color">{{ user.userprofile.survey.l_risk|floatformat:"0" }}%</strong> and <strong class="rating-color">{{ user.userprofile.survey.u_risk|floatformat:"0" }}%</strong> </p>
-{% if user.userprofile.survey.u_comparison_risk > 1 %}
-<div class="row-fluid">
-    <h3 class="results-category-header"> Risk Comparison: </h3> 
-    <h3 class="rating-color">{{ user.userprofile.survey.u_comparison_risk }} x Higher than the Risk of a Healthy Person</h3>
+            <p class="lead"> Your risk of having a heart attack or a stroke within the next five years is between: <strong class="rating-color">{{ user.userprofile.survey.l_risk|floatformat:"0" }}%</strong> and <strong class="rating-color">{{ user.userprofile.survey.u_risk|floatformat:"0" }}%</strong> </p>
+            {% if user.userprofile.survey.u_comparison_risk > 1 %}
+            <div class="row-fluid">
+                <h3 class="results-category-header"> Risk Comparison: </h3> 
+                <h3 class="rating-color">{{ user.userprofile.survey.u_comparison_risk }} x Higher than the Risk of a Healthy Person</h3>
+            </div>
+            <p class="lead"> Your risk of having a heart attack or stroke could be <strong class="rating-color">{{ user.userprofile.survey.u_comparison_risk }}</strong> times higher than what is considered healthy for {{ user.userprofile.survey.gender_group_string }} in your age group.</p>
+            {% endif %}
+            {% if user.userprofile.survey.u_comparison_risk < 1 %}
+            <div class="row-fluid">
+                <h3 class="results-category-header"> Risk Comparison: </h3> 
+                <h3 class="rating-color">{{ user.userprofile.survey.u_risk_comparison_less_1 }} x Lower than the Risk of a Healthy Person</h3>
+            </div>
+            <p class="lead"> Your risk of having a heart attack or stroke could be <strong class="rating-color">{{ user.userprofile.survey.u_risk_comparison_less_1 }}</strong> times lower than what is considered healthy for {{ user.userprofile.survey.gender_group_string }} in your age group! That's great!</p>
+            {% endif %}
+            {% if user.userprofile.survey.u_comparison_risk == 1 %}
+            <div class="row-fluid">
+                <h3 class="results-category-header"> Risk Comparison: </h3> 
+                <h3 class="rating-color"> You Have a Healthy Risk Level</h3>
+            </div>
+            <p class="lead"> Your risk of having a heart attack or stroke is considered healthy for {{ user.userprofile.survey.gender_group_string }} in your age group!</p>
+            {% endif %}
+
+            <div class="row-fluid">
+                <h3 class="results-category-header"> Risk Percentile: </h3> 
+                <h3 class="rating-color">{{ user.userprofile.survey.u_risk_percentile|floatformat:"0"|ordinal }}</h3>
+            </div>
+            <p class="lead"> Your risk could be in the <strong class="rating-color">{{ user.userprofile.survey.u_risk_percentile|floatformat:"0"|ordinal }}</strong> percentile for {{ user.userprofile.survey.gender_group_string }} in your age group. <a id="percentile-more-button">Learn More</a> </p>
+
+        </div>
+
+        <div class="tab-pane" id="nexttab">
+
+            <h2 class="center-text"> What To Do Next </h2>
+
+            {% if not user.userprofile.survey.recommendation == 1 %}
+
+            {% endif %}
+            <h3> 1. Obtain a Screening Test: </h3> 
+            <p class="lead"> The results above are just an estimate. Knowing the results of some common medical tests (cholesterol and blood pressure screening) can allow us to give you exact risk information, and suggestions for what to do next. The following information is requested:
+            <ul class="lead">
+                <li> Cholesterol Levels (HDL, LDL, and Total) </li>
+                <li> Blood Pressure (Systolic and Diastolic) </li> 
+                {% if user.userprofile.survey.diabetes %}
+                <li> Glycated Hemoglobin (HbA1c) - Optional</li>
+                {% endif %}
+            </ul>
+            <p class="lead"> If you don't have this information from a previous visit to your doctor, don't worry! You can locate a nearby pharmacy or testing location to have the screening tests done.</p>
+            <button class="btn span6 margin-top-15 centered-span btn-large btn-block btn-danger" type="button" onclick="window.location.href='/locate/'">Find a Screening Test Location</button>
+
+            <h3> 2. Enter The Results to Receive Your Full Risk Assessment: </h3> 
+            <p class="lead"> Once you have the results to the screening test or from your doctor, enter the results to get your full and accurate risk assessment. Completing this step will also give you access to several personal risk reducing suggestions.</p>
+            <button class="btn span6 margin-top-15 centered-span btn-large btn-block btn-danger" type="button" onclick="window.location.href='/assess/bio/'">Enter Your Screening Test Results</button>
+            <h3> 3. Enter Additional Details: </h3> 
+            <p class="lead">In order to refine your risk estimate and present you with personalized suggestions for reducing your risk, you should fill out this section of additional information. There are just 6 to 7 quick questions about your family history, number of medications, and exercise habits.</p>
+            <button class="btn span6 margin-top-15 centered-span btn-large btn-block btn-danger" type="button" onclick="window.location.href='/assess/detail/'">Enter Additional Information</button>
+
+        </div>
+    </div>
 </div>
-<p class="lead"> Your risk of having a heart attack or stroke could be <strong class="rating-color">{{ user.userprofile.survey.u_comparison_risk }}</strong> times higher than what is considered healthy for {{ user.userprofile.survey.gender_group_string }} in your age group.</p>
-{% endif %}
-{% if user.userprofile.survey.u_comparison_risk < 1 %}
-<div class="row-fluid">
-    <h3 class="results-category-header"> Risk Comparison: </h3> 
-    <h3 class="rating-color">{{ user.userprofile.survey.u_risk_comparison_less_1 }} x Lower than the Risk of a Healthy Person</h3>
-</div>
-<p class="lead"> Your risk of having a heart attack or stroke could be <strong class="rating-color">{{ user.userprofile.survey.u_risk_comparison_less_1 }}</strong> times lower than what is considered healthy for {{ user.userprofile.survey.gender_group_string }} in your age group! That's great!</p>
-{% endif %}
-{% if user.userprofile.survey.u_comparison_risk == 1 %}
-<div class="row-fluid">
-    <h3 class="results-category-header"> Risk Comparison: </h3> 
-    <h3 class="rating-color"> You Have a Healthy Risk Level</h3>
-</div>
-<p class="lead"> Your risk of having a heart attack or stroke is considered healthy for {{ user.userprofile.survey.gender_group_string }} in your age group!</p>
-{% endif %}
-
-<div class="row-fluid">
-    <h3 class="results-category-header"> Risk Percentile: </h3> 
-    <h3 class="rating-color">{{ user.userprofile.survey.u_risk_percentile|floatformat:"0"|ordinal }}</h3>
-</div>
-<p class="lead"> Your risk could be in the <strong class="rating-color">{{ user.userprofile.survey.u_risk_percentile|floatformat:"0"|ordinal }}</strong> percentile for {{ user.userprofile.survey.gender_group_string }} in your age group. <a id="percentile-more-button">Learn More</a> </p>
-
-<h2 class="center-text header-border margin-top-10"> What To Do Next </h2>
-
-{% if not user.userprofile.survey.recommendation == 1 %}
-
-{% endif %}
-<h3> 1. Obtain a Screening Test: </h3> 
-<p class="lead"> The results above are just an estimate. Knowing the results of some common medical tests (cholesterol and blood pressure screening) can allow us to give you exact risk information, and suggestions for what to do next. The following information is requested:
-<ul class="lead">
-    <li> Cholesterol Levels (HDL, LDL, and Total) </li>
-    <li> Blood Pressure (Systolic and Diastolic) </li> 
-    {% if user.userprofile.survey.diabetes %}
-    <li> Glycated Hemoglobin (HbA1c) - Optional</li>
-    {% endif %}
-</ul>
-<p class="lead"> If you don't have this information from a previous visit to your doctor, don't worry! You can locate a nearby pharmacy or testing location to have the screening tests done.</p>
-<button class="btn span6 margin-top-15 centered-span btn-large btn-block btn-danger" type="button" onclick="window.location.href='/locate/'">Find a Screening Test Location</button>
-
-<h3> 2. Enter The Results to Receive Your Full Risk Assessment: </h3> 
-<p class="lead"> Once you have the results to the screening test or from your doctor, enter the results to get your full and accurate risk assessment. Completing this step will also give you access to several personal risk reducing suggestions.</p>
-<button class="btn span6 margin-top-15 centered-span btn-large btn-block btn-danger" type="button" onclick="window.location.href='/assess/bio/'">Enter Your Screening Test Results</button>
-<h3> 3. Enter Additional Details: </h3> 
-<p class="lead">In order to refine your risk estimate and present you with personalized suggestions for reducing your risk, you should fill out this section of additional information. There are just 6 to 7 quick questions about your family history, number of medications, and exercise habits.</p>
-<button class="btn span6 margin-top-15 centered-span btn-large btn-block btn-danger" type="button" onclick="window.location.href='/assess/detail/'">Enter Additional Information</button>
 
 {% endblock %}
 
