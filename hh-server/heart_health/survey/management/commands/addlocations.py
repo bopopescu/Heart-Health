@@ -2,6 +2,9 @@ from django.core.management.base import BaseCommand, CommandError
 from geopy import geocoders
 import simplejson as json
 from survey.models import Location
+import logging
+
+logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
     """
@@ -58,7 +61,7 @@ def addLocationsToDB(filename):
                 location.latitude = lat
                 location.longitude = lng
             except Exception as exception:
-                print 'Location: ' + location.name + ' failed to be geocoded. Skipping this location. Error is: ' + str(exception)
+                logger.error('Location: ' + location.name + ' failed to be geocoded. Skipping this location. Error is: ' + str(exception))
                 continue
         else:
             location.latitude = provider['lat']
