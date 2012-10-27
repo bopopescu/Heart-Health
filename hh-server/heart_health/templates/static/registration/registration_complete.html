@@ -7,7 +7,15 @@
 <h3 class="center-text header-border">Thanks For Registering! Check Your Email!</h3>
 <p class="center-text"> Great work! Be sure to check your email and click the link we just sent you to activate your registration. If you don't do this within two days,
 your registration will be cancelled.</p>
+{% if user.userprofile.survey.age %}
+<p class="center-text"> Since you already had an assessment in progress, we've saved it for you and assigned it to your account!</p>
+{% endif %}
 <div class="span6 centered-span">
-    <button class="btn btn-large btn-block btn-danger" type="button" onclick='window.location.href="/assess/basic/"'> Begin the Assessment! </button>
+    <button class="btn btn-large btn-block btn-danger" type="button" onclick='window.location.href="/assess/"'>
+    {% if user.userprofile.survey.age %}
+    Continue the Assessment!
+    {% else %}
+    Begin the Assessment! 
+    {% endif %}</button>
 </div>
 {% endblock %}

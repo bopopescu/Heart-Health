@@ -45,6 +45,17 @@
                 </p>
             </div>
             {% endif %}
+            {% if user.userprofile.is_anonymous %}
+            <div class="alert alert-block alert-info">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <h4>Register Now to Save Your Information!</h4>
+                <p>Since you're not logged in, your results and information will not be saved. Please consider registering in order to save your results, so that you can return later and enter screening test results without starting over. All you need is your email address!</p>
+                <p>
+                    <a class="btn btn-danger" href="/register/">Register Now!</a>
+                </p>
+            </div>
+            {% endif %}
+
             <div class="row-fluid">
                 <h3 class="results-category-header"> Risk Rating: </h3> 
                 <h3 id="upper-rating-1" class="muted upper-rating hidden-phone">&nbsp; Low</h3>

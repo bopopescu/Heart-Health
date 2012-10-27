@@ -9,6 +9,7 @@ class UserProfile(models.Model):
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
     preferred_location = models.ForeignKey('survey.Location', null=True)
+    is_anonymous = models.BooleanField(default=False)
 
     class Admin:
         pass

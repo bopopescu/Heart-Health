@@ -47,7 +47,7 @@
                     <div class="btn-group user-dropdown">
                         <button class="btn btn-large dropdown-toggle" data-toggle="dropdown">
                             <i class="icon-user icon-black"></i>
-                            {% if user.is_authenticated %}
+                            {% if user.is_authenticated and not user.userprofile.is_anonymous %}
                                 {{ user.username }}
                             {% else %}
                                 Not Logged In
@@ -56,11 +56,18 @@
                         </button>
                         <ul class="dropdown-menu">
                             {% if user.is_authenticated %}
+                                {% if user.userprofile.is_anonymous %}
+                                <li><a href="/register/">Register to Save Your Information</a></li>
+                                <li><a href="/logout/">Clear Your Information</a></li>
+                                <li class="divider"></li>
+                                {% endif %}
                                 <li><a href="/assess/basic/"><i class="icon-pencil"></i> Take The Assessment</a></li>
                                 <li><a href="/locate/"><i class="icon-globe"></i> Locate a Screening Location</a></li>
                                 <li><a href="/results/"><i class="icon-heart"></i> View Your Results</a></li>
+                                {% if not user.userprofile.is_anonymous %}
                                 <li class="divider"></li>
                                 <li><a href="/logout/">Log Out</a></li>
+                                {% endif %}
                             {% else %}
                                 <li><a href="/register/">Register </a></li>
                                 <li><a href="/login/">Log In</a></li>

@@ -1,21 +1,32 @@
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from survey.models import Survey
 from survey import locationMethods as location
+from accounts.models import UserProfile
+import uuid
 import simplejson as json
 import survey.locationMethods as locationMethods
 
 def index(request):
 	return render_to_response('index.html', locals(), context_instance=RequestContext(request))
 
+def assess(request):
+    if request.user.userprofile.survey.has_basic_input():
+        if not request.user.userprofile.survey.has_bio_input():
+            return HttpResponseRedirect('/assess/bio/')    
+        else:
+            return HttpResponseRedirect('/assess/detail/')    
+    else:
+        return HttpResponseRedirect('/assess/basic/')    
+
 def assess_basic(request):
 	return render_to_response('assess_basic.html', locals(), context_instance=RequestContext(request))
 
 def assess_basic_save(request):
-    # reject calls that do not have a logged in user
-    if not request.user.is_authenticated():
-        return HttpResponseForbidden()
+    create_user_if_anonymous(request)
     
     if not hasattr(request.user.userprofile, 'survey'):
        request.user.userprofile.survey = Survey()
@@ -36,9 +47,7 @@ def assess_basic_save(request):
     return HttpResponseRedirect('/results/')    
 
 def assess_bio_save(request):
-    # reject calls that do not have a logged in user
-    if not request.user.is_authenticated():
-        return HttpResponseForbidden()
+    create_user_if_anonymous(request)
     
     if not hasattr(request.user.userprofile, 'survey'):
        request.user.userprofile.survey = Survey()
@@ -68,9 +77,7 @@ def assess_detail(request):
 	return render_to_response('assess_detail.html', locals(), context_instance=RequestContext(request))
 
 def assess_detail_save(request):
-    # reject calls that do not have a logged in user
-    if not request.user.is_authenticated():
-        return HttpResponseForbidden()
+    create_user_if_anonymous(request)
     
     if not hasattr(request.user.userprofile, 'survey'):
        request.user.userprofile.survey = Survey()
@@ -101,9 +108,8 @@ def locate_get(request):
     return HttpResponse(json.dumps({'providers': locations}))
 
 def locate_save_preferred(request):
-    # reject calls that do not have a logged in user
-    if not request.user.is_authenticated():
-        return HttpResponseForbidden()
+    create_user_if_anonymous(request)
+
     preferred_location = location.get_and_save_location_from_provider_dict(request.POST) 
     request.user.userprofile.preferred_location = preferred_location
     request.user.userprofile.save()
@@ -145,10 +151,22 @@ def get_results(request):
             request.user.userprofile.survey.get_bio_results()
         return HttpResponse(json.dumps({"success": True, "redirect": "/results/full/"}))
 
-    # TODO remove this, I'm forcing a refresh for testing purposes
-    #request.user.userprofile.survey.get_basic_results()
     if (not request.user.userprofile.survey.has_basic_results()) or request.user.userprofile.survey.is_stale:
         request.user.userprofile.survey.get_basic_results()
         return HttpResponse(json.dumps({"success": True, "redirect": "/results/basic/"}))
     else:
         return HttpResponse(json.dumps({"success": True, "redirect": "/results/basic/"}))
+
+def create_user_if_anonymous(request):
+    if not request.user.is_authenticated():
+        anon_user = User(username=str(uuid.uuid4().hex[:30]), first_name="Anonymous", last_name="User") 
+        anon_user.set_unusable_password()
+        anon_user.save()
+
+        anon_user.username = "user_" + str(anon_user.id)
+        anon_user.userprofile.is_anonymous = True
+        anon_user.save()
+
+
+        anon_user.backend = 'django.contrib.auth.backends.ModelBackend'
+        login(request, anon_user)
