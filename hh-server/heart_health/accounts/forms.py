@@ -18,6 +18,7 @@ class UserRegistrationForm(forms.Form):
 
     password1 = forms.CharField(widget=forms.PasswordInput(), label="Password")
     password2 = forms.CharField(widget=forms.PasswordInput(), label="Repeat your password")
+    allow_notifications = forms.BooleanField(required=False, label="Allow email from Heart Health", initial=True)
     
     def clean_password(self):
         if self.data['password1'] != self.data['password2']:

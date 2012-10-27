@@ -22,17 +22,18 @@ class Backend(default.DefaultBackend):
         new_user = RegistrationProfile.objects.create_inactive_user(username, email, password, site)
 
         # if an anonymous user is registering, save their data
-        print "anon username is: " + request.user.username
-        if request.user.userprofile.is_anonymous:
-            request.user.is_active = False
-            request.user.save()
-            survey = request.user.userprofile.survey
-            survey.id = None
-            survey.user_profile = new_user.userprofile
-            survey.save()
-            new_user.userprofile.survey = survey
-            new_user.save()
-        print "new username is: " + new_user.username
+        if hasattr(request.user, 'userprofile'):
+            if request.user.userprofile.is_anonymous:
+                request.user.is_active = False
+                request.user.save()
+                survey = request.user.userprofile.survey
+                survey.id = None
+                survey.user_profile = new_user.userprofile
+                survey.save()
+                new_user.userprofile.survey = survey
+
+        new_user.userprofile.allow_notifications = kwargs['allow_notifications']
+        new_user.userprofile.save()
 
         signals.user_registered.send(sender=self.__class__,
                                                 user=new_user,
