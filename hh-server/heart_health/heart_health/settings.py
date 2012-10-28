@@ -136,6 +136,8 @@ EMAIL_HOST_USER='hearthealthapp'
 EMAIL_HOST_PASSWORD='killerapp'
 EMAIL_USE_TLS=True
 
+DEFAULT_FROM_EMAIL="Heart Health"
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

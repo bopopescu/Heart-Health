@@ -1,12 +1,14 @@
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.contrib.auth.models import User
+from django.utils.timezone import utc
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from survey.models import Survey
+from survey.models import Survey, Notification
 from survey import locationMethods as location
 from accounts.models import UserProfile
 import uuid
+import datetime
 import simplejson as json
 import survey.locationMethods as locationMethods
 
@@ -40,11 +42,37 @@ def assess_basic_save(request):
     request.user.userprofile.survey.mi = request.POST['mi'] == "true"
     request.user.userprofile.survey.diabetes = request.POST['diabetes'] == "true"
 
-
     request.user.userprofile.survey.is_stale = True
+
+    if request.user.userprofile.allow_notifications and not request.user.userprofile.is_anonymous:
+        create_notifications(request.user)
+
     request.user.userprofile.survey.save()
     request.user.userprofile.save()
     return HttpResponseRedirect('/results/')    
+
+def create_notifications(userObj):
+    """ Creates three notifications for the user, at 1 week, 2 weeks, and 4 weeks. """
+    now = datetime.datetime.utcnow().replace(tzinfo=utc)
+
+    one_min = Notification(user=userObj)
+    one_min.send_time = now + datetime.timedelta(0, 60)
+    one_min.save()
+
+    one_week = Notification(user=userObj)
+    one_week.send_time = now + datetime.timedelta(7)
+    one_week.save()
+
+    two_weeks = Notification(user=userObj)
+    two_weeks.send_time = now + datetime.timedelta(7)
+    two_weeks.save()
+
+    four_weeks = Notification(user=userObj)
+    four_weeks.send_time = now + datetime.timedelta(7)
+    four_weeks.save()
+
+    userObj.userprofile.allow_notifications = False
+    userObj.userprofile.save()
 
 def assess_bio_save(request):
     create_user_if_anonymous(request)
@@ -66,6 +94,9 @@ def assess_bio_save(request):
     request.user.userprofile.survey.get_bio_results()
 
     warning = str(request.user.userprofile.survey.warning)
+
+    notifications = Notification.objects.filter(user=request.user)
+    notifications.delete()
 
     return HttpResponse(json.dumps({"warningCode": warning}), mimetype="application/json")    
 

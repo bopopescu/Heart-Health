@@ -1,0 +1,21 @@
+{% load humanize %}
+Hey there!
+        
+We're really glad that you've taken the time to complete the basic assessment about {{ notification.created_at|naturaltime }} over at http://www.hearthealthapp.com/. Heart disease can be extremely dangerous, but also very preventable! Understanding your risk of having a heart attack or stroke is very important. With over two million heart attacks and strokes occuring each year in the United States, it's time to take action to prevent as many of them as we can. As part of the Million Hearts campaign, we're trying to prevent one million heart attacks in the next five years! We need your help to accomplish our goal.
+        
+While beginning the assessment was a great first step, we strongly suggest that you get a screening test at a local pharmacy or health care provider. After getting a couple short medical tests to identify your cholesterol levels and blood pressure, entering the results at http://www.hearthealthapp.com/assess/bio/ will allow us to give you a full and accurate assessment of your risk. This full picture of you risk includes personalized suggestions to reduce your risk and become healthier.
+        
+{% if not user.userprofile.preferred_location %}
+We have a full directory of the pharmacies and medical providers all across the country that offer these quick, low cost tests. Please visit our screening test provider locator to find a location near you today.
+{% else %}
+Your preferred testing location is:
+
+{{ user.userprofile.preferred_location.name }}
+{{ user.userprofile.preferred_location.address1 }} {% if user.userprofile.preferred_location.address2 %}{{ user.userprofile.preferred_location.address2 }}{% endif %}
+{{ user.userprofile.preferred_location.city }} {{user.userprofile.preferred_location.state }} {{ user.userprofile.preferred_location.get_formatted_zip }}
+{{ user.userprofile.preferred_location.get_formatted_phone }}
+{{ user.userprofile.preferred_location.url }}
+{{ user.userprofile.preferred_location.description }}
+
+Click here to get directions to your preferred location: {{ user.userprofile.preferred_location.get_directions_link }} Or, please visit our screening test location location here: http://www.hearthealthapp.com/locate/ to find additional locations near you today.
+{% endif %}

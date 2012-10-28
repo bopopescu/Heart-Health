@@ -293,6 +293,21 @@ class Location(models.Model):
        provider['description'] = self.description
        return provider 
 
+    def get_directions_link(self):
+        address2 = ''; 
+        if self.address2:
+            address2 = self.address2 + ' '
+        dAddr = self.address1 + ' ' + address2 + self.city + ' ' +  self.state + ' ' + self.zip_code
+        params = {'daddr': dAddr} 
+        directionsUrl = 'http://maps.google.com/maps?' + urllib.urlencode(params)
+        return directionsUrl  
+
+    def get_formatted_phone(self):
+        return self.phone[0:3] + '-' + self.phone[3:6] + '-' + self.phone[6:10]
+
+    def get_formatted_zip(self):
+        return self.zip_code[0:5]
+
     class Meta:
         unique_together = ['name', 'address1', 'address2', 'city', 'state', 'zip_code']
 

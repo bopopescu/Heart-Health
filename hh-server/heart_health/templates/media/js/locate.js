@@ -293,7 +293,7 @@ function getContentForProvider(provider, includeDescription, floatDistance, incl
         if(includeDescription && provider.description){
             htmlResult += '<br>' + provider.description + '<br>';
         }
-        if(includeButton && preferredProvider != null){
+        if(includeButton){
             htmlResult += '<button class="btn btn-danger">Set As My Preferred Location</button>';
         }
         htmlResult += '</address>';

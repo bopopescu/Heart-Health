@@ -1,0 +1,67 @@
+{% extends "email_base.html" %}
+{% load humanize %}
+
+{% block title %}Reminder to Get a Screening Test{% endblock %}
+
+{% block message %}
+<tr>
+    <td width="600" valign="top">
+        Hey there!
+    </td>
+</tr>
+<tr>
+    <td width="600" valign="top">
+        <br/>
+    </td>
+</tr>
+<tr>
+    <td width="600" valign="top">
+        We're really glad that you've taken the time to complete the basic assessment about {{ notification.created_at|naturaltime }} over at <a href="http://www.hearthealthapp.com/" style="color: #D92000; text-decoration: none;" target="_blank">Heart Health</a>.
+    </td>
+</tr>
+<tr>
+    <td width="600" valign="top">
+        <br/>
+    </td>
+</tr>
+<tr>
+    <td width="600" valign="top">
+        Heart disease can be extremely dangerous, but also very preventable! Understanding your risk of having a heart attack or stroke is very important. With over two million heart attacks and strokes occuring each year in the United States, it's time to take action to prevent as many of them as we can. As part of the <a href="http://millionhearts.hhs.gov/" style="color: #D92000; text-decoration: none;" target="_blank">Million Hearts</a> campaign, we're trying to prevent one million heart attacks in the next five years! We need your help to accomplish our goal.
+    </td>
+</tr>
+<tr>
+    <td width="600" valign="top">
+        <br/>
+    </td>
+</tr>
+<tr>
+    <td width="600" valign="top">
+         While beginning the assessment was a great first step, we strongly suggest that you get a screening test at a local pharmacy or health care provider. After getting a couple short medical tests to identify your cholesterol levels and blood pressure, entering the results <a href="http://www.hearthealthapp.com/assess/bio/" style="color: #D92000; text-decoration: none;" target="_blank">here</a> will allow us to give you a full and accurate assessment of your risk. This full picture of your risk includes personalized suggestions to reduce your risk and become healthier.
+    </td>
+</tr>
+<tr>
+    <td width="600" valign="top">
+        <br/>
+    </td>
+</tr>
+<tr>
+    <td width="600" valign="top">
+        {% if not user.userprofile.preferred_location %}
+        We have a full directory of the pharmacies and medical providers all across the country that offer these quick, low cost tests. Please visit our <a href="http://www.hearthealthapp.com/locate/" style="color: #D92000; text-decoration: none;" target="_blank">Screening Test Provider Locator</a> to find a location near you today.
+        {% else %}
+        Your preferred testing location is:<br/>
+        <br/>
+        {{ user.userprofile.preferred_location.name }}<br/>
+        {{ user.userprofile.preferred_location.address1 }} {% if user.userprofile.preferred_location.address2 %}{{ user.userprofile.preferred_location.address2 }}{% endif %}<br/>
+        {{ user.userprofile.preferred_location.city }} {{user.userprofile.preferred_location.state }} {{ user.userprofile.preferred_location.get_formatted_zip }}<br/>
+        <span class="mobile_link">{{ user.userprofile.preferred_location.get_formatted_phone }}</span><br />
+        <a href="{{ user.userprofile.preferred_location.url }}" style="color: #D92000; text-decoration: none;" target="_blank">{{ user.userprofile.preferred_location.url_caption }}</a><br/>
+        {{ user.userprofile.preferred_location.description }}<br/><br/>
+
+        Click <a href="{{ user.userprofile.preferred_location.get_directions_link }}" style="color: #D92000; text-decoration: none;" target="_blank">here</a> to get directions to your preferred location. Or, please visit our <a href="http://www.hearthealthapp.com/locate/" style="color: #D92000; text-decoration: none;" target="_blank">Screening Test Provider Locator</a> to find additional locations near you today.
+        {% endif %}
+
+    </td>
+</tr>
+
+{% endblock message %}
