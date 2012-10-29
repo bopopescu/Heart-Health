@@ -2,12 +2,14 @@ from django.db import models
 from accounts.models import UserProfile
 from django.contrib import admin
 import urllib, urllib2
+from survey import sslConnection
 import simplejson as json
 import uuid
 import logging
 
 INDIGO_URL = "https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health"
 logger = logging.getLogger(__name__)
+sslConnection.install_opener(urllib2)
 
 class Survey(models.Model):
     user_profile = models.OneToOneField(UserProfile, verbose_name="The user that owns this survey")
