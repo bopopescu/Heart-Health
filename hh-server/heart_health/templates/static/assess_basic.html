@@ -42,13 +42,13 @@
             <div id="height-group" class="control-group hidden"> 
                 <label>Please enter your height in inches:</label>
                 <input name="height" type="text" value="{{ user.userprofile.survey.height|default_if_none:"" }}">
-                <span class="help-inline hidden">Height must be between 44 and 87 inches.</span>
+                <span class="help-inline hidden">Height must be an even number between 44 and 87 inches.</span>
                 </label>
             </div>
             <div id="weight-group" class="control-group hidden"> 
                 <label>Please enter your weight in pounds:</label>
                 <input name="weight" type="text" value="{{ user.userprofile.survey.weight|default_if_none:"" }}">
-                <span class="help-inline hidden">Weight must be between 80 and 600 pounds.</span>
+                <span class="help-inline hidden">Weight must be an even number between 80 and 600 pounds.</span>
                 </label>
             </div>
             <div id="smoke-group" class="control-group hidden"> 

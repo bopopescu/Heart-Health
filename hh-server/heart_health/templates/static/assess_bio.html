@@ -33,35 +33,35 @@
                 <label>Systolic Blood Pressure (mm/Hg):</label>
                 <input name="systolic" type="text" value="{{ user.userprofile.survey.systolic|default_if_none:"" }}">
                 <span class="help-block">This is the <strong>first</strong> number in your blood pressure reading. <a class="bp-help"> Help </a></span>
-                <span class="help-inline hidden range-error">Systolic blood pressure must be between 80 and 220.</span>
+                <span class="help-inline hidden range-error">Systolic blood pressure must be an even number between 80 and 220.</span>
                 </label>
             </div>
             <div id="diastolic" class="control-group"> 
                 <label>Diastolic Blood Pressure (mm/Hg):</label>
                 <input name="diastolic" type="text" value="{{ user.userprofile.survey.diastolic|default_if_none:"" }}">
                 <span class="help-block">This is the <strong>second</strong> number in your blood pressure reading. <a class="bp-help"> Help </a></span>
-                <span class="help-inline hidden range-error">Diastolic blood pressure must be between 40 and 130.</span>
+                <span class="help-inline hidden range-error">Diastolic blood pressure must be an even number between 40 and 130.</span>
                 <span id="diastolic-less-error" class="help-inline hidden">Diastolic blood pressure must be less than systolic blood pressure.</span>
                 </label>
             </div>
             <div id="cholesterol" class="control-group"> 
                 <label>Total Cholesterol (mg/dL):</label>
                 <input name="cholesterol" type="text" value="{{ user.userprofile.survey.cholesterol|default_if_none:"" }}">
-                <span class="help-inline hidden range-error">Total cholesterol must be between 70 and 500.</span>
+                <span class="help-inline hidden range-error">Total cholesterol must be an even number between 70 and 500.</span>
                 <span class="help-inline hidden cholesterol-combo-error">HDL + LDL must be lower than total cholesterol.</span>
                 </label>
             </div>
             <div id="hdl" class="control-group"> 
                 <label>HDL Cholesterol (mg/dL):</label>
                 <input name="hdl" type="text" value="{{ user.userprofile.survey.hdl|default_if_none:"" }}">
-                <span class="help-inline hidden range-error">HDL Cholesterol must be between 20 and 130.</span>
+                <span class="help-inline hidden range-error">HDL Cholesterol must be an even number between 20 and 130.</span>
                 <span class="help-inline hidden cholesterol-combo-error">HDL + LDL must be lower than total cholesterol.</span>
                 </label>
             </div>
             <div id="ldl" class="control-group"> 
                 <label>LDL Cholesterol (mg/dL):</label>
                 <input name="ldl" type="text" value="{{ user.userprofile.survey.ldl|default_if_none:"" }}">
-                <span class="help-inline hidden range-error">LDL Cholesterol must be between 40 and 400.</span>
+                <span class="help-inline hidden range-error">LDL Cholesterol must be an even number between 40 and 400.</span>
                 <span class="help-inline hidden cholesterol-combo-error">HDL + LDL must be lower than total cholesterol.</span>
                 </label>
             </div>

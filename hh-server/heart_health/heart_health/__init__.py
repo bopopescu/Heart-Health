@@ -11,4 +11,4 @@ user_activated.connect(login_on_registration_or_activation)
 AuthenticationForm.base_fields['username'].max_length = 150
 AuthenticationForm.base_fields['username'].widget.attrs['maxlength'] = 150
 AuthenticationForm.base_fields['username'].validators[0].limit_value = 150
-AuthenticationForm.base_fields['username'].label = "Email Address"
+AuthenticationForm.base_fields['username'].label = "Email Address:"

@@ -17,29 +17,29 @@
             {% if user.userprofile.survey.doctor_recommendation == 1 %}
             <div id="results-alert" class="alert alert-block alert-success">
                 <button type="button" class="close" data-dismiss="alert">×</button>
-                <h4>Discuss Your Heart Attack Risk With a Doctor </h4>
+                <h4>Discuss your heart attack risk with a doctor </h4>
                 <p> Based on the information you provided, you should consider speaking to your doctor about your risk of having a heart attack or stroke. It would be a good idea to discuss steps to reduce your risk. </p>
             </div>
             {% endif %}
             {% if user.userprofile.survey.doctor_recommendation == 2 %}
             <div id="results-alert" class="alert alert-block alert-warn">
                 <button type="button" class="close" data-dismiss="alert">×</button>
-                <h4>It is Important That You Discuss Your Heart Attack Risk With a Doctor </h4>
+                <h4>It is important that you discuss your heart attack risk with a doctor </h4>
                 <p> Based on the information you provided, it is important that you speak to your doctor about your risk of having a heart attack or stroke. You should discuss steps to reduce your risk. </p>
             </div>
             {% endif %}
             {% if user.userprofile.survey.recommendation == 3 %}
             <div id="results-alert" class="alert alert-block alert-danger">
                 <button type="button" class="close" data-dismiss="alert">×</button>
-                <h4>It is Urgent That You Discuss Your Heart Attack Risk With a Doctor </h4>
+                <h4>It is urgent that you discuss your heart attack risk with a doctor </h4>
                 <p> Based on the information you provided, it is very important that you speak to your doctor as soon as possible about your risk of having a heart attack or stroke. You should discuss things you can do to reduce your risk. </p>
             </div>
             {% endif %}
             {% if not user.userprofile.survey.has_detail_input %}
             <div class="alert alert-block alert-info">
                 <button type="button" class="close" data-dismiss="alert">×</button>
-                <h4>Enter Additional Information to Increase Results Accuracy </h4>
-                <p>In order to refine your risk estimate and present you with additional personalized suggestions for reducing your risk, you should fill out this quick section of additional details. There are just 6 to 7 quick questions about your family history, number of medications, and exercise habits.</p>
+                <h4>Enter additional information to increase results accuracy </h4>
+                <p>In order to refine your risk estimate and present you with additional personalized suggestions for reducing your risk, you should fill out this quick section of additional details. There are just six to seven quick questions about your family history, number of medications, and exercise habits.</p>
                 <p>
                     <a class="btn btn-danger" href="/assess/detail/">Enter this Information</a>
                 </p>
@@ -48,7 +48,7 @@
             {% if user.userprofile.is_anonymous %}
             <div class="alert alert-block alert-info">
                 <button type="button" class="close" data-dismiss="alert">×</button>
-                <h4>Register Now to Save These Results! </h4>
+                <h4>Register now to save these results! </h4>
                 <p>Since you're not logged in, your results will not be saved. Please consider registering in order to save your results, so that you can return to them later and update your information to see how your risk changes. All you need is your email address!</p>
                 <p>
                     <a class="btn btn-danger" href="/register/">Register Now!</a>

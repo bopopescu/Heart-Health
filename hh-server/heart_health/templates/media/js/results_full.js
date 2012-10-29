@@ -3,8 +3,20 @@ $('#results-pill').addClass('active');
 
 $('#percentile-more-button').popover({
     title: 'About Percentiles',
-    content: 'Your risk percentile relates your risk to other people of the same age and gender. If you are in the 90th percentile, then your risk of having a heart attack is greater than 90% of others with the same age and gender.'
+    content: 'Your risk percentile relates your risk to other people of the same age and gender. If you are in the 90th percentile, then your risk of having a heart attack is greater than 90% of others with the same age and gender.',
+    placement: 'top'
+}).click(function(evt) {
+    var popover = $(this).data('popover');
+    var shown = popover && popover.tip().is(':visible');
+    evt.stopPropagation();
+    if(shown) return;
+    $(this).popover('show');
 });
+
+$('html').on('click', function () {
+    $('#percentile-more-button').popover('hide');
+});
+
 
 function setUpperRatingMessage(){
   //var messages = ['Low', 'Medium', 'High', 'Very High', 'Extremely High'] 

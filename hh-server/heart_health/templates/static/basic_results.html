@@ -15,7 +15,7 @@
             {% if user.userprofile.survey.recommendation == 1 %}
             <div id="results-alert" class="alert alert-block alert-success">
                 <button type="button" class="close" data-dismiss="alert">×</button>
-                <h4>Consider Getting a Screening Test </h4>
+                <h4>Consider getting a screening test </h4>
                 <p> Based on just the information you gave us so far, we have calculated an estimate of your risk for Cardiovascular Disease. We have estimated that your risk is likely in a lower category. However, knowing the results of some common medical tests (cholesterol and blood pressure screening) can allow us to give you exact risk information and suggestions for what to do next. Please consider locating a screening location to have these tests done.</p>
                 <p>
                     <a class="btn btn-success margin-right-15" href="/assess/bio/">Enter this Information</a>
@@ -26,7 +26,7 @@
             {% if user.userprofile.survey.recommendation == 2 %}
             <div id="results-alert" class="alert alert-block alert-warn">
                 <button type="button" class="close" data-dismiss="alert">×</button>
-                <h4>It is Important That You Get a Screening Test </h4>
+                <h4> It is important that you get a screening test </h4>
                 <p> Based on just the information you gave us so far, we have calculated an estimate of your risk for Cardiovascular Disease. We have estimated that your risk could be high or very high. Knowing the results of some common medical tests (cholesterol and blood pressure screening) can allow us to give you exact risk information, and suggestions for what to do next. Because your risk could be dangerous, it is very important that you enter this information, so you can take action if necessary.</p>
                 <p>
                     <a class="btn btn-warning margin-right-15" href="/assess/bio/">Enter this Information</a>
@@ -37,7 +37,7 @@
             {% if user.userprofile.survey.recommendation == 3 %}
             <div id="results-alert" class="alert alert-block alert-danger">
                 <button type="button" class="close" data-dismiss="alert">×</button>
-                <h4>It is Urgent That You Get a Screening Test</h4>
+                <h4>It is urgent that you get a screening test</h4>
                 <p> Based on just the information you gave us so far, we have calculated an estimate of your risk for Cardiovascular Disease. We have estimated that your risk could be extremely high. Knowing the results of some common medical tests (cholesterol and blood pressure) can allow us to give you exact risk information, and suggestions for what to do next. Because your risk could be dangerous, it is extremely important that you enter this information.</p>
                 <p>
                     <a class="btn btn-danger margin-right-15" href="/assess/bio/">Enter this Information</a>
@@ -120,7 +120,7 @@
             <p class="lead"> Once you have the results to the screening test or from your doctor, enter the results to get your full and accurate risk assessment. Completing this step will also give you access to several personal risk reducing suggestions.</p>
             <button class="btn span6 margin-top-15 centered-span btn-large btn-block btn-danger" type="button" onclick="window.location.href='/assess/bio/'">Enter Your Screening Test Results</button>
             <h3> 3. Enter Additional Details: </h3> 
-            <p class="lead">In order to refine your risk estimate and present you with personalized suggestions for reducing your risk, you should fill out this section of additional information. There are just 6 to 7 quick questions about your family history, number of medications, and exercise habits.</p>
+            <p class="lead">In order to refine your risk estimate and present you with personalized suggestions for reducing your risk, you should fill out this section of additional information. There are just six to seven quick questions about your family history, number of medications, and exercise habits.</p>
             <button class="btn span6 margin-top-15 centered-span btn-large btn-block btn-danger" type="button" onclick="window.location.href='/assess/detail/'">Enter Additional Information</button>
 
         </div>

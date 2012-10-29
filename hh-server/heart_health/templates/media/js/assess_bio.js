@@ -19,8 +19,8 @@ $('.bp-help').popover({
     content: 'The first number in your blood pressure reading is your systolic blood pressure and the sceond number is your diastolic blood pressure. For example if your blood pressure is <strong>125/82</strong>, your systolic blood pressure is <strong>125</strong> and your diastolic pressure is <strong>82</strong>.'
 });
 
-function validateInputGroupInRange(id, low, high){
-    var validated = validateTextNumericInRange($('#' + id + ' input').val(), low, high)
+function validateInputGroupInRange(id, low, high, isFloat){
+    var validated = validateTextNumericInRange($('#' + id + ' input').val(), low, high, isFloat)
     if(!validated){
         $('#' + id).addClass('error');
         $('#' + id + ' .range-error').removeClass('hidden');
@@ -34,19 +34,19 @@ function validateInputGroupInRange(id, low, high){
 var validationFunction = function(formData, jqForm, options) {
     var validated = true;
     
-    validated = validateInputGroupInRange('systolic', 80, 220) && validated;
+    validated = validateInputGroupInRange('systolic', 80, 220, false) && validated;
     
-    validated = validateInputGroupInRange('diastolic', 40, 130) && validated;
+    validated = validateInputGroupInRange('diastolic', 40, 130, false) && validated;
    
-    validated = validateInputGroupInRange('cholesterol', 70, 500) && validated;
+    validated = validateInputGroupInRange('cholesterol', 70, 500, false) && validated;
     
-    validated = validateInputGroupInRange('hdl', 20, 130) && validated;
+    validated = validateInputGroupInRange('hdl', 20, 130, false) && validated;
     
-    validated = validateInputGroupInRange('ldl', 40, 400) && validated;
+    validated = validateInputGroupInRange('ldl', 40, 400, false) && validated;
     
     if($('#hba1c').length > 0){
         if($('#hba1c input').val().length > 0){
-            validated = validateInputGroupInRange('hba1c', 2, 16) && validated;
+            validated = validateInputGroupInRange('hba1c', 2, 16, true) && validated;
         }
     }
    
@@ -106,8 +106,12 @@ var warningCheck = function(responseText, statusText, xhr, form){
     }
 };
 
-function validateTextNumericInRange(text, min, max) {
+function validateTextNumericInRange(text, min, max, isFloat) {
         var value = parseInt(text, 10);
+        var positiveOrFloat = isPositiveInteger(text) || isFloat;
+        return (positiveOrFloat && !isNaN(value) && !isNaN(text) && value >= min && value <= max);
+}
 
-        return (!isNaN(value) && !isNaN(text) && value >= min && value <= max);
+function isPositiveInteger(val) {
+        return val == "0" || ((val | 0) > 0 && val % 1 == 0);
 }

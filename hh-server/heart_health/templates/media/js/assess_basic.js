@@ -111,7 +111,11 @@ $('.control-group input').keyup(function(event){
 function validateTextNumericInRange(text, min, max) {
         var value = parseInt(text, 10);
 
-        return (!isNaN(value) && !isNaN(text) && value >= min && value <= max);
+        return (isPositiveInteger(text) && !isNaN(value) && !isNaN(text) && value >= min && value <= max);
+}
+
+function isPositiveInteger(val) {
+        return val == "0" || ((val | 0) > 0 && val % 1 == 0);
 }
 
 function submitBasicQuestions(){

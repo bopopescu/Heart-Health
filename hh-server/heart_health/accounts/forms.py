@@ -16,8 +16,9 @@ class UserRegistrationForm(forms.Form):
     #email will be become username
     email = Email()
 
-    password1 = forms.CharField(widget=forms.PasswordInput(), label="Password")
-    password2 = forms.CharField(widget=forms.PasswordInput(), label="Repeat your password")
+    email.label = 'Email Address:'
+    password1 = forms.CharField(widget=forms.PasswordInput(), label="Password:")
+    password2 = forms.CharField(widget=forms.PasswordInput(), label="Confirm your password:")
     allow_notifications = forms.BooleanField(required=False, label="Allow email from Heart Health", initial=True)
     
     def clean_password(self):
