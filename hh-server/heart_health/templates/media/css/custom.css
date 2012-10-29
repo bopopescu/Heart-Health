@@ -26,6 +26,21 @@
     margin-bottom: 15px !important;
 }
 
+#share-buttons {
+    clear: both;
+    margin-top: 25px !important;
+}
+
+#share-buttons span {
+    float: left;
+}
+
+#share-text {
+    float: left;
+    clear: left;
+    margin-top: 10px;
+}
+
 body {
     margin-top: 35px;
 }
