@@ -2,7 +2,7 @@
 
 {% block title %}Heart Health - Enter Additional Details{% endblock %}
 {% block content %}
-<ul class="nav nav-tabs">
+<ul class="hidden-phone nav nav-tabs">
     <li>
         <a href="/assess/basic/">Basic Information</a>
     </li>
@@ -77,11 +77,11 @@
                 <span class="help-block">A heart attack is also called a myocardial infarction or MI.</span>
                 </label>
             </div>
-            <div id="wizard-both-buttons" class="row-fluid span10 centered-span margin-top-15 wizard-button-group">
+            <div id="wizard-both-buttons" class="row-fluid span10 hidden centered-span margin-top-15 wizard-button-group">
                 <button class="btn btn-large btn-danger span6 button-space-after" onclick="wizard.showPreviousStep()" type="button">Previous</button>
                 <button class="btn btn-large btn-danger span6" onclick="wizard.showNextStep()" type="button">Next</button>
             </div>
-            <div id="wizard-next-only" class="hidden span5 centered-span margin-top-15 wizard-button-group">
+            <div id="wizard-next-only" class="span5 centered-span margin-top-15 wizard-button-group">
                 <button class="btn btn-large btn-block btn-danger" type="button" onclick="wizard.showNextStep()">Next</button>
             </div>
             <div id="wizard-submit-group" class="hidden span10 centered-span row-fluid margin-top-15 wizard-button-group">

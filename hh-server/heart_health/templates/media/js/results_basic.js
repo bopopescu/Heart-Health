@@ -30,7 +30,7 @@ function setUpperRatingMessage(){
       colorClass = 'text-error';
   }
 
-  $('#upper-rating-' + absoluteRatingUpper).addClass(colorClass).removeClass('hidden-phone').css('font-size', '30px');
+  $('#upper-rating-' + absoluteRatingUpper).addClass(colorClass).removeClass('hidden-phone').addClass('selected-rating-level');
   $('.rating-color').addClass(colorClass);
 }
 setUpperRatingMessage();
