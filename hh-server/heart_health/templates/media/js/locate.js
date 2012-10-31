@@ -45,7 +45,7 @@ function setLocationIfAvailable(){
             geocoder.geocode({'latLng': currentLatLng}, function(results, status) {
               if (status == google.maps.GeocoderStatus.OK) {
                   if (results[1]) {
-                        $('#address-search').val(results[1].formatted_address);
+                        $('.address-input:visible').val(results[1].formatted_address);
                         currentAddress = results[1].formatted_address;
                         $('#search-alert').addClass('hidden');
                   } else {
@@ -294,7 +294,7 @@ function getContentForProvider(provider, includeDescription, floatDistance, incl
             htmlResult += '<br>' + provider.description + '<br>';
         }
         if(includeButton){
-            htmlResult += '<button class="btn btn-danger">Set As My Preferred Location</button>';
+            htmlResult += '<button class="btn btn-danger hidden-phone">Set As My Preferred Location</button>';
         }
         htmlResult += '</address>';
         return htmlResult;
@@ -336,7 +336,7 @@ var currentAddress = '';
 function searchAddress(){
     resetResults();
     $('#loading-spinner').removeClass('hidden');
-    var address = $('#address-search').val();
+    var address = $('.address-input:visible').val();
     currentAddress = address;
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({'address': address}, function(results, status) {
@@ -359,7 +359,7 @@ function searchAddress(){
 }
 
 // Pressing the enter key on the input should search the address
-$('#address-search').keyup(function(event){
+$('.address-input').keyup(function(event){
         if(event.keyCode == 13){
             event.preventDefault();
             searchAddress();

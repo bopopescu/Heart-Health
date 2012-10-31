@@ -18,11 +18,20 @@
                 <div id="search-alert-text">
                 </div>
             </div>
-            <button id="locate-button" class="btn span3" type="button" onclick="setLocationIfAvailable()"><i class="icon-globe"></i> Find Me</button>
-            <div class="input-append span8">
-                <input id="address-search" class="search-query span10" autocomplete="off" type="text" placeholder="Enter an Address">
-                <button id="search-button" onclick="searchAddress()" type="button" class="btn"><i class="icon-search"></i></button>
+            <div class="span11">
+                <button id="locate-button" class="btn span4" type="button" onclick="setLocationIfAvailable()"><i class="icon-globe"></i> Find Me</button>
+                <div id="location-search" class="input-append span8 hidden-phone">
+                    <input class="search-query span10 address-input" autocomplete="off" type="text" placeholder="Enter an Address">
+                    <button id="search-button" onclick="searchAddress()" type="button" class="btn"><i class="icon-search"></i></button>
+                </div>
             </div>
+            <div class="row-fluid span12 visible-phone">
+                <div>
+                    <input class="address-input" style="width: 100%;" autocomplete="off" type="text" placeholder="Enter an Address">
+                    <button id="search-button span4" onclick="searchAddress()" type="button" class="btn"><i class="icon-search"></i></button>
+                </div>
+            </div>
+
         </form>
 
         <div id="map_canvas_container" class="span11" style="height: 400px;">
@@ -82,7 +91,7 @@
         <div id="preferred-save-error" class="hidden alert alert-error">
             <a class="close" data-dismiss="alert" href="#">&times;</a>
             <h5>We're sorry!</h5>
-            An error has occurred saving your preferred location. Please try again.
+            An error has occurred saving your preferred location. Please try again. You may need to enable location tracking in your browser.
         </div>
         <p> If this is the most convenient location for you, mark it as your preferred location here. This will allow you to return later to the application (if you have <a href="/login/" target="_blank">logged in</a>) and view your chosen location. If you have enabled email notifications, we can send you a helpful reminder including information about this location.</p>
         <h4>Your Preferred Location: </h4>

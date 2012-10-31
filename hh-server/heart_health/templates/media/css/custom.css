@@ -136,6 +136,7 @@ li {
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
+
     .full-stretch-on-phone {
         width: 100% !important;
     }
@@ -153,10 +154,6 @@ li {
         width: 40px;
         height: 40px;
         margin-bottom: 2px;
-    }
-
-    #content .modal.fade.in {
-        top: 5%;
     }
 
     h1 {
@@ -222,11 +219,20 @@ li {
         float: none;
     }
 
+    #locate-button {
+        width: 100% !important;
+        margin-bottom: 10px;
+    }
+
+    #address-section-content {
+        height: auto !important;
+    }
+
 }
 
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
-    .btn {
+    .btn:not(#search-button) {
         width: 100% !important;
     }
     input {
@@ -245,6 +251,12 @@ li {
         margin-bottom: 10px;   
     }
 
+
+    #locate-button {
+        width: 100% !important;
+        margin-bottom: 10px;
+    }
+
 }
 
 /* Portrait tablet to landscape and desktop */
@@ -253,7 +265,7 @@ li {
         width: 35% !important;
     }
 
-    .btn {
+    .btn:not(#search-button) {
         width: 100% !important;
     }
 
@@ -263,6 +275,46 @@ li {
 
     .user-dropdown {
         margin-bottom: 10px;   
+    }
+
+    #locate-button {
+        width: 100% !important;
+        margin-bottom: 10px;
+    }
+
+    #location-search {
+        width: 90%;
+        margin-left: 0px;
+    }
+
+    #map-section {
+        margin-bottom: 20px;
+    }
+
+    #contact-link {
+        float: left;
+        margin-top: 10px;
+    }
+
+    #user-dropdown-container {
+        margin-top: 5px;
+        margin-bottom: 10px;   
+        width: 95% !important;
+    }
+
+    header {
+        width: 100% !important;
+    }
+
+    body {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    #mainwell {
+        padding-left: 5px;
+        padding-right: 5px;
+        width: 95%;
     }
 
 }
