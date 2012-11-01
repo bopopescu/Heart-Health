@@ -326,10 +326,6 @@ li {
 
 /* Large desktop */
 @media (min-width: 1200px) {
-    #testing-warning {
-        width: 100%;
-    }
-
     .user-dropdown {
         float: right !important;
     }
