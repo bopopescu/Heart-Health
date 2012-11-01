@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 from geopy import geocoders
 import simplejson as json
 from survey.models import Location
+import csv
 import logging
 
 logger = logging.getLogger(__name__)
@@ -14,9 +15,12 @@ class Command(BaseCommand):
     """
 
     def handle(self, *args, **options):
-        addLocationsToDB(args[0])
+        if args[0] == 'json':
+            addLocationsToDB_json(args[1])
+        if args[0] == 'csv':
+            add_locations_to_db_csv(args[1])
 
-def addLocationsToDB(filename):
+def addLocationsToDB_json(filename):
     json_data = open(filename).read()
     data = json.loads(json_data)
     
@@ -68,4 +72,61 @@ def addLocationsToDB(filename):
             location.longitude = provider['lon']
 
         location.save()
+
+def add_locations_to_db_csv(filename):
+    with open(filename, 'rb') as locations_file:
+        csv_reader = csv.reader(locations_file)
+        
+        is_first_row = True 
+        for provider in csv_reader:
+            if is_first_row:
+                is_first_row = False
+                continue
+
+            if provider[2]:
+                address2_string = str(provider[2])
+            else:
+                address2_string = ''
+
+            try:
+                location = Location.objects.get(name=str(provider[0]), address1=str(provider[1]), address2=address2_string, city=str(provider[3]), state=str(provider[4]), zip_code=str(provider[5])) 
+            except Location.DoesNotExist:
+                location = Location()
+
+            location.name = str(provider[0])
+            location.address1 = str(provider[1])
+            if provider[2]:
+                location.address2 = str(provider[2])
+            location.city = str(provider[3])
+            location.state = str(provider[4])
+            location.zip_code = str(provider[5])
+            if provider[6]:
+                location.cross_street = str(provider[6])
+            location.phone = str(provider[9])
+            location.url = str(provider[7])
+            if provider[8]:
+                location.url_caption = str(provider[8])
+            if provider[10]:
+                location.description = str(provider[10])
+            location.is_result = True 
+
+            if not provider[11] or not provider[12]:
+                geocoder =  geocoders.Google()
+                provider_loc_string = str(provider[1]) + ' '
+                if provider[2]:
+                    provider_loc_string += str(provider[2]) + ' '
+                provider_loc_string += str(provider[3]) + ' ' + str(provider[5])
+                try:
+                    place, (lat, lng) = geocoder.geocode(provider_loc_string)
+                    location.latitude = lat
+                    location.longitude = lng
+                except Exception as exception:
+                    logger.error('Location: ' + location.name + ' failed to be geocoded. Skipping this location. Error is: ' + str(exception))
+                    continue
+            else:
+                location.latitude = float(provider[11])
+                location.longitude = float(provider[12])
+
+            print "adding " + location.name + location.city + location.zip_code
+            location.save()
 

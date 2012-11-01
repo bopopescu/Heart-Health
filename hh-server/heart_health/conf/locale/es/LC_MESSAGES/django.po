@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-31 23:04-0400\n"
+"POT-Creation-Date: 2012-10-31 23:43-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,7 +101,9 @@ msgstr "Ingresar"
 msgid ""
 "This is important. Share Heart Health with your loved ones now. Help us save "
 "one"
-msgstr "Esto es importante. Compartir la salud del corazón con sus seres queridos ahora. Ayúdanos a salvar una "
+msgstr ""
+"Esto es importante. Compartir la salud del corazón con sus seres queridos "
+"ahora. Ayúdanos a salvar una "
 
 #: templates/static/base.html:125
 msgid "Contact Us"
@@ -128,8 +130,9 @@ msgstr ""
 "factores de riesgo para estas condiciones puede ser prevenida y controlada."
 
 #: templates/static/index.html:8
-msgid "Identify Your Risk of Cardiovascular Disease"
-msgstr "Identificar Su Riesgo de Enfermedad Cardiovascular"
+msgid "Heart Health Can Identify Your Risk of Cardiovascular Disease"
+msgstr ""
+"Salud del Corazón Puede Identificar Su Riesgo de Enfermedad Cardiovascular"
 
 #: templates/static/index.html:9
 msgid ""
@@ -160,11 +163,10 @@ msgstr ""
 "únicamente por profesionales de la salud."
 
 #: templates/static/index.html:10
-msgid ""
-"Simple Questions. Easy to Understand Results. Individualized Risk Analysis."
+msgid "Get Easy to Understand Results and Individualized Risk Analysis"
 msgstr ""
-"Preguntas sencillas. Fácil de Comprender los resultados. Análisis de Riesgo "
-"Individual."
+"Cómo Fácil de Comprender los Resultados y Análisis de Riesgos "
+"Individualizada"
 
 #: templates/static/index.html:11
 msgid ""
