@@ -1,0 +1,297 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-10-31 23:04-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: templates/static/base.html:45
+msgid "This is a testing application for the"
+msgstr "Esta es una aplicación de pruebas para la"
+
+#: templates/static/base.html:45
+msgid ""
+"and does not yet produce real data. After November 19th, if Heart Health is "
+"chosen as a finalist, this application will display real results!"
+msgstr ""
+"y todavía no produce datos reales. Después de 19 de noviembre, si la salud "
+"del corazón es elegido como finalista, esta aplicación mostrará resultados "
+"reales!"
+
+#: templates/static/base.html:54
+msgid "Health"
+msgstr "Salud Del Corazón"
+
+#: templates/static/base.html:56
+msgid "Interactive Risk Assessment for Heart Attacks and Strokes"
+msgstr ""
+"Evaluación de Riesgos interactivo para los ataques cardíacos y accidentes "
+"cerebrovasculares"
+
+#: templates/static/base.html:57
+msgid "Risk Assessment for Heart Attacks and Strokes"
+msgstr ""
+"Evaluación de Riesgos interactivo para los ataques cardíacos y accidentes "
+"cerebrovasculares"
+
+#: templates/static/base.html:64 templates/static/base.html.py:103
+msgid "Take The Assessment"
+msgstr "Realice la Evaluación"
+
+#: templates/static/base.html:65 templates/static/base.html.py:93
+#: templates/static/base.html:104
+msgid "Locate a Screening Location"
+msgstr "Ubique un Lugar de Proyección"
+
+#: templates/static/base.html:66 templates/static/base.html.py:94
+#: templates/static/base.html:105
+msgid "View Your Results"
+msgstr "Vea los Resultados"
+
+#: templates/static/base.html:75
+msgid "Not Logged In"
+msgstr "No Has Iniciado Sesión"
+
+#: templates/static/base.html:82
+msgid "Register to Save Your Information"
+msgstr "Regístrese para Guardar la Información"
+
+#: templates/static/base.html:83
+msgid "Clear Your Information"
+msgstr "Borrar Su Información"
+
+#: templates/static/base.html:86
+msgid "Enter Basic Information"
+msgstr "Introduzca la Información Básica"
+
+#: templates/static/base.html:88
+msgid "Enter Screening Test Results"
+msgstr "Ingrese Test de Cribado"
+
+#: templates/static/base.html:91
+msgid "Enter Additional Information"
+msgstr "Registro de Información Adicional"
+
+#: templates/static/base.html:97
+msgid "Log Out"
+msgstr "Finalizar la Sesión"
+
+#: templates/static/base.html:100
+msgid "Register"
+msgstr "Registro"
+
+#: templates/static/base.html:101
+#: templates/static/registration/password_reset_complete.html:12
+msgid "Log In"
+msgstr "Ingresar"
+
+#: templates/static/base.html:123
+msgid ""
+"This is important. Share Heart Health with your loved ones now. Help us save "
+"one"
+msgstr "Esto es importante. Compartir la salud del corazón con sus seres queridos ahora. Ayúdanos a salvar una "
+
+#: templates/static/base.html:125
+msgid "Contact Us"
+msgstr "Contáctenos"
+
+#: templates/static/index.html:4
+msgid "Heart Health"
+msgstr "Salud del Corazón"
+
+#: templates/static/index.html:6
+msgid "Over 2,000,000 Heart Attacks and Strokes Occur Each Year in the US"
+msgstr ""
+"Más de 2.000.000 ataques cardíacos y accidentes cerebrovasculares se "
+"producen cada año en los EE.UU."
+
+#: templates/static/index.html:7
+msgid ""
+"Heart disease and stroke are an epidemic in the United States today. "
+"However, many of the major risk factors for these conditions can be "
+"prevented and controlled."
+msgstr ""
+"Las enfermedades cardíacas y los accidentes cerebrovasculares son una "
+"epidemia en los Estados Unidos hoy. Sin embargo, muchos de los principales "
+"factores de riesgo para estas condiciones puede ser prevenida y controlada."
+
+#: templates/static/index.html:8
+msgid "Identify Your Risk of Cardiovascular Disease"
+msgstr "Identificar Su Riesgo de Enfermedad Cardiovascular"
+
+#: templates/static/index.html:9
+msgid ""
+"It is extremely important for Americans to understand their risk of "
+"cardiovascular disease so that they can take action to prevent it. The"
+msgstr ""
+"Es extremadamente importante que los estadounidenses entiendan el riesgo de "
+"enfermedad cardiovascular, para que puedan tomar medidas para prevenirlo. La"
+
+#: templates/static/index.html:9
+msgid ""
+"campaign is a national initiative to prevent 1 million heart attacks and "
+"strokes over five years. As part of the initiative, this application has "
+"been granted access to use the"
+msgstr ""
+"campaña es una iniciativa nacional para prevenir 1 millón de ataques "
+"cardíacos y accidentes cerebrovasculares en cinco años. Como parte de la "
+"iniciativa, esta aplicación se ha concedido acceso al uso de la"
+
+#: templates/static/index.html:9
+msgid ""
+"to calculate individualized risk. This platform has never before been made "
+"available to the general public. It has previously only been accessed by "
+"health care professionals."
+msgstr ""
+"para calcular el riesgo individual. Esta plataforma nunca antes ha sido "
+"puesta a disposición del público en general. Anteriormente ha sido visitada "
+"únicamente por profesionales de la salud."
+
+#: templates/static/index.html:10
+msgid ""
+"Simple Questions. Easy to Understand Results. Individualized Risk Analysis."
+msgstr ""
+"Preguntas sencillas. Fácil de Comprender los resultados. Análisis de Riesgo "
+"Individual."
+
+#: templates/static/index.html:11
+msgid ""
+"Just by answering a few simple questions, this assessment can give you a "
+"good sense of your risk right up front. After this initial assessment, Heart "
+"Health can help you find testing facilities to collect additional data to "
+"get a more accurate picture of your cardiovascular disease risk. This is "
+"important. If we're going to prevent one million heart attacks and strokes "
+"in five years, we need your help. Let's get started!"
+msgstr ""
+"Sólo respondiendo a unas sencillas preguntas, esta evaluación puede dar una "
+"buena idea de su riesgo a la derecha en la delantera. Después de esta "
+"evaluación inicial, la salud del corazón puede ayudar a encontrar las "
+"instalaciones de prueba para reunir datos adicionales para obtener una "
+"imagen más precisa de su riesgo de enfermedad cardiovascular. Esto es "
+"importante. Si vamos a evitar millón ataques cardíacos y accidentes "
+"cerebrovasculares en cinco años, necesitamos su ayuda. Vamos a empezar!"
+
+#: templates/static/index.html:13
+msgid "Begin the Assessment!"
+msgstr "Comienza la Evaluación!"
+
+#: templates/static/registration/password_change_done.html:4
+#: templates/static/registration/password_change_done.html:8
+msgid "Password change successful"
+msgstr "Cambio de contraseña exitoso"
+
+#: templates/static/registration/password_change_done.html:10
+msgid "Your password was changed."
+msgstr "Su contraseña se ha cambiado."
+
+#: templates/static/registration/password_change_form.html:5
+#: templates/static/registration/password_change_form.html:9
+msgid "Password change"
+msgstr "Cambio de contraseña"
+
+#: templates/static/registration/password_change_form.html:11
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+"Introduzca su antigua contraseña, por razones de seguridad, a continuación, "
+"introduzca la contraseña nueva dos veces para que podamos verificar que la "
+"ha escrito correctamente."
+
+#: templates/static/registration/password_change_form.html:18
+#: templates/static/registration/password_reset_confirm.html:20
+msgid "Change my password"
+msgstr "Cambiar mi contraseña"
+
+#: templates/static/registration/password_reset_complete.html:4
+#: templates/static/registration/password_reset_complete.html:8
+msgid "Password Reset Complete"
+msgstr "Cambiar Contraseña Completa"
+
+#: templates/static/registration/password_reset_complete.html:10
+msgid "Your password has been set.  You may go ahead and log in now."
+msgstr ""
+"Su contraseña ha sido ajustada. Usted puede seguir adelante e iniciar sesión "
+"ahora."
+
+#: templates/static/registration/password_reset_confirm.html:5
+#: templates/static/registration/password_reset_form.html:5
+#: templates/static/registration/password_reset_form.html:9
+msgid "Password Reset"
+msgstr "Cambiar Contraseña"
+
+#: templates/static/registration/password_reset_confirm.html:11
+msgid "Enter New Password"
+msgstr "Escriba la Nueva Contraseña"
+
+#: templates/static/registration/password_reset_confirm.html:13
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr ""
+"Introduzca su nueva contraseña dos veces para que podamos verificar que la "
+"ha escrito correctamente."
+
+#: templates/static/registration/password_reset_confirm.html:26
+msgid "Password Reset Unsuccessful"
+msgstr "Cambiar Contraseña Incorrecta"
+
+#: templates/static/registration/password_reset_confirm.html:28
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
+msgstr ""
+"El enlace de restablecimiento de contraseña no es válido, posiblemente "
+"porque ya ha sido utilizada. Solicite un restablecimiento de contraseña "
+"nueva."
+
+#: templates/static/registration/password_reset_done.html:4
+#: templates/static/registration/password_reset_done.html:8
+msgid "Password Reset Successful"
+msgstr "Cambiar Contraseña Exitosa"
+
+#: templates/static/registration/password_reset_done.html:10
+msgid "Your password has been changed."
+msgstr "Su contraseña ha sido cambiada."
+
+#: templates/static/registration/password_reset_email.html:2
+msgid "You're receiving this e-mail because you requested a password reset"
+msgstr ""
+"Usted está recibiendo este correo electrónico porque ha solicitado un "
+"restablecimiento de contraseña"
+
+#: templates/static/registration/password_reset_email.html:3
+msgid "for your user account at Heart Health"
+msgstr "para su cuenta de usuario en la Salud del Corazón"
+
+#: templates/static/registration/password_reset_email.html:5
+msgid "Please go to the following page and choose a new password:"
+msgstr "Por favor, vaya a la siguiente página y escoger una nueva contraseña:"
+
+#: templates/static/registration/password_reset_email.html:10
+msgid "Thanks for taking the Heart Health Assessment!"
+msgstr "Gracias por tomarte la Evaluación de la Salud Corazón!"
+
+#: templates/static/registration/password_reset_form.html:11
+msgid ""
+"Did you forget your password? Please enter your e-mail address below, and "
+"we'll e-mail instructions for setting a new one."
+msgstr ""
+"¿Olvidó su contraseña? Introduzca su dirección de correo electrónico, y te "
+"enviaremos las instrucciones para configurar una nueva."
+
+#: templates/static/registration/password_reset_form.html:18
+msgid "Reset my password"
+msgstr "Cambiar mi contraseña"

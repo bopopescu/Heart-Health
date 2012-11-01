@@ -32,6 +32,13 @@ LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
+LANGUAGES = (
+    ('es', 'Spanish'),
+    ('en', 'English')
+)
+
+LOCALE_PATHS = ( "/home/matt/Projects/Heart-Health/hh-server/heart_health/conf/locale/",)
+
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
@@ -94,6 +101,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )

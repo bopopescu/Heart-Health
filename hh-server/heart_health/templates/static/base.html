@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<head>
@@ -41,7 +42,7 @@
 	  <div>
         <div class="row-fluid">
             <div id="testing-warning" class="alert alert-error center-text">
-                This is a testing application for the <a href="http://www.health2con.com/devchallenge/million-hearts-risk-check-challenge/">Million Hearts Risk Check Challenge</a> and does not yet produce real data. After November 19th, if Heart Health is chosen as a finalist, this application will display real results!
+               {% trans "This is a testing application for the" %} <a href="http://www.health2con.com/devchallenge/million-hearts-risk-check-challenge/">Million Hearts Risk Check Challenge</a> {% trans "and does not yet produce real data. After November 19th, if Heart Health is chosen as a finalist, this application will display real results!" %}
             </div>
         </div>
 	 	<div class="row-fluid">
@@ -50,19 +51,19 @@
 			<header class="span8">
                 <div class="row-fluid">
                     <a href='/'><img class="title-heart-image" src="{{ STATIC_URL }}img/heart-pulse-100.png"/></a>
-                    <a href="/" class="title-text"><h1>Health</h1></a>
+                    <a href="/" class="title-text"><h1>{% trans "Health" %}</h1></a>
                 </div>
-                <p class="lead hidden-phone"> Interactive Risk Assesment for Heart Attacks and Strokes </p>
-                <p class="lead visible-phone"> Risk Assesment for Heart Attacks and Strokes </p>
+                <p class="lead hidden-phone">{% trans "Interactive Risk Assessment for Heart Attacks and Strokes" %} </p>
+                <p class="lead visible-phone">{% trans "Risk Assessment for Heart Attacks and Strokes" %} </p>
 			</header>
              </div>
 		</div>
         <div class="row-fluid">
             <div class="span1 hidden-phone hidden-tablet"></div>
                 <ul class="nav nav-pills span8 hidden-phone hidden-tablet">
-                    <li id="assess-pill"><a href="/assess/basic/"><i class="icon-pencil"></i> Take The Assessment</a></li>
-                    <li id="locate-pill"><a href="/locate/"><i class="icon-globe"></i> Locate a Screening Location</a></li>
-                    <li id="results-pill"><a href="/results/"><i class="icon-heart"></i> View Your Results</a></li>
+                    <li id="assess-pill"><a href="/assess/basic/"><i class="icon-pencil"></i> {% trans "Take The Assessment" %}</a></li>
+                    <li id="locate-pill"><a href="/locate/"><i class="icon-globe"></i> {% trans "Locate a Screening Location" %}</a></li>
+                    <li id="results-pill"><a href="/results/"><i class="icon-heart"></i>{% trans "View Your Results" %}</a></li>
                 </ul>
                 <div id="user-dropdown-container" class="span2">
                     <div class="btn-group user-dropdown">
@@ -71,37 +72,37 @@
                             {% if user.is_authenticated and not user.userprofile.is_anonymous %}
                                 {{ user.username }}
                             {% else %}
-                                Not Logged In
+                                {% trans "Not Logged In" %}
                             {% endif %}
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
                             {% if user.is_authenticated %}
                                 {% if user.userprofile.is_anonymous %}
-                                <li><a href="/register/">Register to Save Your Information</a></li>
-                                <li><a href="/logout/">Clear Your Information</a></li>
+                                <li><a href="/register/"> {% trans "Register to Save Your Information" %}</a></li>
+                                <li><a href="/logout/"> {% trans "Clear Your Information" %}</a></li>
                                 <li class="divider"></li>
                                 {% endif %}
-                                <li><a href="/assess/basic/"><i class="icon-pencil"></i> Enter Basic Information</a></li>
+                                <li><a href="/assess/basic/"><i class="icon-pencil"></i> {% trans "Enter Basic Information" %}</a></li>
                                 {% if user.userprofile.survey.has_basic_input %}
-                                <li><a href="/assess/bio/"><i class="icon-pencil"></i> Enter Screening Test Results</a></li>
+                                <li><a href="/assess/bio/"><i class="icon-pencil"></i> {% trans "Enter Screening Test Results" %}</a></li>
                                 {% endif %}
                                 {% if user.userprofile.survey.has_bio_input %}
-                                <li><a href="/assess/detail/"><i class="icon-pencil"></i> Enter Additional Information</a></li>
+                                <li><a href="/assess/detail/"><i class="icon-pencil"></i> {% trans "Enter Additional Information" %}</a></li>
                                 {% endif %}
-                                <li><a href="/locate/"><i class="icon-globe"></i> Locate a Screening Location</a></li>
-                                <li><a href="/results/"><i class="icon-heart"></i> View Your Results</a></li>
+                                <li><a href="/locate/"><i class="icon-globe"></i> {% trans "Locate a Screening Location" %}</a></li>
+                                <li><a href="/results/"><i class="icon-heart"></i> {% trans "View Your Results" %}</a></li>
                                 {% if not user.userprofile.is_anonymous %}
                                 <li class="divider"></li>
-                                <li><a href="/logout/">Log Out</a></li>
+                                <li><a href="/logout/">{% trans "Log Out" %}</a></li>
                                 {% endif %}
                             {% else %}
-                                <li><a href="/register/">Register </a></li>
-                                <li><a href="/login/">Log In</a></li>
+                                <li><a href="/register/">{% trans "Register" %} </a></li>
+                                <li><a href="/login/">{% trans "Log In" %}</a></li>
                                 <li class="divider"></li>
-                                <li><a href="/assess/basic/"><i class="icon-pencil"></i> Take The Assessment</a></li>
-                                <li><a href="/locate/"><i class="icon-globe"></i> Locate a Screening Location</a></li>
-                                <li><a href="/results/"><i class="icon-heart"></i> View Your Results</a></li>
+                                <li><a href="/assess/basic/"><i class="icon-pencil"></i> {% trans "Take The Assessment" %}</a></li>
+                                <li><a href="/locate/"><i class="icon-globe"></i> {% trans "Locate a Screening Location" %}</a></li>
+                                <li><a href="/results/"><i class="icon-heart"></i> {% trans "View Your Results" %}</a></li>
                             {% endif %}
                         </ul>
                      </div>
@@ -119,8 +120,20 @@
                   <span class='st_email_hcount' st_title="Heart Health" st_url="http://www.hearthealthapp.com/" st_summary="Find your risk of having a heart attack or stroke in the next five years for free!" displayText='Email'></span>
                   <span class='st_reddit_hcount' st_title="Heart Health" st_url="http://www.hearthealthapp.com/" st_summary="Find your risk of having a heart attack or stroke in the next five years for free!" displayText='Reddit'></span>
                   <span class='st_googleplus_hcount' st_title="Heart Health" st_url="http://www.hearthealthapp.com/" st_summary="Find your risk of having a heart attack or stroke in the next five years for free!" displayText='Google +'></span>
-                  <span id="share-text">This is important. Share Heart Health with your loved ones now. Help us save one <a target="_blank" href="http://millionhearts.hhs.gov/">Million Hearts&trade;</a></span>
-                  <div id="contact-link"><a href="mailto:support@hearthealthapp.com">Contact Us</a></div>
+                  <span id="share-text">{% trans "This is important. Share Heart Health with your loved ones now. Help us save one" %} <a target="_blank" href="http://millionhearts.hhs.gov/">Million Hearts&trade;</a></span>
+                  <div id="contact-link">
+                      <a href="mailto:support@hearthealthapp.com">{% trans "Contact Us" %} </a>
+                       <form name="setLangEnglish" action="/i18n/setlang/" method="POST">{% csrf_token %}
+                         <input name="next" type="hidden" value="/" />
+                         <input type="hidden" name="language" value="en" />
+                         <a href="#" onclick="document.setLangEnglish.submit();return false;">English</a>
+                       </form>
+                       <form name="setLangSpanish" action="/i18n/setlang/" method="POST">{% csrf_token %}
+                         <input name="next" type="hidden" value="/" />
+                         <input type="hidden" name="language" value="es" />
+                         <a href="#" onclick="document.setLangSpanish.submit();return false;">Espa&#241;ol</a>
+                       </form>
+                    </div>
               </div>
 
         

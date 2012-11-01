@@ -29,6 +29,7 @@ urlpatterns = patterns('',
             name='registration_register'
         ),
     url(r'^', include('registration.backends.default.urls')),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 
     # Examples:
     # url(r'^$', 'heart_health.views.home', name='home'),
