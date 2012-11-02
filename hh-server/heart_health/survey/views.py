@@ -16,6 +16,9 @@ def index(request):
 	return render_to_response('index.html', locals(), context_instance=RequestContext(request))
 
 def assess(request):
+    if request.user.is_anonymous:
+        return HttpResponseRedirect('/assess/basic/')    
+
     if request.user.userprofile.survey.has_basic_input():
         if not request.user.userprofile.survey.has_bio_input():
             return HttpResponseRedirect('/assess/bio/')    
