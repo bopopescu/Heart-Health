@@ -19,6 +19,11 @@ class Command(BaseCommand):
             addLocationsToDB_json(args[1])
         if args[0] == 'csv':
             add_locations_to_db_csv(args[1])
+        if args[0] == 'delete':
+            delete_saved_locations()
+
+def delete_saved_locations():
+    Location.objects.all().delete()
 
 def addLocationsToDB_json(filename):
     json_data = open(filename).read()
