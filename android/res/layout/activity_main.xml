@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <LinearLayout android:id="@+id/loading_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+        
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Heart Health"
+        android:textStyle="bold"
+        android:textSize="28dp"
+        android:layout_marginBottom="10dp" />
+
+    <ImageView android:layout_height="wrap_content"
+        	    android:layout_width="wrap_content"
+        	    android:src="@drawable/heart_pulse"
+        	    android:layout_marginBottom="25dp" />
+    
+    <ProgressBar android:layout_width="wrap_content"
+        		 android:layout_height="wrap_content"
+        		 style="?android:attr/progressBarStyleSmall"
+        		 android:layout_gravity="center"/>
+    
+    </LinearLayout>
+    
+    <WebView 
+       	android:id="@+id/webview" 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+		android:visibility="gone"/>
+
+</RelativeLayout>
