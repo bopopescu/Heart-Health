@@ -148,6 +148,9 @@ class Survey(models.Model):
                 self.elevated_cholesterol is not None and
                 self.doctor_recommendation is not None)
 
+    def has_invalid_results(self):
+        return (self.u_risk == 0 or self.u_risk == '') and (self.risk == 0 or self.risk == '' or self.risk is None)
+
     def get_basic_results(self):
         params = {'age': self.age, 'gender': str(self.gender), 'height': self.height, 'weight': self.weight, 'smoker': str(self.smoker).lower(), 'mi': str(self.mi).lower(), 'diabetes': str(self.diabetes).lower(), 'stroke': str(self.stroke).lower(), 'trackingid': str(self.trackingid)}  
         encoded_args = urllib.urlencode(params)
@@ -158,19 +161,19 @@ class Survey(models.Model):
         risk_array = response['Risk']
         for risk_obj in risk_array:
             if risk_obj['riskType'] == 'UpperBoundCVD':
-                self.u_risk = risk_obj['risk']
-                self.u_risk_percentile = risk_obj['riskPercentile']
-                self.u_comparison_risk = risk_obj['comparisonRisk']
-                self.u_rating_for_age = risk_obj['ratingForAge']
-                self.u_rating = risk_obj['rating']
+                self.u_risk = get_num_from_dict_or_zero(risk_obj, 'risk')
+                self.u_risk_percentile = get_num_from_dict_or_zero(risk_obj, 'riskPercentile')
+                self.u_comparison_risk = get_num_from_dict_or_zero(risk_obj, 'comparisonRisk')
+                self.u_rating_for_age = get_num_from_dict_or_zero(risk_obj, 'ratingForAge')
+                self.u_rating = get_num_from_dict_or_zero(risk_obj, 'rating')
             if risk_obj['riskType'] == 'LowerBoundCVD':
-                self.l_risk = risk_obj['risk']
-                self.l_risk_percentile = risk_obj['riskPercentile']
-                self.l_comparison_risk = risk_obj['comparisonRisk']
-                self.l_rating_for_age = risk_obj['ratingForAge']
-                self.l_rating = risk_obj['rating']
+                self.l_risk = get_num_from_dict_or_zero(risk_obj, 'risk')
+                self.l_risk_percentile = get_num_from_dict_or_zero(risk_obj, 'riskPercentile')
+                self.l_comparison_risk = get_num_from_dict_or_zero(risk_obj, 'comparisonRisk')
+                self.l_rating_for_age = get_num_from_dict_or_zero(risk_obj, 'ratingForAge')
+                self.l_rating = get_num_from_dict_or_zero(risk_obj, 'rating')
 
-        self.recommendation = response['Recommendation']
+        self.recommendation = get_num_from_dict_or_zero(response, 'Recommendation')
 
         self.is_stale = False
 
@@ -194,7 +197,6 @@ class Survey(models.Model):
 
         encoded_args = urllib.urlencode(params)
         response = json.loads(urllib2.urlopen(INDIGO_URL, encoded_args).read())
-        print response
 
         if len(response['ErrorMessageHashMap']) > 1:
              logger.error('Error while getting bio results: ' + json.dumps(response['ErrorMessageHashMap'])) 
@@ -202,13 +204,13 @@ class Survey(models.Model):
         risk_array = response['Risk']
         for risk_obj in risk_array:
             if risk_obj['riskType'] == 'CVD':
-                self.risk = risk_obj['risk']
-                self.risk_percentile = risk_obj['riskPercentile']
-                self.comparison_risk = risk_obj['comparisonRisk']
-                self.rating_for_age = risk_obj['ratingForAge']
-                self.rating = risk_obj['rating']
+                self.risk = get_from_dict_or_none(risk_obj, 'risk')
+                self.risk_percentile = get_num_from_dict_or_zero(risk_obj, 'riskPercentile')
+                self.comparison_risk = get_num_from_dict_or_zero(risk_obj, 'comparisonRisk')
+                self.rating_for_age = get_num_from_dict_or_zero(risk_obj, 'ratingForAge')
+                self.rating = get_num_from_dict_or_zero(risk_obj, 'rating')
 
-        self.doctor_recommendation = response['DoctorRecommendation']
+        self.doctor_recommendation = get_num_from_dict_or_zero(response, 'DoctorRecommendation')
  
         # For these outputs, I'm not positive they will be returned, so I will use get() since it returns none
         # if the output doesn't exist
@@ -241,8 +243,15 @@ admin.site.register(Survey)
 
 def get_from_dict_or_none(dictionary, key):
     result = dictionary.get(key)
-    if(result == ''):
+    if(result == '' or result == 'Not Available'):
         return None
+    else:
+        return result
+
+def get_num_from_dict_or_zero(dictionary, key):
+    result = dictionary[key]
+    if result == 'Not Available':
+        return 0
     else:
         return result
 

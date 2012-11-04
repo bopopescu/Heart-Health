@@ -63,7 +63,9 @@
                 <ul class="nav nav-pills span8 hidden-phone hidden-tablet">
                     <li id="assess-pill"><a href="/assess/basic/"><i class="icon-pencil"></i> {% trans "Take The Assessment" %}</a></li>
                     <li id="locate-pill"><a href="/locate/"><i class="icon-globe"></i> {% trans "Locate a Screening Location" %}</a></li>
-                    <li id="results-pill"><a href="/results/"><i class="icon-heart"></i>{% trans "View Your Results" %}</a></li>
+                    {% if user.userprofile.survey.has_basic_input %}
+                    <li id="results-pill"><a href="/results/"><i class="icon-heart"></i> {% trans "View Your Results" %}</a></li>
+                    {% endif %}
                 </ul>
                 <div id="user-dropdown-container" class="span2">
                     <div class="btn-group user-dropdown">
@@ -91,7 +93,9 @@
                                 <li><a href="/assess/detail/"><i class="icon-pencil"></i> {% trans "Enter Additional Information" %}</a></li>
                                 {% endif %}
                                 <li><a href="/locate/"><i class="icon-globe"></i> {% trans "Locate a Screening Location" %}</a></li>
+                                {% if user.userprofile.survey.has_basic_input %}
                                 <li><a href="/results/"><i class="icon-heart"></i> {% trans "View Your Results" %}</a></li>
+                                {% endif %}
                                 {% if not user.userprofile.is_anonymous %}
                                 <li class="divider"></li>
                                 <li><a href="/logout/">{% trans "Log Out" %}</a></li>
@@ -102,7 +106,9 @@
                                 <li class="divider"></li>
                                 <li><a href="/assess/basic/"><i class="icon-pencil"></i> {% trans "Take The Assessment" %}</a></li>
                                 <li><a href="/locate/"><i class="icon-globe"></i> {% trans "Locate a Screening Location" %}</a></li>
+                                {% if user.userprofile.survey.has_basic_input %}
                                 <li><a href="/results/"><i class="icon-heart"></i> {% trans "View Your Results" %}</a></li>
+                                {% endif %}
                             {% endif %}
                         </ul>
                      </div>

@@ -34,7 +34,7 @@
                 <p> Based on the information you provided, it is important that you speak to your doctor about your risk of having a heart attack or stroke. You should discuss steps to reduce your risk. </p>
             </div>
             {% endif %}
-            {% if user.userprofile.survey.recommendation == 3 %}
+            {% if user.userprofile.survey.doctor_recommendation == 3 %}
             <div id="results-alert" class="alert alert-block alert-danger">
                 <button type="button" class="close" data-dismiss="alert">×</button>
                 <h4>It is urgent that you discuss your heart attack risk with a doctor </h4>

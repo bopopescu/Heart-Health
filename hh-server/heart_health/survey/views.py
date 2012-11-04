@@ -154,6 +154,8 @@ def results_basic(request):
         return render_to_response('results_loading.html', locals(), context_instance=RequestContext(request))
     if not request.user.userprofile.survey.has_basic_results():
         return render_to_response('results_loading.html', locals(), context_instance=RequestContext(request))
+    if request.user.userprofile.survey.has_invalid_results():
+        return render_to_response('results_loading.html', locals(), context_instance=RequestContext(request))
     else:
         return render_to_response('basic_results.html', locals(), context_instance=RequestContext(request))
 
@@ -161,6 +163,8 @@ def results_full(request):
     if not hasattr(request.user, 'userprofile'):
         return render_to_response('results_loading.html', locals(), context_instance=RequestContext(request))
     if not request.user.userprofile.survey.has_full_results():
+        return render_to_response('results_loading.html', locals(), context_instance=RequestContext(request))
+    if request.user.userprofile.survey.has_invalid_results():
         return render_to_response('results_loading.html', locals(), context_instance=RequestContext(request))
     else:
         return render_to_response('full_results.html', locals(), context_instance=RequestContext(request))
@@ -173,6 +177,9 @@ def get_results(request):
     if not request.user.is_authenticated():
         return HttpResponse(json.dumps({"success": False, "message": 'You have not taken the assessment yet, please <a href="/assess/basic/"> take the assessment</a> or <a href="/login/"> log in </a> to see your results.'}))
 
+    if not hasattr(request.user, 'userprofile'):
+        return HttpResponse(json.dumps({"success": False, "message": 'You have not taken the assessment yet, please <a href="/assess/basic/"> take the assessment</a> or <a href="/login/"> log in </a> to see your results.'}))
+
     if not hasattr(request.user.userprofile, 'survey'):
         return HttpResponse(json.dumps({"success": False, "message": 'You have not taken the assessment yet, please <a href="/assess/basic/"> take the assessment</a> or <a href="/login/"> log in </a> to see your results.'}))
 
@@ -183,12 +190,21 @@ def get_results(request):
     if request.user.userprofile.survey.has_bio_input():
         if (not request.user.userprofile.survey.has_full_results()) or request.user.userprofile.survey.is_stale:
             request.user.userprofile.survey.get_bio_results()
+
+        if request.user.userprofile.survey.has_invalid_results():
+            return HttpResponse(json.dumps({"success": False, "message": 'Unfortunately, definitive results were not available using the information you gave us about yourself. Please double check that you have entered the right information. If you have, then we\'re sorry that we can\'t provide a risk assessment right now. Feel free to <a href="mailto:support@hearthealthapp.com">contact us</a> about this.'}))
+
         return HttpResponse(json.dumps({"success": True, "redirect": "/results/full/"}))
 
     if (not request.user.userprofile.survey.has_basic_results()) or request.user.userprofile.survey.is_stale:
         request.user.userprofile.survey.get_basic_results()
+        if request.user.userprofile.survey.has_invalid_results():
+            return HttpResponse(json.dumps({"success": False, "message": 'Unfortunately, definitive results were not available using the information you gave us about yourself. Please double check that you have entered the right information. If you have, then we\'re sorry that we can\'t provide a risk assessment right now. Feel free to <a href="mailto:support@hearthealthapp.com">contact us</a> about this.'}))
         return HttpResponse(json.dumps({"success": True, "redirect": "/results/basic/"}))
+
     else:
+        if request.user.userprofile.survey.has_invalid_results():
+            return HttpResponse(json.dumps({"success": False, "message": 'Unfortunately, definitive results were not available using the information you gave us about yourself. Please double check that you have entered the right information. If you have, then we\'re sorry that we can\'t provide a risk assessment right now. Feel free to <a href="mailto:support@hearthealthapp.com">contact us</a> about this.'}))
         return HttpResponse(json.dumps({"success": True, "redirect": "/results/basic/"}))
 
 def create_user_if_anonymous(request):
