@@ -284,7 +284,10 @@ function getContentForProvider(provider, includeDescription, floatDistance, incl
         var formattedZip = provider.zip.substr(0,5);
         htmlResult += provider.city + ' ' + provider.state + ' ' + formattedZip + '<br>'; 
         if(provider.phone){
-            var formattedPhone = '(' + provider.phone.substr(0, 3) + ')' + '-' + provider.phone.substr(3, 3) + '-' + provider.phone.substr(6,4)
+            var formattedPhone = provider.phone;
+            if(provider.phone.indexOf(')') == -1){
+                var formattedPhone = '(' + provider.phone.substr(0, 3) + ')' + '-' + provider.phone.substr(3, 3) + '-' + provider.phone.substr(6,4)
+            }
             htmlResult += formattedPhone + '<br>';
         }
         if(provider.url){
