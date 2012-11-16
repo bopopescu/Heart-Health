@@ -35,6 +35,10 @@ function setUpperRatingMessage(){
 }
 setUpperRatingMessage();
 
+function nextTab(){
+    $('#nexttab').tab('show');
+}
+
 /*
 function setUpperRatingBar(){
     var highestWidth = absoluteRatingUpper * 20;

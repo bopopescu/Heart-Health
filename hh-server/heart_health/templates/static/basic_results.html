@@ -103,6 +103,8 @@
             </div>
             <p class="lead"> Your risk could be in the <strong class="rating-color">{{ user.userprofile.survey.u_risk_percentile|floatformat:"0"|ordinal }}</strong> percentile for {{ user.userprofile.survey.gender_group_string }} in your age group. <a id="percentile-more-button">Learn More</a> </p>
 
+            <button class="btn span6 margin-top-15 centered-span btn-large btn-block btn-danger button-space-after hidden" style="padding-right: 20px;" type="button" onclick="nextTab();">What To Do Next  <i class="icon-chevron-right icon-white" style="float: right;"></i></button>
+
         </div>
 
         <div class="tab-pane" id="nexttab">
