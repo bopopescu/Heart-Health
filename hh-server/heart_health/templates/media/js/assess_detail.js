@@ -108,6 +108,10 @@ wizard.steps.push(new wizardStep('family-risk-group', function(){
 //Show the first step!
 wizard.showCurrentStep();
 
+$('#basic-form').submit(function (){
+    return wizard.currentStepIdx == wizard.steps.length - 1;
+});
+
 // Pressing the enter key on each input checkbox should advance the form wizard
 $('.control-group input').keyup(function(event){
         if(event.keyCode == 13){

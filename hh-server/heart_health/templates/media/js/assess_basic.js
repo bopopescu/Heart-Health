@@ -138,3 +138,7 @@ function submitBasicQuestions(){
         },
     });
 }
+
+$('#basic-form').submit(function (){
+    return wizard.currentStepIdx == wizard.steps.length - 1;
+});
