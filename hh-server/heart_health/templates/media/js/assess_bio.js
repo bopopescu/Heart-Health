@@ -45,9 +45,7 @@ var validationFunction = function(formData, jqForm, options) {
     validated = validateInputGroupInRange('ldl', 40, 400, false) && validated;
     
     if($('#hba1c').length > 0){
-        if($('#hba1c input').val().length > 0){
             validated = validateInputGroupInRange('hba1c', 2, 16, true) && validated;
-        }
     }
    
     var diastolic = $('#diastolic input').val();
