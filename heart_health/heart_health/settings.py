@@ -158,6 +158,8 @@ EMAIL_USE_TLS=True
 
 DEFAULT_FROM_EMAIL="Heart Health"
 
+SERVER_EMAIL = 'hearthealthapp@gmail.com'
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
