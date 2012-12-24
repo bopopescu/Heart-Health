@@ -6,4 +6,5 @@ django-bootstrap-toolkit==2.6.22
 django-registration==0.8
 geopy==0.94.2
 simplejson==2.6.2
+utils==0.1
 wsgiref==0.1.2
