@@ -1,4 +1,5 @@
 # Django settings for heart_health project.
+import dj_database_url
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -8,6 +9,8 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
+
+DATABASES['default'] = dj_database_url.config()
 
 #DATABASES = {
 #        'default': {
@@ -180,5 +183,3 @@ AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
 
 AUTH_PROFILE_MODULE = 'survey.UserProfile'
 
-import dj_database_url
-DATABASES['default'] = dj_database_url.config()
