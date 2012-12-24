@@ -29,6 +29,8 @@ public class Main extends Activity {
     	final View loadingLayout = findViewById(R.id.loading_layout);
     	final View progressBar = findViewById(R.id.progress_bar);
     	
+    	webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+    	
     	webView.setWebViewClient(new WebViewClient() {  
 	        @Override  
 	        public boolean shouldOverrideUrlLoading(WebView view, String url)  
