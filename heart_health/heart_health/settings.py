@@ -1,5 +1,6 @@
 # Django settings for heart_health project.
 import dj_database_url
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -10,7 +11,9 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES['default'] = dj_database_url.config()
+DATABASES = {
+        'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+}
 
 #DATABASES = {
 #        'default': {
