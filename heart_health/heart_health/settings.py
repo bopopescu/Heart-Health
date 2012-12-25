@@ -197,5 +197,3 @@ AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
 
 AUTH_PROFILE_MODULE = 'survey.UserProfile'
 
-import dj_database_url
-DATABASES['default'] =  dj_database_url.config()

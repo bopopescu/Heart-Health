@@ -267,8 +267,8 @@ class Notification(models.Model):
 class Location(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
-    name = models.CharField(max_length=75)
-    address1 = models.CharField(max_length=75)
+    name = models.CharField(max_length=100)
+    address1 = models.CharField(max_length=255)
     address2 = models.CharField(max_length=75,default='',blank=True)
     city = models.CharField(max_length=75)
     state = models.CharField(max_length=75)
@@ -277,7 +277,7 @@ class Location(models.Model):
     url = models.CharField(max_length=255)
     url_caption = models.CharField(max_length=255,default='',blank=True)
     cross_street = models.CharField(max_length=255,default='',blank=True)
-    description = models.CharField(max_length=255,default='',blank=True)
+    description = models.CharField(max_length=500,default='',blank=True)
     is_result = models.BooleanField(default=False)
 
     def get_as_provider_json(self):
